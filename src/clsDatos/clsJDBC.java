@@ -25,4 +25,52 @@ public class clsJDBC {
         this.password = "*";
         this.con = null;
     }
+    
+    public void conectar() throws Exception{
+        try {
+            Class.forName(driver);
+            con = DriverManager.getConnection(url, user, password);
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new Exception("Error al conectar la base de datos " +ex);
+        }
+    }
+    
+    public void desconectar() throws Exception{
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            throw new Exception("Error al desconectar la base de datos " +ex);
+        }
+    }
+    
+    public ResultSet consultar(String strSQL) throws Exception{
+        ResultSet rs = null;
+        try {
+            conectar();
+            sent = con.createStatement();
+            rs = sent.executeQuery(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error en la conslulta  " + e.getMessage());
+        } finally{
+            if (con != null) {
+                desconectar();
+            }
+        }    
+    }
+    
+    //insert, update, delete
+    public void ejecutar(String strSQL) throws Exception{
+        try {
+            conectar();
+            sent = con.createStatement();
+            sent.executeUpdate(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al ejecutar Update "+ e.getMessage());
+        } finally {
+            if (con != null) {
+                desconectar();
+            }
+        }
+    }
 }
