@@ -9,5 +9,7 @@ package capaPresentacion;
  * @author Chinc
  */
 public class clsPrueba {
-    
+    public void alo(){
+        System.out.println("Alo");
+    }
 }
