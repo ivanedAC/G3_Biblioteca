@@ -5,7 +5,7 @@
 
 
 
-package clsDatos;
+package capaDatos;
 
 import java.sql.*;
 
