@@ -36,7 +36,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         public FondoPanel() {
             // Ruta de la imagen (puedes ajustarla según tu directorio)
-            imagen = new ImageIcon(getClass().getResource("/recursos/fondo_3.jpg")).getImage();
+            imagen = new ImageIcon(getClass().getResource("/recursos/fondo_biblioteca.jpeg")).getImage();
         }
 
         @Override
@@ -46,8 +46,19 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
         }
     }
-
     
+    public void sinBotones(){
+        btnLibro.setVisible(false);
+        btnAutor.setVisible(false);
+        btnEjemplar.setVisible(false);
+        btnCliente.setVisible(false);
+    }
+
+    public void botonesMantenimiento(){
+        btnLibro.setVisible(true);
+        btnAutor.setVisible(true);
+        btnEjemplar.setVisible(true);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,58 +70,90 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnAutor = new javax.swing.JButton();
+        btnLibro = new javax.swing.JButton();
+        btnEjemplar = new javax.swing.JButton();
+        btnCliente = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         pnlFondo = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        mnuSalir = new javax.swing.JMenuItem();
+        mnuMantenimientos = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        mnuReportes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jToolBar1.setBackground(new java.awt.Color(230, 182, 139));
         jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar1.setRollover(true);
         jToolBar1.setEnabled(false);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/autor (1).png"))); // NOI18N
-        jButton1.setText("AUTOR");
-        jButton1.setHideActionText(true);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton1.setMaximumSize(new java.awt.Dimension(190, 50));
-        jButton1.setMinimumSize(new java.awt.Dimension(190, 50));
-        jToolBar1.add(jButton1);
+        btnAutor.setBackground(new java.awt.Color(230, 182, 139));
+        btnAutor.setForeground(new java.awt.Color(113, 49, 18));
+        btnAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/autor (1).png"))); // NOI18N
+        btnAutor.setText("AUTOR");
+        btnAutor.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
+        btnAutor.setHideActionText(true);
+        btnAutor.setMaximumSize(new java.awt.Dimension(190, 50));
+        btnAutor.setMinimumSize(new java.awt.Dimension(190, 50));
+        jToolBar1.add(btnAutor);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/libro (2).png"))); // NOI18N
-        jButton5.setText("LIBRO");
-        jButton5.setFocusCycleRoot(true);
-        jButton5.setFocusable(false);
-        jButton5.setHideActionText(true);
-        jButton5.setMaximumSize(new java.awt.Dimension(190, 50));
-        jButton5.setMinimumSize(new java.awt.Dimension(190, 50));
-        jToolBar1.add(jButton5);
+        btnLibro.setBackground(new java.awt.Color(230, 182, 139));
+        btnLibro.setForeground(new java.awt.Color(113, 49, 18));
+        btnLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/libro (2).png"))); // NOI18N
+        btnLibro.setText("LIBRO");
+        btnLibro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
+        btnLibro.setFocusCycleRoot(true);
+        btnLibro.setFocusable(false);
+        btnLibro.setHideActionText(true);
+        btnLibro.setMaximumSize(new java.awt.Dimension(190, 50));
+        btnLibro.setMinimumSize(new java.awt.Dimension(190, 50));
+        jToolBar1.add(btnLibro);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/ejemplar (1).png"))); // NOI18N
-        jButton6.setText("EJEMPLAR");
-        jButton6.setFocusable(false);
-        jButton6.setHideActionText(true);
-        jButton6.setMaximumSize(new java.awt.Dimension(190, 50));
-        jButton6.setMinimumSize(new java.awt.Dimension(190, 50));
-        jButton6.setPreferredSize(new java.awt.Dimension(130, 50));
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnEjemplar.setBackground(new java.awt.Color(230, 182, 139));
+        btnEjemplar.setForeground(new java.awt.Color(113, 49, 18));
+        btnEjemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/ejemplar (1).png"))); // NOI18N
+        btnEjemplar.setText("EJEMPLAR");
+        btnEjemplar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
+        btnEjemplar.setFocusable(false);
+        btnEjemplar.setHideActionText(true);
+        btnEjemplar.setMaximumSize(new java.awt.Dimension(190, 50));
+        btnEjemplar.setMinimumSize(new java.awt.Dimension(190, 50));
+        btnEjemplar.setPreferredSize(new java.awt.Dimension(130, 50));
+        btnEjemplar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnEjemplarActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton6);
+        jToolBar1.add(btnEjemplar);
+
+        btnCliente.setBackground(new java.awt.Color(230, 182, 139));
+        btnCliente.setForeground(new java.awt.Color(113, 49, 18));
+        btnCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/ejemplar (1).png"))); // NOI18N
+        btnCliente.setText("CLIENTE");
+        btnCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
+        btnCliente.setFocusable(false);
+        btnCliente.setHideActionText(true);
+        btnCliente.setMaximumSize(new java.awt.Dimension(190, 50));
+        btnCliente.setMinimumSize(new java.awt.Dimension(190, 50));
+        btnCliente.setPreferredSize(new java.awt.Dimension(130, 50));
+        btnCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCliente);
 
         jPanel1.setBackground(new java.awt.Color(113, 49, 18));
 
@@ -165,23 +208,41 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Login");
 
-        jMenuItem2.setText("jMenuItem2");
-        jMenu1.add(jMenuItem2);
+        mnuSalir.setText("Salir");
+        mnuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSalirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuSalir);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Mantenimiento");
+        mnuMantenimientos.setText("Mantenimiento");
+        mnuMantenimientos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnuMantenimientosMouseClicked(evt);
+            }
+        });
 
         jMenuItem4.setText("Usuario");
-        jMenu2.add(jMenuItem4);
+        mnuMantenimientos.add(jMenuItem4);
 
         jMenuItem1.setText("Autor");
-        jMenu2.add(jMenuItem1);
+        mnuMantenimientos.add(jMenuItem1);
 
         jMenuItem3.setText("Libro");
-        jMenu2.add(jMenuItem3);
+        mnuMantenimientos.add(jMenuItem3);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(mnuMantenimientos);
+
+        mnuReportes.setText("Reportes");
+        mnuReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnuReportesMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(mnuReportes);
 
         setJMenuBar(jMenuBar1);
 
@@ -193,8 +254,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(pnlFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -212,29 +272,52 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjemplarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnEjemplarActionPerformed
+
+    private void mnuMantenimientosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuMantenimientosMouseClicked
+        botonesMantenimiento();
+    }//GEN-LAST:event_mnuMantenimientosMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        sinBotones();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
+        //this.dispose();
+        System.exit(0);
+    }//GEN-LAST:event_mnuSalirActionPerformed
+
+    private void mnuReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuReportesMouseClicked
+        sinBotones();
+    }//GEN-LAST:event_mnuReportesMouseClicked
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btnAutor;
+    private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnEjemplar;
+    private javax.swing.JButton btnLibro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenu mnuMantenimientos;
+    private javax.swing.JMenu mnuReportes;
+    private javax.swing.JMenuItem mnuSalir;
     private javax.swing.JPanel pnlFondo;
     // End of variables declaration//GEN-END:variables
 
