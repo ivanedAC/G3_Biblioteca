@@ -111,7 +111,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         btnLibro.setBackground(new java.awt.Color(230, 182, 139));
         btnLibro.setForeground(new java.awt.Color(113, 49, 18));
-        btnLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/libro (2).png"))); // NOI18N
+        btnLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/libro(1).png"))); // NOI18N
         btnLibro.setText("LIBRO");
         btnLibro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
         btnLibro.setFocusCycleRoot(true);
