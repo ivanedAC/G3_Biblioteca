@@ -74,7 +74,7 @@ public class jdManAutor extends javax.swing.JDialog {
         jTextField3.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
 
         jButton12.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
-        jButton12.setText("L");
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/buscar_48px.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
