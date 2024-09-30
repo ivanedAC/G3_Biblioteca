@@ -86,7 +86,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         mnuSalir = new javax.swing.JMenuItem();
         mnuMantenimientos = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMnuUsuario = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
@@ -111,6 +111,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnAutor.setHideActionText(true);
         btnAutor.setMaximumSize(new java.awt.Dimension(190, 50));
         btnAutor.setMinimumSize(new java.awt.Dimension(190, 50));
+        btnAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAutorActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnAutor);
 
         btnLibro.setBackground(new java.awt.Color(230, 182, 139));
@@ -123,6 +128,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnLibro.setHideActionText(true);
         btnLibro.setMaximumSize(new java.awt.Dimension(190, 50));
         btnLibro.setMinimumSize(new java.awt.Dimension(190, 50));
+        btnLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLibroActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnLibro);
 
         btnEjemplar.setBackground(new java.awt.Color(230, 182, 139));
@@ -229,15 +239,20 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem4.setText("Usuario");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMnuUsuario.setText("Usuario");
+        jMnuUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMnuUsuarioActionPerformed(evt);
             }
         });
-        mnuMantenimientos.add(jMenuItem4);
+        mnuMantenimientos.add(jMnuUsuario);
 
         jMenuItem1.setText("Autor");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         mnuMantenimientos.add(jMenuItem1);
 
         jMenuItem3.setText("Libro");
@@ -313,11 +328,24 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         botonesReportes();
     }//GEN-LAST:event_mnuReportesMouseClicked
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jMnuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuUsuarioActionPerformed
         // TODO add your handling code here:
         jdMantUsuario objFrm = new jdMantUsuario(this, true);
         objFrm.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_jMnuUsuarioActionPerformed
+    private void btnLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLibroActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        jdManAutor jautor = new jdManAutor(this, true);
+        jautor.setLocationRelativeTo(null);
+        jautor.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAutorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,7 +361,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMnuUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;

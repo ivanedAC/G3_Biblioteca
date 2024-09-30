@@ -4,11 +4,22 @@
  */
 package capaCliente;
 
+import capaLogica.clsPais;
+import capaLogica.clsSede;
+import capaLogica.clsTipoUsuario;
+import java.sql.ResultSet;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ACER
  */
 public class jdMantUsuario extends javax.swing.JDialog {
+
+    clsPais objPais = new clsPais();
+    clsSede objSede = new clsSede();
+    clsTipoUsuario objTUsuario = new clsTipoUsuario();
 
     /**
      * Creates new form jdMantUsuario
@@ -16,6 +27,62 @@ public class jdMantUsuario extends javax.swing.JDialog {
     public jdMantUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    private void listarPaises() {
+        ResultSet rsPais = null;
+        DefaultComboBoxModel modeloPais = new DefaultComboBoxModel();
+        cboxPais.setModel(modeloPais);
+        try {
+            rsPais = objPais.listarPais();
+            while (rsPais.next()) {
+                modeloPais.addElement(rsPais.getString("nombre"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void listarSedes(){
+        ResultSet rsSede = null;
+        DefaultComboBoxModel modeloSede = new DefaultComboBoxModel();
+        cboxSede.setModel(modeloSede);
+        try {
+            rsSede = objSede.listarSede();
+            while (rsSede.next()) {
+                modeloSede.addElement(rsSede.getString("nombre"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void listarTipoDocumento(){
+        ResultSet rsSede = null;
+        DefaultComboBoxModel modeloSede = new DefaultComboBoxModel();
+        cboxTipoDoc.setModel(modeloSede);
+        try {
+            rsSede = objSede.listarSede();
+            while (rsSede.next()) {
+                modeloSede.addElement(rsSede.getString("nombre"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void listarTipoUsuario(){
+        ResultSet rsTuser = null;
+        DefaultComboBoxModel modeloSede = new DefaultComboBoxModel();
+        cboxTUser.setModel(modeloSede);
+        try {
+            rsTuser = objTUsuario.listarTipoUsuario();
+            while (rsTuser.next()) {
+                modeloSede.addElement(rsTuser.getString("nombre"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }
 
     /**
@@ -75,6 +142,11 @@ public class jdMantUsuario extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(230, 182, 139));
 
@@ -261,7 +333,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                                     .addComponent(jLabel3))
                                 .addGap(51, 51, 51)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cboxSex, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cboxSex, 0, 222, Short.MAX_VALUE)
                                     .addComponent(txtApeMat)
                                     .addComponent(txtApePat)
                                     .addComponent(txtNom)
@@ -280,15 +352,15 @@ public class jdMantUsuario extends javax.swing.JDialog {
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboxSede, 0, 153, Short.MAX_VALUE)
+                    .addComponent(cboxSede, 0, 221, Short.MAX_VALUE)
                     .addComponent(txtPass)
                     .addComponent(txtUsu)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(calendarFNac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                        .addComponent(calendarFNac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                         .addComponent(txtDir, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtCel, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtCor, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(cboxTUser, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtCel, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(cboxTUser, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCor, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(20, 20, 20))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -311,15 +383,20 @@ public class jdMantUsuario extends javax.swing.JDialog {
                                             .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel11)))
                                     .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(12, 12, 12)
                                 .addComponent(txtCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12)
-                            .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel12))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cboxTUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboxTUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -348,9 +425,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(47, 47, 47)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -511,6 +586,13 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        listarPaises();
+        listarSedes();
+        listarTipoUsuario();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

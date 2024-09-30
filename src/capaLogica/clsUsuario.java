@@ -17,7 +17,7 @@ public class clsUsuario {
     ResultSet rs = null;
     
     public ResultSet login(String us, String pass) throws Exception {
-        strSQL = "SELECT * FROM fn_login('"+us+"','"+pass+"')";
+        strSQL = "SELECT * FROM fn_login('" + us + "','" + pass + "')";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
