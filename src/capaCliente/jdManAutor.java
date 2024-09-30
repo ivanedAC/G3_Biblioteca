@@ -415,7 +415,7 @@ public class jdManAutor extends javax.swing.JDialog {
                     sexo = 'F';
                 }
                 objAutor.registrarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex() + 1, txtNombre.getText(), sexo);
-                JOptionPane.showMessageDialog(this, "Registro exitoso del autor: " + "\n" + txtNombre.getText());
+                JOptionPane.showMessageDialog(this, "Registro exitoso del autor:  " + "\n" + txtNombre.getText());
                 limpiarControles();
                 listarAutores();
             }
