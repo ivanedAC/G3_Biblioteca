@@ -226,8 +226,15 @@ public class jdIniciarSesion extends javax.swing.JDialog {
                         us = rs_login.getString("usuario");
                     }
                     if (!us.equals("")) {
-                        JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + us);
-                        this.dispose();
+                        if (objUsuario.validar_vigencia(rs_login.getInt("codigo")) == 0) {
+                            JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + us);
+                            this.dispose();
+                        } else if (objUsuario.validar_vigencia(rs_login.getInt("codigo")) == 1) {
+                            JOptionPane.showMessageDialog(this, "Este usuario no tiene permitido el acceso " + us);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Ocurrio un problema al validar el usuario");
+                        }
+
                     } else {
                         JOptionPane.showMessageDialog(this, "Credenciales incorrectas");
                     }
