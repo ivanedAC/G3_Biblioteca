@@ -22,4 +22,19 @@ public class clsTipoDocumento {
             throw new Exception("Error al listar tipodocumento -->" + e.getMessage());
         }
     }
+    
+    public String nombreTipoDocumento(int cod)throws Exception{
+        strSQL="select nombre from tipo_documento where codigo="+cod;
+        String nombretipoDoc="";
+        try {
+            rs=objConectar.consultar(strSQL);
+            while (rs.next()) {                
+                nombretipoDoc=rs.getString("nombre");
+                return nombretipoDoc;
+            }
+        } catch (Exception e) {
+            throw new Exception("error al obtener el nombre del tipo de documento-->"+e.getMessage());
+        }
+        return "";
+    }
 }

@@ -35,6 +35,25 @@ public class clsCliente {
             throw new Exception("Error al buscar cliente-->"+e.getMessage());
         }
     }
+    public ResultSet listarClientesN( ) throws Exception{
+        strSQL = "select P.* from cliente C inner join persona P on C.cod_persona=P.codigo where P.cod_tipo_doc != 2";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar cliente Natural-->"+e.getMessage());
+        }
+    }
+    
+    public ResultSet listarClientesJ( ) throws Exception{
+        strSQL = "select P.* from cliente C inner join persona P on C.cod_persona=P.codigo where P.cod_tipo_doc = 2";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar cliente Juridico-->"+e.getMessage());
+        }
+    }
     
     public void insertarClienteJuridico(int cpais, int ctipodoc, String ndoc, String nom,String rs, String dir, String cel, String f_reg,String correo,String estado) throws Exception{
         int cod=generarCodigoCliente();

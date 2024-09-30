@@ -26,4 +26,18 @@ public class clsPais {
             throw new Exception("Error al listar paises -->" + e.getMessage());
         }
     }
+
+    public String buscarPaisPorCodigo(int codigo) throws Exception {
+        strSQL = "select nombre from pais where codigo=" + codigo;
+        try {
+            rs = objConectar.consultar(strSQL);
+            while (rs.next()) {
+                String nombrePais = rs.getString("nombre");
+                return nombrePais;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al encontrar pais por codigo-->" + e.getMessage());
+        }
+        return "";
+    }
 }
