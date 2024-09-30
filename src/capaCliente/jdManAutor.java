@@ -7,8 +7,6 @@ package capaCliente;
 import capaLogica.clsAutor;
 import capaLogica.clsPais;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -128,8 +126,6 @@ public class jdManAutor extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel7.setText("SEXO");
 
-        cmbPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         txtNombre.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
 
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hombre", "Mujer" }));
@@ -158,19 +154,16 @@ public class jdManAutor extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(jLabel7)
                     .addComponent(jLabel2))
-                .addGap(116, 116, 116)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbSexo, 0, 319, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtNombre)
+                        .addComponent(cmbPais, javax.swing.GroupLayout.Alignment.TRAILING, 0, 319, Short.MAX_VALUE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addGap(34, 34, 34)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,6 +196,11 @@ public class jdManAutor extends javax.swing.JDialog {
 
         btnModificar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         btnModificar.setText("MODIFICAR");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         btnEliminar.setText("ELIMINAR");
@@ -248,7 +246,7 @@ public class jdManAutor extends javax.swing.JDialog {
                     .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,17 +285,17 @@ public class jdManAutor extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -307,10 +305,9 @@ public class jdManAutor extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -344,26 +341,28 @@ public class jdManAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        char sexo;
+
         try {
-            if (btnNuevo.getText().equals("Nuevo")) {
-                btnNuevo.setText("Guardar");
+            if (btnNuevo.getText().equals("NUEVO")) {
+                btnNuevo.setText("GUARDAR");
                 limpiarControles();
                 txtCodigo.setText(objAutor.generarCodAutor().toString());
                 txtNombre.requestFocus();
             } else {
-                char sexo;
-                btnNuevo.setText("Nuevo");
+                btnNuevo.setText("NUEVO");
                 if (cmbSexo.getSelectedItem().equals("Hombre")) {
-                    sexo = 'H';
+                    sexo = 'M';
                 } else {
                     sexo = 'F';
                 }
-
-                objAutor.registrarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex(), txtNombre.getText(), sexo);
+                objAutor.registrarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex() + 1, txtNombre.getText(), sexo);
                 limpiarControles();
                 listarAutores();
             }
         } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(this, "Error al registrar el autor: " + e.getMessage());
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -387,10 +386,12 @@ public class jdManAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tblAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutorMouseClicked
-
-            txtCodigo.setText(String.valueOf(tblAutor.getValueAt(tblAutor.getSelectedRow(),0)));
-
+        try {
+            txtCodigo.setText(String.valueOf(objAutor.buscarAutorN(tblAutor.getValueAt(tblAutor.getSelectedRow(), 1).toString())));
+        } catch (Exception ex) {
+        }
         btnBuscarActionPerformed(null);
+
     }//GEN-LAST:event_tblAutorMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -416,6 +417,40 @@ public class jdManAutor extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error -->" + e.getMessage());
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+      char sexo;
+        try {
+            if (txtCodigo.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un código para actualizar");
+            } else if (txtNombre.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un nombre de Autor");
+            } else {
+                int rp = 0;
+                rp = JOptionPane.showConfirmDialog(this,
+                        "Estás seguro que deseas actualizar el: " + txtCodigo.getText() + "\n" + txtNombre.getText(),
+                        "Actualizar",
+                        JOptionPane.YES_NO_OPTION);
+                if (rp == JOptionPane.YES_OPTION) {
+                    if (cmbSexo.getSelectedItem().equals("Hombre")) {
+                        sexo = 'M';
+                    } else {
+                        sexo = 'F';
+                    }
+                    objAutor.actualizarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex() + 1, txtNombre.getText(), sexo);
+                    JOptionPane.showMessageDialog(this, "Se ha actualizado el codigo: " + txtCodigo.getText());
+                    limpiarControles();
+                    listarAutores();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Actualización cancelada.");
+
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error -->" + e.getMessage());
+
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments

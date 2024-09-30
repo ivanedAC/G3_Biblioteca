@@ -40,17 +40,17 @@ public class clsAutor {
         return 0;
     }
 
-    public void registrarAutor(int cod, int pais, String nombre, char Sexo) throws Exception {
-        strSQL = "select pa_insert_autor(cod, pais, nombre, sexo)";
+    public void registrarAutor(int au, int pa, String nom, char sex) throws Exception {
+        strSQL = "SELECT pa_insert_autor(" + au + ", " + pa + ", '" + nom + "', '" + sex + "')";
         try {
-            objConectar.ejecutar(strSQL);
+            objConectar.consultar(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al registrar autor -->" + e.getMessage());
         }
     }
 
     public ResultSet buscarAutor(int cod) throws Exception {
-        strSQL = "select * from autor where cod =" + cod;
+        strSQL = "select * from autor where codigo =" + cod;
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
@@ -62,7 +62,7 @@ public class clsAutor {
     public void eliminarAutor(int cod) throws Exception {
         strSQL = "select pa_delete_autor (" + cod + ")";
         try {
-            objConectar.ejecutar(strSQL);
+            objConectar.consultar(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al eliminar autor --> " + e.getMessage());
         }
@@ -72,12 +72,21 @@ public class clsAutor {
         strSQL = "select codigo from autor where nombre ='" + nombre + "'";
         try {
             rs = objConectar.consultar(strSQL);
-            while (rs.next()) {
-                return rs.getInt("codigos");
+            if (rs.next()) {
+                return rs.getInt("codigo");
             }
         } catch (Exception e) {
             throw new Exception("Error al buscar autor -->" + e.getMessage());
         }
         return 0;
+    }
+
+    public void actualizarAutor(int au, int pa, String nom, char sex) throws Exception {
+        strSQL = "SELECT pa_update_autor(" + au + "," + pa + ", '" + nom + "', '" + sex + "')";
+        try {
+            objConectar.consultar(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al actualizar autor --> " + e.getMessage());
+        }
     }
 }
