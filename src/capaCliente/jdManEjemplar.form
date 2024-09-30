@@ -77,19 +77,24 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton7" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="jButton9" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="jButton8" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton11" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="jButton10" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="jButton12" min="-2" pref="176" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jButton7" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="jButton9" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="jButton8" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jButton11" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="jButton10" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="jButton12" min="-2" pref="176" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="jSeparator2" min="-2" pref="411" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="33" max="32767" attributes="0"/>
+                  <EmptySpace pref="9" max="32767" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="11" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="576" max="-2" attributes="0"/>
@@ -127,7 +132,9 @@
                               <Component id="cboEstado" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                               <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                          <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jButton7" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                               <Component id="jButton12" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
@@ -290,6 +297,12 @@
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="12" green="31" red="71" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="12" green="31" red="71" type="rgb"/>
+            </Property>
             <Property name="orientation" type="int" value="1"/>
           </Properties>
         </Component>
@@ -418,6 +431,16 @@
               <Color blue="ce" green="e0" red="f5" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Modificar"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator2">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="12" green="31" red="71" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="12" green="31" red="71" type="rgb"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

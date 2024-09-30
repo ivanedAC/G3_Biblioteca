@@ -277,7 +277,9 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjemplarActionPerformed
-        // TODO add your handling code here:
+        jdManEjemplar objeto = new jdManEjemplar(this, true);
+        objeto.setLocationRelativeTo(this);
+        objeto.setVisible(true);
     }//GEN-LAST:event_btnEjemplarActionPerformed
 
     private void mnuMantenimientosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuMantenimientosMouseClicked
