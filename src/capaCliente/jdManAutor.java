@@ -103,9 +103,11 @@ public class jdManAutor extends javax.swing.JDialog {
         btnSalir = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAutor = new javax.swing.JTable();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(230, 182, 139));
@@ -118,23 +120,34 @@ public class jdManAutor extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(230, 182, 139));
 
         jLabel1.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(113, 49, 18));
         jLabel1.setText("PAIS");
 
         jLabel4.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(113, 49, 18));
         jLabel4.setText("NOMBRE");
 
         jLabel7.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(113, 49, 18));
         jLabel7.setText("SEXO");
 
+        cmbPais.setBackground(new java.awt.Color(245, 224, 206));
+        cmbPais.setEditable(true);
+
+        txtNombre.setBackground(new java.awt.Color(245, 224, 206));
         txtNombre.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
 
+        cmbSexo.setBackground(new java.awt.Color(245, 224, 206));
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hombre", "Mujer" }));
 
         jLabel2.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(113, 49, 18));
         jLabel2.setText("CODIGO");
 
+        txtCodigo.setBackground(new java.awt.Color(245, 224, 206));
         txtCodigo.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
 
+        btnBuscar.setBackground(new java.awt.Color(113, 49, 18));
         btnBuscar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/buscar_48px.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -157,13 +170,12 @@ public class jdManAutor extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cmbSexo, 0, 319, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtNombre)
-                        .addComponent(cmbPais, javax.swing.GroupLayout.Alignment.TRAILING, 0, 319, Short.MAX_VALUE)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(txtNombre)
+                    .addComponent(cmbPais, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(34, 34, 34)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,12 +201,14 @@ public class jdManAutor extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 204, 102));
+        jPanel3.setBackground(new java.awt.Color(230, 182, 139));
 
+        btnModificar.setBackground(new java.awt.Color(113, 49, 18));
         btnModificar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(245, 224, 206));
         btnModificar.setText("MODIFICAR");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,7 +216,9 @@ public class jdManAutor extends javax.swing.JDialog {
             }
         });
 
+        btnEliminar.setBackground(new java.awt.Color(113, 49, 18));
         btnEliminar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(245, 224, 206));
         btnEliminar.setText("ELIMINAR");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,7 +226,9 @@ public class jdManAutor extends javax.swing.JDialog {
             }
         });
 
+        btnSalir.setBackground(new java.awt.Color(113, 49, 18));
         btnSalir.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(245, 224, 206));
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,7 +236,9 @@ public class jdManAutor extends javax.swing.JDialog {
             }
         });
 
+        btnLimpiar.setBackground(new java.awt.Color(113, 49, 18));
         btnLimpiar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(245, 224, 206));
         btnLimpiar.setText("LIMPIAR");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,7 +246,9 @@ public class jdManAutor extends javax.swing.JDialog {
             }
         });
 
+        btnNuevo.setBackground(new java.awt.Color(113, 49, 18));
         btnNuevo.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnNuevo.setForeground(new java.awt.Color(245, 224, 206));
         btnNuevo.setText("NUEVO");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,12 +256,18 @@ public class jdManAutor extends javax.swing.JDialog {
             }
         });
 
+        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
@@ -262,10 +290,15 @@ public class jdManAutor extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(113, 113, 113))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 153, 153));
+        jPanel2.setBackground(new java.awt.Color(230, 182, 139));
 
+        tblAutor.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
         tblAutor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -281,19 +314,25 @@ public class jdManAutor extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblAutor);
 
+        jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -473,6 +512,8 @@ public class jdManAutor extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable tblAutor;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
