@@ -5,6 +5,7 @@
 package capaLogica;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
+import java.util.Date;
 
 /**
  *
@@ -36,6 +37,28 @@ public class clsUsuario {
             }
         } catch (Exception e) {
             throw new Exception("Error al validadr vigencia" + e.getMessage());
+        }
+    }
+    
+    public int registrarUsuario(Integer cod, Integer cpais, Integer ctipodoc, String ndoc,
+            String nom, String apPat, String apMat, Boolean sex, String FechaNac, String dir,
+            String cel, String f_reg, String cor, Integer ctuser, String usu, String pass, String estado,
+            Integer sede) throws Exception{
+        f_reg = "current_date";
+        strSQL = "SELECT pa_insert_Usuario(" + cod + "," + cpais + "," + ctipodoc + "," + ndoc +"," + 
+                nom + "," + apPat + "," + apMat + "," + sex + "," + FechaNac + "," + dir + "," + cel 
+                + "," + f_reg + "," + cor + "," + ctuser + "," + usu + "," + pass + "," + estado + ") "
+                + "as resultado";
+        try {
+            rs = objConectar.consultar(strSQL);
+            if(rs.next()){
+                return rs.getInt("resultado");
+            }
+            else {
+                return -1;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al registrar usuario: " + e.getMessage());
         }
     }
 }

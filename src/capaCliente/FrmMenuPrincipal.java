@@ -230,6 +230,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
 
         jMenuItem4.setText("Usuario");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         mnuMantenimientos.add(jMenuItem4);
 
         jMenuItem1.setText("Autor");
@@ -307,6 +312,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         sinBotones();
         botonesReportes();
     }//GEN-LAST:event_mnuReportesMouseClicked
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        jdMantUsuario objFrm = new jdMantUsuario(this, true);
+        objFrm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
