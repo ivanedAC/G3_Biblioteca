@@ -73,7 +73,7 @@ public class clsAutor {
         try {
             rs = objConectar.consultar(strSQL);
             while (rs.next()) {
-                return rs.getInt("codigo");
+                return rs.getInt("codigos");
             }
         } catch (Exception e) {
             throw new Exception("Error al buscar autor -->" + e.getMessage());
