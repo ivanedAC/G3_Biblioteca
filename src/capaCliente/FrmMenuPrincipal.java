@@ -119,6 +119,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnLibro.setHideActionText(true);
         btnLibro.setMaximumSize(new java.awt.Dimension(190, 50));
         btnLibro.setMinimumSize(new java.awt.Dimension(190, 50));
+        btnLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLibroActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnLibro);
 
         btnEjemplar.setBackground(new java.awt.Color(230, 182, 139));
@@ -299,6 +304,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private void mnuReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuReportesMouseClicked
         sinBotones();
     }//GEN-LAST:event_mnuReportesMouseClicked
+
+    private void btnLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLibroActionPerformed
 
     /**
      * @param args the command line arguments
