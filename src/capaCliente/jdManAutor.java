@@ -10,6 +10,7 @@ import java.sql.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -23,7 +24,12 @@ public class jdManAutor extends javax.swing.JDialog {
     private void listarAutores() {
         ResultSet rsAutores = null;
         String sexo = "";
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         modelo.addColumn("Pais");
         modelo.addColumn("Nombre");
         modelo.addColumn("Sexo");
@@ -43,6 +49,7 @@ public class jdManAutor extends javax.swing.JDialog {
                 modelo.addRow(datos[0]);
             }
             tblAutor.setModel(modelo);
+            tblAutor.getTableHeader().setReorderingAllowed(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -132,13 +139,17 @@ public class jdManAutor extends javax.swing.JDialog {
         jLabel7.setText("SEXO");
 
         cmbPais.setBackground(new java.awt.Color(245, 224, 206));
-        cmbPais.setEditable(true);
+        cmbPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPaisActionPerformed(evt);
+            }
+        });
 
         txtNombre.setBackground(new java.awt.Color(245, 224, 206));
         txtNombre.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
 
         cmbSexo.setBackground(new java.awt.Color(245, 224, 206));
-        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hombre", "Mujer" }));
+        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
 
         jLabel2.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(113, 49, 18));
@@ -149,7 +160,7 @@ public class jdManAutor extends javax.swing.JDialog {
 
         btnBuscar.setBackground(new java.awt.Color(113, 49, 18));
         btnBuscar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/buscar_48px.png"))); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/buscar_24px.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -173,22 +184,22 @@ public class jdManAutor extends javax.swing.JDialog {
                     .addComponent(txtNombre)
                     .addComponent(cmbPais, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(34, 34, 34)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(18, 18, 18)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(39, 39, 39)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBuscar)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,6 +220,7 @@ public class jdManAutor extends javax.swing.JDialog {
         btnModificar.setBackground(new java.awt.Color(113, 49, 18));
         btnModificar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(245, 224, 206));
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/editar_32px.png"))); // NOI18N
         btnModificar.setText("MODIFICAR");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,6 +231,7 @@ public class jdManAutor extends javax.swing.JDialog {
         btnEliminar.setBackground(new java.awt.Color(113, 49, 18));
         btnEliminar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(245, 224, 206));
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/eliminar_32px.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,6 +242,7 @@ public class jdManAutor extends javax.swing.JDialog {
         btnSalir.setBackground(new java.awt.Color(113, 49, 18));
         btnSalir.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(245, 224, 206));
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/salir_32px.png"))); // NOI18N
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +253,7 @@ public class jdManAutor extends javax.swing.JDialog {
         btnLimpiar.setBackground(new java.awt.Color(113, 49, 18));
         btnLimpiar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(245, 224, 206));
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/limpiar_32px.png"))); // NOI18N
         btnLimpiar.setText("LIMPIAR");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,6 +264,7 @@ public class jdManAutor extends javax.swing.JDialog {
         btnNuevo.setBackground(new java.awt.Color(113, 49, 18));
         btnNuevo.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         btnNuevo.setForeground(new java.awt.Color(245, 224, 206));
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/nuevo_32px.png"))); // NOI18N
         btnNuevo.setText("NUEVO");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -270,7 +286,7 @@ public class jdManAutor extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -298,6 +314,7 @@ public class jdManAutor extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(230, 182, 139));
 
+        tblAutor.setBackground(new java.awt.Color(245, 224, 206));
         tblAutor.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
         tblAutor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -347,8 +364,7 @@ public class jdManAutor extends javax.swing.JDialog {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,17 +401,21 @@ public class jdManAutor extends javax.swing.JDialog {
         try {
             if (btnNuevo.getText().equals("NUEVO")) {
                 btnNuevo.setText("GUARDAR");
+                btnNuevo.setIcon(new ImageIcon("src/recursos/guardar_32px.png"));
                 limpiarControles();
                 txtCodigo.setText(objAutor.generarCodAutor().toString());
                 txtNombre.requestFocus();
             } else {
                 btnNuevo.setText("NUEVO");
+                btnNuevo.setIcon(new ImageIcon("src/recursos/nuevo_32px.png"));
+
                 if (cmbSexo.getSelectedItem().equals("Hombre")) {
                     sexo = 'M';
                 } else {
                     sexo = 'F';
                 }
                 objAutor.registrarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex() + 1, txtNombre.getText(), sexo);
+                JOptionPane.showMessageDialog(this, "Registro exitoso del autor: " + "\n" + txtNombre.getText());
                 limpiarControles();
                 listarAutores();
             }
@@ -406,6 +426,7 @@ public class jdManAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String sexo;
         ResultSet rsAutor = null;
         try {
             if (txtCodigo.getText().equals("")) {
@@ -414,6 +435,13 @@ public class jdManAutor extends javax.swing.JDialog {
                 rsAutor = objAutor.buscarAutor(Integer.parseInt(txtCodigo.getText()));
                 if (rsAutor.next()) {
                     txtNombre.setText(rsAutor.getString("nombre"));
+                    cmbPais.setSelectedIndex(rsAutor.getInt("cod_pais") - 1);
+                    if (rsAutor.getString("sexo").equals("M")) {
+                        sexo = "Masculino";
+                    } else {
+                        sexo = "Femenino";
+                    }
+                    cmbSexo.setSelectedItem(sexo);
                 } else {
                     JOptionPane.showMessageDialog(this, "¡Código de autor ingresado no existente!");
                     limpiarControles();
@@ -458,7 +486,7 @@ public class jdManAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-      char sexo;
+        char sexo;
         try {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para actualizar");
@@ -490,6 +518,10 @@ public class jdManAutor extends javax.swing.JDialog {
 
         }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void cmbPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbPaisActionPerformed
 
     /**
      * @param args the command line arguments
