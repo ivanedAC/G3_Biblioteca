@@ -89,6 +89,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMnuUsuario = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -258,6 +259,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem3.setText("Libro");
         mnuMantenimientos.add(jMenuItem3);
 
+        jMenuItem2.setText("Cliente");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        mnuMantenimientos.add(jMenuItem2);
+
         jMenuBar1.add(mnuMantenimientos);
 
         mnuReportes.setText("Reportes");
@@ -343,6 +352,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jautor.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        jdManCliente objCliente = new jdManCliente(this, true);
+        objCliente.setLocation(207, 175);
+        objCliente.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
     private void btnAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAutorActionPerformed
@@ -360,6 +375,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMnuUsuario;
     private javax.swing.JPanel jPanel1;
