@@ -59,6 +59,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnAutor.setVisible(true);
         btnEjemplar.setVisible(true);
     }
+    
+    public void botonesReportes(){
+        btnCliente.setVisible(true);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -273,18 +277,21 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjemplarActionPerformed
-        // TODO add your handling code here:
+        jdManEjemplar objeto = new jdManEjemplar(this, true);
+        objeto.setLocationRelativeTo(this);
+        objeto.setVisible(true);
     }//GEN-LAST:event_btnEjemplarActionPerformed
 
     private void mnuMantenimientosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuMantenimientosMouseClicked
+        sinBotones();
         botonesMantenimiento();
     }//GEN-LAST:event_mnuMantenimientosMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         sinBotones();
-        jdIniciarSesion frmLogin = new jdIniciarSesion(this, true);
-        frmLogin.setLocationRelativeTo(null);
-        frmLogin.setVisible(true);
+//        jdIniciarSesion frmLogin = new jdIniciarSesion(this, true);
+//        frmLogin.setLocationRelativeTo(null);
+//        frmLogin.setVisible(true);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
@@ -298,6 +305,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuReportesMouseClicked
         sinBotones();
+        botonesReportes();
     }//GEN-LAST:event_mnuReportesMouseClicked
 
     /**

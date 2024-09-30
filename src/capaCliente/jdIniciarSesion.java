@@ -118,7 +118,7 @@ public class jdIniciarSesion extends javax.swing.JDialog {
         lblCaptcha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnCambiarCaptcha.setBackground(new java.awt.Color(113, 49, 18));
-        btnCambiarCaptcha.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
+        btnCambiarCaptcha.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
         btnCambiarCaptcha.setForeground(new java.awt.Color(230, 182, 139));
         btnCambiarCaptcha.setText("Cambiar");
         btnCambiarCaptcha.addActionListener(new java.awt.event.ActionListener() {
