@@ -282,6 +282,9 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         sinBotones();
+        jdIniciarSesion frmLogin = new jdIniciarSesion(this, true);
+        frmLogin.setLocationRelativeTo(null);
+        frmLogin.setVisible(true);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
