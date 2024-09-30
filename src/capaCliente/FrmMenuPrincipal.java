@@ -59,6 +59,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnAutor.setVisible(true);
         btnEjemplar.setVisible(true);
     }
+    
+    public void botonesReportes(){
+        btnCliente.setVisible(true);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -282,14 +286,15 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEjemplarActionPerformed
 
     private void mnuMantenimientosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuMantenimientosMouseClicked
+        sinBotones();
         botonesMantenimiento();
     }//GEN-LAST:event_mnuMantenimientosMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         sinBotones();
-        jdIniciarSesion frmLogin = new jdIniciarSesion(this, true);
-        frmLogin.setLocationRelativeTo(null);
-        frmLogin.setVisible(true);
+//        jdIniciarSesion frmLogin = new jdIniciarSesion(this, true);
+//        frmLogin.setLocationRelativeTo(null);
+//        frmLogin.setVisible(true);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
@@ -303,6 +308,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuReportesMouseClicked
         sinBotones();
+        botonesReportes();
     }//GEN-LAST:event_mnuReportesMouseClicked
 
     private void btnLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibroActionPerformed
