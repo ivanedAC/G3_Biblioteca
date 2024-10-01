@@ -28,7 +28,7 @@ public class clsSede {
     }
     
     public Integer obtenerSede(String nom) throws Exception {
-        strSQL = "SELECT * FROM SEDE WHERE NOMBRE ilike " + nom;
+        strSQL = "SELECT * FROM SEDE WHERE NOMBRE ilike '" + nom + "'";
         try {
             rs = objConectar.consultar(strSQL);
             if (rs.next()) {

@@ -348,7 +348,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     private void jMnuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuUsuarioActionPerformed
         // TODO add your handling code here:
-        jdMantUsuario objFrm = new jdMantUsuario(this, true);
+        jdManUsuario objFrm = new jdManUsuario(this, true);
         objFrm.setVisible(true);
     }//GEN-LAST:event_jMnuUsuarioActionPerformed
     private void btnLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibroActionPerformed
