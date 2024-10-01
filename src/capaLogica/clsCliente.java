@@ -7,6 +7,7 @@ import capaDatos.clsJDBC;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
 
 public class clsCliente {
     
@@ -55,16 +56,18 @@ public class clsCliente {
     }
     
     public ResultSet obtenerClientePorDoc(String doc) throws Exception{
-        strSQL = "select P.* from cliente C inner join persona P on C.cod_persona=P.codigo where P.numero_documento='"+doc+"'";
+        strSQL = "select P.*, C.estado as estado from cliente C inner join persona P on C.cod_persona=P.codigo where P.numero_documento='"+doc+"'";
         try {
             rs = objConectar.consultar(strSQL);
+            
             return rs;
+            
         } catch (Exception e) {
             throw new Exception("Error al buscar cliente-->"+e.getMessage());
         }
     }
     public ResultSet listarClientesN( ) throws Exception{
-        strSQL = "select P.* from cliente C inner join persona P on C.cod_persona=P.codigo where P.cod_tipo_doc != 2";
+        strSQL = "select P.*, C.estado as estado from cliente C inner join persona P on C.cod_persona=P.codigo where P.cod_tipo_doc != 2";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
@@ -74,7 +77,7 @@ public class clsCliente {
     }
     
     public ResultSet listarClientesJ( ) throws Exception{
-        strSQL = "select P.* from cliente C inner join persona P on C.cod_persona=P.codigo where P.cod_tipo_doc = 2";
+        strSQL = "select P.*, C.estado as estado from cliente C inner join persona P on C.cod_persona=P.codigo where P.cod_tipo_doc = 2";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
@@ -107,7 +110,6 @@ public class clsCliente {
     public void modificarClienteJuridico(int cpais, int ctipodoc, String ndoc, String nom,String rs, String dir, String cel, String f_reg,String correo,String estado)throws Exception{
        int cod=buscarCodigoCliente(ndoc);
        strSQL="select pa_update_clientejuridica("+cod+","+cpais+","+ctipodoc+", '"+ndoc+"' , '"+nom+"', '"+rs+"' , '"+dir+"' , '"+cel+"' , '"+f_reg+"' , '"+correo+"','"+estado+"')";
-        System.out.println(strSQL);
         try {
             objConectar.consultar(strSQL);
         } catch (Exception e) {

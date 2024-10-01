@@ -91,6 +91,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         MnuCategoria = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -276,6 +277,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuMantenimientos.add(MnuCategoria);
 
+        jMenuItem1.setText("Proveedor");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mnuMantenimientos.add(jMenuItem1);
+
         jMenuBar1.add(mnuMantenimientos);
 
         mnuReportes.setText("Reportes");
@@ -363,7 +372,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         jdManCliente objCliente = new jdManCliente(this, true);
-        objCliente.setLocation(207, 175);
+        objCliente.setLocationRelativeTo(null);
         objCliente.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -376,6 +385,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jcategoria.setLocationRelativeTo(null);
         jcategoria.setVisible(true);
     }//GEN-LAST:event_MnuCategoriaActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        jdManProveedor jProveedor = new jdManProveedor(this, true);
+        jProveedor.setLocationRelativeTo(null);
+        jProveedor.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,6 +407,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMnuUsuario;
