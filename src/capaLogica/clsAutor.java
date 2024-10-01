@@ -68,18 +68,18 @@ public class clsAutor {
         }
     }
 
-    public int buscarAutorN(String nombre) throws Exception {
-        strSQL = "select codigo from autor where nombre ='" + nombre + "'";
-        try {
-            rs = objConectar.consultar(strSQL);
-            if (rs.next()) {
-                return rs.getInt("codigo");
-            }
-        } catch (Exception e) {
-            throw new Exception("Error al buscar autor -->" + e.getMessage());
-        }
-        return 0;
-    }
+//    public int buscarAutorN(String nombre) throws Exception {
+//        strSQL = "select codigo from autor where nombre ='" + nombre + "'";
+//        try {
+//            rs = objConectar.consultar(strSQL);
+//            if (rs.next()) {
+//                return rs.getInt("codigo");
+//            }
+//        } catch (Exception e) {
+//            throw new Exception("Error al buscar autor -->" + e.getMessage());
+//        }
+//        return 0;
+//    }
 
     public void actualizarAutor(int au, int pa, String nom, char sex) throws Exception {
         strSQL = "SELECT pa_update_autor(" + au + "," + pa + ", '" + nom + "', '" + sex + "')";

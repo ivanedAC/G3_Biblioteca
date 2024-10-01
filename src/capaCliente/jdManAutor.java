@@ -30,6 +30,7 @@ public class jdManAutor extends javax.swing.JDialog {
                 return false;
             }
         };
+        modelo.addColumn("Codigo");
         modelo.addColumn("Pais");
         modelo.addColumn("Nombre");
         modelo.addColumn("Sexo");
@@ -42,10 +43,11 @@ public class jdManAutor extends javax.swing.JDialog {
                 } else {
                     sexo = "Femenino";
                 }
-                Object datos[][] = new Object[1][3];
-                datos[0][0] = rsAutores.getString("pais");
-                datos[0][1] = rsAutores.getString("nombre");
-                datos[0][2] = sexo;
+                Object datos[][] = new Object[1][4];
+                datos[0][0] = rsAutores.getInt("codigo");
+                datos[0][1] = rsAutores.getString("pais");
+                datos[0][2] = rsAutores.getString("nombre");
+                datos[0][3] = sexo;
                 modelo.addRow(datos[0]);
             }
             tblAutor.setModel(modelo);
@@ -453,10 +455,7 @@ public class jdManAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tblAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutorMouseClicked
-        try {
-            txtCodigo.setText(String.valueOf(objAutor.buscarAutorN(tblAutor.getValueAt(tblAutor.getSelectedRow(), 1).toString())));
-        } catch (Exception ex) {
-        }
+        txtCodigo.setText(String.valueOf(tblAutor.getValueAt(tblAutor.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
 
     }//GEN-LAST:event_tblAutorMouseClicked

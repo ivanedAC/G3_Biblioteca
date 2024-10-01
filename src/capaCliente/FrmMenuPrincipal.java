@@ -87,9 +87,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuSalir = new javax.swing.JMenuItem();
         mnuMantenimientos = new javax.swing.JMenu();
         jMnuUsuario = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        MnuAutor = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        MnuCategoria = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -248,13 +249,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuMantenimientos.add(jMnuUsuario);
 
-        jMenuItem1.setText("Autor");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        MnuAutor.setText("Autor");
+        MnuAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                MnuAutorActionPerformed(evt);
             }
         });
-        mnuMantenimientos.add(jMenuItem1);
+        mnuMantenimientos.add(MnuAutor);
 
         jMenuItem3.setText("Libro");
         mnuMantenimientos.add(jMenuItem3);
@@ -266,6 +267,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             }
         });
         mnuMantenimientos.add(jMenuItem2);
+
+        MnuCategoria.setText("Categoria");
+        MnuCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuCategoriaActionPerformed(evt);
+            }
+        });
+        mnuMantenimientos.add(MnuCategoria);
 
         jMenuBar1.add(mnuMantenimientos);
 
@@ -346,11 +355,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLibroActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void MnuAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuAutorActionPerformed
         jdManAutor jautor = new jdManAutor(this, true);
         jautor.setLocationRelativeTo(null);
         jautor.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_MnuAutorActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         jdManCliente objCliente = new jdManCliente(this, true);
@@ -362,11 +371,19 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAutorActionPerformed
 
+    private void MnuCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCategoriaActionPerformed
+        jdManCategoria jcategoria = new jdManCategoria(this,true);
+        jcategoria.setLocationRelativeTo(null);
+        jcategoria.setVisible(true);
+    }//GEN-LAST:event_MnuCategoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MnuAutor;
+    private javax.swing.JMenuItem MnuCategoria;
     private javax.swing.JButton btnAutor;
     private javax.swing.JButton btnCliente;
     private javax.swing.JButton btnEjemplar;
@@ -374,7 +391,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMnuUsuario;
