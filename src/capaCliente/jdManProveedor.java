@@ -426,7 +426,11 @@ public class jdManProveedor extends javax.swing.JDialog {
         lblFecha.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         lblFecha.setText("FECHA NACIMIENTO");
 
-        txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        try {
+            txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         txtFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFechaActionPerformed(evt);
@@ -807,6 +811,7 @@ public class jdManProveedor extends javax.swing.JDialog {
                 objProveedor.insertarProveedorJuridico(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), estado);
                 JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente");
                 clearfields();
+                listarProveedorJuridicos();
             } else {
                 if (cbxSexo.getSelectedItem().toString().equals("Masculino")) {
                     sexo = true;
@@ -817,6 +822,7 @@ public class jdManProveedor extends javax.swing.JDialog {
                 objProveedor.insertarProveedorNatural(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), sexo, txtFecha.getText(), txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), estado);
                 JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente");
                 clearfields();
+                listarProveedorNaturales();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "error-->" + ex.getMessage());
@@ -860,10 +866,15 @@ public class jdManProveedor extends javax.swing.JDialog {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         try {
-            objProveedor.darBajaCliente(txtDocIdent.getText());
+            objProveedor.darBajaProveedor(txtDocIdent.getText());
             JOptionPane.showMessageDialog(this, "Cliente dado de baja");
-            listarProveedorJuridicos();
-            listarProveedorNaturales();
+            if (rbtnPJ.isSelected()) {
+                listarProveedorJuridicos();
+
+            } else {
+                listarProveedorNaturales();
+
+            }
             clearfields();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -874,8 +885,13 @@ public class jdManProveedor extends javax.swing.JDialog {
         try {
             objProveedor.eliminarProveedor(txtDocIdent.getText());
             JOptionPane.showMessageDialog(this, "Cliente eliminado");
-            listarProveedorJuridicos();
-            listarProveedorNaturales();
+            if (rbtnPJ.isSelected()) {
+                listarProveedorJuridicos();
+
+            } else {
+                listarProveedorNaturales();
+
+            }
             clearfields();
             // TODO add your handling code here:
         } catch (Exception ex) {

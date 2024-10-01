@@ -130,9 +130,9 @@ public class clsProveedor {
         }
     }
 
-    public void darBajaCliente(String ndoc) throws Exception {
+    public void darBajaProveedor(String ndoc) throws Exception {
         int cod = buscarCodigoProveedor(ndoc);
-        strSQL = "select pa_disabled_cliente(" + cod + ")";
+        strSQL = "select pa_disabled_proveedor(" + cod + ")";
         try {
             objConectar.consultar(strSQL);
         } catch (Exception e) {
