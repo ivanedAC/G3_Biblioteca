@@ -37,4 +37,17 @@ public class clsTipoDocumento {
         }
         return "";
     }
+    
+    public Integer obtenerTipoDocumento(String nom) throws Exception {
+        strSQL = "SELECT * FROM TIPO_DOCUMENTO WHERE NOMBRE ilike '" + nom + "'";
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al obtener tipo usuario: " + e.getMessage());
+        }
+        return 0;
+    }
 }

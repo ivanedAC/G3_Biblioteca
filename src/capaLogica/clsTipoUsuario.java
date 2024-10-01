@@ -28,7 +28,7 @@ public class clsTipoUsuario {
     }
 
     public Integer obtenerTipoUsuario(String nom) throws Exception {
-        strSQL = "SELECT * FROM TIPO_USUARIO WHERE NOMBRE ilike " + nom;
+        strSQL = "SELECT * FROM TIPO_USUARIO WHERE NOMBRE ilike '" + nom + "'";
         try {
             rs = objConectar.consultar(strSQL);
             if (rs.next()) {

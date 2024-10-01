@@ -40,4 +40,19 @@ public class clsPais {
         }
         return "";
     }
+    
+    
+       public int buscarCodigoPorNombre(String nom) throws Exception {
+        strSQL = "select codigo from pais where nombre='" +nom+"'";
+        try {
+            rs = objConectar.consultar(strSQL);
+            while (rs.next()) {
+                int cod = rs.getInt("codigo");
+                return cod;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al encontrar pais por codigo-->" + e.getMessage());
+        }
+        return 0;
+    }
 }
