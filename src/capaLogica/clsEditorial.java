@@ -26,36 +26,36 @@ public class clsEditorial {
     }
     
     public void insertarEditorial(int cod, String nom, boolean vig) throws Exception{
-        strSQL = "select * from pa_insert_editorial ("+cod+", '"+nom+"', "+vig+")";
+        strSQL = "select pa_insert_editorial ("+cod+", '"+nom+"', "+vig+")";
         try {
-            objConectar.ejecutar(strSQL);
+            objConectar.consultar(strSQL);
         } catch (Exception e) {
             throw new Exception("Erro al regitrar --->" +e.getMessage());
         }
     }
     
     public void modficarEditorial(int cod, String nom, boolean vig) throws Exception{
-        strSQL = "select * from pa_update_editorial ("+cod+", '"+nom+"', "+vig+")";
+        strSQL = "select pa_update_editorial ("+cod+", '"+nom+"', "+vig+")";
         try {
-            objConectar.ejecutar(strSQL);
+            objConectar.consultar(strSQL);
         } catch (Exception e) {
             throw new Exception("Error a modificar --->" + e.getMessage());
         }
     }
     
     public void eliminarEditorial(int cod) throws Exception{
-        strSQL= "select * from pa_delete_editorial("+cod+")";
+        strSQL= "select pa_delete_editorial("+cod+")";
         try {
-            objConectar.ejecutar(strSQL);
+            objConectar.consultar(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al eliminar ---> " + e.getMessage());
         }
     }
     
     public void darBajaEditorial(int cod) throws Exception{
-        strSQL= "select * from pa_disabled_editorial("+cod+")";
+        strSQL= "select pa_disabled_editorial("+cod+")";
         try {
-            objConectar.ejecutar(strSQL);
+            objConectar.consultar(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al dar de baja --->" +e.getMessage());
         }
