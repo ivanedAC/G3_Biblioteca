@@ -76,6 +76,14 @@ public class clsCategoria {
             throw new Exception("Error al actualizar categoria --> " + e.getMessage());
         }
     }
-    
+    public ResultSet buscarCategoriaPorNombre(String nombre) throws Exception{
+        strSQL = "SELECT * FROM CATEGORIA WHERE nombre iLike '%"+nombre+"%';";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar la categoria: " + e.getMessage());
+        }
+    }
     
 }
