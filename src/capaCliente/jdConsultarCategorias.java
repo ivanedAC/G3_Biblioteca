@@ -31,8 +31,6 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
     public void llenarTabla(ResultSet rs) {
         DefaultTableModel model = (DefaultTableModel) tblDatos.getModel();
         model.setRowCount(0);
-        model.addColumn("Código");
-        model.addColumn("Nombre");
         try {
             while (rs.next()) {
                 model.addRow(new Object[]{
@@ -41,7 +39,7 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
                 });
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al consultar las categorias --> "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al consultar las categorias --> " + ex.getMessage());
         }
     }
 
@@ -54,7 +52,7 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
                     rs_busqueda = objCategoria.buscarCategoriaPorNombre(consulta);
                 } else if (ckCodigo.isSelected()) {
                     try {
-                        rs_busqueda =objCategoria.buscarCategoria(Integer.parseInt(consulta));
+                        rs_busqueda = objCategoria.buscarCategoria(Integer.parseInt(consulta));
                     } catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(null, "El código debe ser un número");
                     }
@@ -74,6 +72,17 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
         initComponents();
         btngroup_par_consulta.add(ckNombre);
         btngroup_par_consulta.add(ckCodigo);
+        ckCodigo.setSelected(true);
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblDatos.getTableHeader().setReorderingAllowed(false);
+        model.addColumn("Código");
+        model.addColumn("Nombre");
+        tblDatos.setModel(model);
     }
 
     /**
@@ -130,17 +139,9 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
         txtConsulta.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         txtConsulta.setForeground(new java.awt.Color(113, 49, 18));
         txtConsulta.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txtConsulta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtConsultaActionPerformed(evt);
-            }
-        });
         txtConsulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtConsultaKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtConsultaKeyTyped(evt);
             }
         });
 
@@ -226,17 +227,29 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConsultaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtConsultaActionPerformed
-
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
+        try {
+            int selectedRow = tblDatos.getSelectedRow(); // Obtener la fila seleccionada
+            if (selectedRow != -1) {
+                // Capturar el valor de la primera columna (que es el código)
+                int categoriaSeleccionadaId = (int) tblDatos.getValueAt(selectedRow, 0);
+                String resultado = jdManLibro.agregarCategoria(categoriaSeleccionadaId);
+                if (resultado.equals("repetido")){
+                    JOptionPane.showMessageDialog(this, "Esta categoria ya ha sido añadido");
+                } else if (resultado.equals("vacio")){
+                    JOptionPane.showMessageDialog(this, "Categoria no encontrado");
+                }
 
-    private void txtConsultaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConsultaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtConsultaKeyTyped
+            } else {
+                // Mostrar mensaje si no hay una fila seleccionada
+                JOptionPane.showMessageDialog(null, "Por favor selecciona una categoría primero.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void txtConsultaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConsultaKeyReleased
         // TODO add your handling code here:

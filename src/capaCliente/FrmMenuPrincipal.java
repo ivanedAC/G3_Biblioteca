@@ -46,21 +46,21 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
         }
     }
-    
-    public void sinBotones(){
+
+    public void sinBotones() {
         btnLibro.setVisible(false);
         btnAutor.setVisible(false);
         btnEjemplar.setVisible(false);
         btnCliente.setVisible(false);
     }
 
-    public void botonesMantenimiento(){
+    public void botonesMantenimiento() {
         btnLibro.setVisible(true);
         btnAutor.setVisible(true);
         btnEjemplar.setVisible(true);
     }
-    
-    public void botonesReportes(){
+
+    public void botonesReportes() {
         btnCliente.setVisible(true);
     }
 
@@ -386,7 +386,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAutorActionPerformed
 
     private void MnuCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCategoriaActionPerformed
-        jdManCategoria jcategoria = new jdManCategoria(this,true);
+        jdManCategoria jcategoria = new jdManCategoria(this, true);
         jcategoria.setLocationRelativeTo(null);
         jcategoria.setVisible(true);
     }//GEN-LAST:event_MnuCategoriaActionPerformed

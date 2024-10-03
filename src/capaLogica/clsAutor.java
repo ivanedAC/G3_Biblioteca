@@ -89,4 +89,13 @@ public class clsAutor {
             throw new Exception("Error al actualizar autor --> " + e.getMessage());
         }
     }
+    public ResultSet buscarAutorPorNombre(String nombre) throws Exception {
+        strSQL = "select * from autor where nombre ilike '%"+nombre+"%'";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar autor -->" + e.getMessage());
+        }
+    }
 }

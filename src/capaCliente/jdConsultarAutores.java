@@ -4,6 +4,13 @@
  */
 package capaCliente;
 
+import capaLogica.clsAutor;
+import capaLogica.clsCategoria;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author IVAN
@@ -13,9 +20,65 @@ public class jdConsultarAutores extends javax.swing.JDialog {
     /**
      * Creates new form jdConsultarAutores
      */
+    clsAutor objAutor = new clsAutor();
+
+    public void limpiarTabla() {
+        DefaultTableModel model = (DefaultTableModel) tblDatos.getModel();
+        model.setRowCount(0); // Elimina todas las filas
+    }
+
+    public void llenarTabla(ResultSet rs) {
+        DefaultTableModel model = (DefaultTableModel) tblDatos.getModel();
+        model.setRowCount(0);
+        try {
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("codigo"),
+                    rs.getString("nombre"), // Agrega más columnas según tu tabla de "categoria"
+                });
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al consultar los autores --> " + ex.getMessage());
+        }
+    }
+
+    public void buscar() {
+        ResultSet rs_busqueda = null;
+        try {
+            String consulta = txtConsulta.getText().trim();
+            if (!consulta.isEmpty()) {
+                if (cmbFiltro.getSelectedItem().toString().equalsIgnoreCase("nombre")) {
+                    rs_busqueda = objAutor.buscarAutorPorNombre(consulta);
+                } else if (cmbFiltro.getSelectedItem().toString().equalsIgnoreCase("codigo")) {
+                    try {
+                        rs_busqueda = objAutor.buscarAutor(Integer.parseInt(consulta));
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "El código debe ser un número");
+                    }
+                }
+                llenarTabla(rs_busqueda);
+            } else {
+                // Limpiar la tabla si el campo está vacío
+                limpiarTabla();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        }
+    }
+
     public jdConsultarAutores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblDatos.getTableHeader().setReorderingAllowed(false);
+        model.addColumn("Código");
+        model.addColumn("Nombre");
+        tblDatos.setModel(model);
     }
 
     /**
@@ -34,7 +97,7 @@ public class jdConsultarAutores extends javax.swing.JDialog {
         btnAgregar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDatos = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbFiltro = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -67,7 +130,7 @@ public class jdConsultarAutores extends javax.swing.JDialog {
         btnAgregar.setBackground(new java.awt.Color(113, 49, 18));
         btnAgregar.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(245, 224, 206));
-        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/agregar_persona_32px.png"))); // NOI18N
+        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/agregar_categoria_32px.png"))); // NOI18N
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -86,13 +149,13 @@ public class jdConsultarAutores extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblDatos);
 
-        jComboBox1.setBackground(new java.awt.Color(245, 224, 206));
-        jComboBox1.setFont(new java.awt.Font("Courier New", 0, 18)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(113, 49, 18));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Código" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cmbFiltro.setBackground(new java.awt.Color(245, 224, 206));
+        cmbFiltro.setFont(new java.awt.Font("Courier New", 0, 18)); // NOI18N
+        cmbFiltro.setForeground(new java.awt.Color(113, 49, 18));
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Codigo" }));
+        cmbFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cmbFiltroActionPerformed(evt);
             }
         });
 
@@ -104,7 +167,7 @@ public class jdConsultarAutores extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addComponent(txtConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -117,14 +180,13 @@ public class jdConsultarAutores extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAgregar)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtConsulta, javax.swing.GroupLayout.Alignment.TRAILING)))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbFiltro, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtConsulta, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
         );
 
@@ -142,7 +204,7 @@ public class jdConsultarAutores extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -165,7 +227,7 @@ public class jdConsultarAutores extends javax.swing.JDialog {
 
     private void txtConsultaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConsultaKeyReleased
         // TODO add your handling code here:
-        //buscar();
+        buscar();
     }//GEN-LAST:event_txtConsultaKeyReleased
 
     private void txtConsultaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConsultaKeyTyped
@@ -174,11 +236,30 @@ public class jdConsultarAutores extends javax.swing.JDialog {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        try {
+            int selectedRow = tblDatos.getSelectedRow(); // Obtener la fila seleccionada
+            if (selectedRow != -1) {
+                // Capturar el valor de la primera columna (que es el código)
+                int autorSeleccionadaId = (int) tblDatos.getValueAt(selectedRow, 0);
+                String resultado = jdManLibro.agregarAutor(autorSeleccionadaId);
+                if (resultado.equals("repetido")){
+                    JOptionPane.showMessageDialog(this, "Este autor ya ha sido añadido");
+                } else if (resultado.equals("vacio")){
+                    JOptionPane.showMessageDialog(this, "Autor no encontrado");
+                }
+
+            } else {
+                // Mostrar mensaje si no hay una fila seleccionada
+                JOptionPane.showMessageDialog(null, "Por favor selecciona una categoría primero.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cmbFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFiltroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cmbFiltroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,7 +267,7 @@ public class jdConsultarAutores extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbFiltro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
