@@ -14,6 +14,10 @@ import java.sql.ResultSet;
  */
 public class jdIniciarSesion extends javax.swing.JDialog {
 
+    public String us = "";
+    public String us1 = "";
+    public String cargo = "";
+
     /**
      * Creates new form jdIniciarSesion
      */
@@ -214,16 +218,22 @@ public class jdIniciarSesion extends javax.swing.JDialog {
 
     private void btnEnviarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarDatosActionPerformed
         // TODO add your handling code here:
+        // TODO add your handling code here:
         boolean vacio = txtUsuario.getText().isBlank() || txtContrasena.getText().isBlank() || txtCaptcha.getText().isBlank();
         clsUsuario objUsuario = new clsUsuario();
         ResultSet rs_login = null;
-        String us = "";
+        ResultSet rs_datos = null;
         if (!vacio) {
             if (txtCaptcha.getText().equals(lblCaptcha.getText())) {
                 try {
                     rs_login = objUsuario.login(txtUsuario.getText(), txtContrasena.getText());
                     if (rs_login.next()) {
                         us = rs_login.getString("usuario");
+                        rs_datos = objUsuario.obtenerData(us);
+                        if (rs_datos.next()) {
+                            us1 = rs_datos.getString("nombre_completo");
+                            cargo = rs_datos.getString("cargo");
+                        }
                     }
                     if (!us.equals("")) {
                         if (objUsuario.validar_vigencia(rs_login.getInt("codigo")) == 0) {
@@ -247,6 +257,7 @@ public class jdIniciarSesion extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Ningun campo debe estar vacío", "Campos vacios", JOptionPane.ERROR_MESSAGE);
         }
+
 
     }//GEN-LAST:event_btnEnviarDatosActionPerformed
 
