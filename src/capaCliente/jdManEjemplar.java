@@ -24,6 +24,7 @@ public class jdManEjemplar extends javax.swing.JDialog {
 
     public jdManEjemplar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setTitle("Mantenimiento de ejemplar");
         initComponents();
     }
 
