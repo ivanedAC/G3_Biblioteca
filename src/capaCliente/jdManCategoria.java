@@ -59,6 +59,7 @@ public class jdManCategoria extends javax.swing.JDialog {
     public jdManCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Mantenimiento Categoria");
     }
 
     /**
