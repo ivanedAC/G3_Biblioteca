@@ -26,4 +26,13 @@ public class clsIdioma {
             throw new Exception("Error al listar los idiomas: " + e.getMessage());
         }
     }
+    public ResultSet buscarIdiomaPorNombre(String nom) throws Exception{
+        strSQL = "select * from idioma where nombre='"+nom+"'";
+        try {
+            rs=objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar el idioma--->" +e.getMessage());
+        }
+    }
 }

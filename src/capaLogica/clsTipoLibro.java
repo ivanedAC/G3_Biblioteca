@@ -25,4 +25,13 @@ public class clsTipoLibro {
             throw new Exception("Error al listar los tipos de libro: " + e.getMessage());
         }
     }
+    public ResultSet buscarTipoLibroPorNombre(String nom) throws Exception{
+        strSQL = "select * from tipo_libro where nombre='"+nom+"'";
+        try {
+            rs=objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar el tipo de libro--->" +e.getMessage());
+        }
+    }
 }

@@ -25,4 +25,13 @@ public class clsFormato {
             throw new Exception("Error al listar los formatos: " + e.getMessage());
         }
     }
+    public ResultSet buscarFormatoPorNombre(String nom) throws Exception{
+        strSQL = "select * from formato where nombre='"+nom+"'";
+        try {
+            rs=objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar el formato--->" +e.getMessage());
+        }
+    }
 }
