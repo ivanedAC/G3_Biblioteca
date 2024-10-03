@@ -37,6 +37,8 @@ public class jdManCliente extends javax.swing.JDialog {
     public jdManCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        setTitle("Mantenimiento Cliente");
         listarPaises();
         listartipoDocumento();
         listarClientesNaturales();
