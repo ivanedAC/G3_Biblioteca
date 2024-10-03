@@ -43,6 +43,41 @@ public class clsProveedor {
         return 0;
     }
 
+    public int buscarCodigoPersona(String ndoc) throws Exception {
+        strSQL = "select codigo from persona where numero_documento = '" + ndoc + "'";
+        try {
+            rs = objConectar.consultar(strSQL);
+            while (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al generar codigo de Persona---->" + e.getMessage());
+        }
+        return 0;
+    }
+    
+    public ResultSet obtenerPersonaPorDoc(String doc) throws Exception{
+        strSQL = "select * from persona where numero_documento='"+doc+"'";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+            
+        } catch (Exception e) {
+            throw new Exception("Error al buscar persona-->"+e.getMessage());
+        }
+    }
+
+    public void insertarProveedorExistente(String ndoc, String estado) throws Exception {
+        int cod_per = buscarCodigoPersona(ndoc);
+        strSQL = "insert into proveedor (cod_persona,estado)values (" + cod_per + ",'" + estado + "')";
+        try {
+            objConectar.ejecutar(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al insertar proveedor existente-->" + e.getMessage());
+        }
+
+    }
+
     public boolean buscarSexoPorNDoc(String ndoc) throws Exception {
         strSQL = "select P.sexo as sexo from proveedor Pro inner join persona P on Pro.cod_persona=P.codigo where P.numero_documento ='" + ndoc + "'";
         try {

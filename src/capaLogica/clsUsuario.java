@@ -117,6 +117,41 @@ public class clsUsuario {
         }
     }
 
+    public Integer buscarCodigoPersona(String nroDoc) throws Exception {
+        strSQL = "SELECT * from listado_personas left join\n"
+                + "usuario usu on usu.cod_persona = listado_personas.codigo\n"
+                + "where usu.codigo is null and numero_documento = '" + nroDoc + "'";
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al buscar persona: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public int registrarUsuarioExistente(Integer cod, Integer cpais, Integer ctipodoc, String ndoc,
+            String nom, String apPat, String apMat, Boolean sex, String FechaNac, String dir,
+            String cel, String f_reg, String cor, Integer ctuser, String usu, String pass, String estado,
+            Integer sede, Boolean opc) throws Exception {
+        f_reg = "current_date";
+        strSQL = "SELECT pa_insert_UsuarioExistente(" + buscarCodigoPersona(ndoc) + "," + cpais + "," + ctipodoc + ",'" + ndoc + "','"
+                + nom + "','" + apPat + "','" + apMat + "'," + sex + ",'" + FechaNac + "','" + dir + "','" + cel
+                + "'," + f_reg + ",'" + cor + "'," + cod + "," + ctuser + ",'" + usu + "','" + pass + "','" + estado + "',"
+                + sede + "," + opc + ") " + "as resultado";
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return rs.getInt("resultado");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al buscar persona: " + e.getMessage());
+        }
+        return 0;
+    }
+
     public int eliminarUsuario(Integer cod) throws Exception {
         strSQL = "SELECT pa_delete_usuario(" + cod + ") as resultado";
         try {

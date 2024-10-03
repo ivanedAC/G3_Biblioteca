@@ -269,6 +269,14 @@ public class jdManCliente extends javax.swing.JDialog {
         return fechaR = año + "-" + mes + "-" + dia;
     }
 
+    public void listarSeguntipo() {
+        if (cbxtTipoDoc.getSelectedIndex() == 1) {
+            listarClientesJuridicos();
+        } else {
+            listarClientesNaturales();
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -718,25 +726,36 @@ public class jdManCliente extends javax.swing.JDialog {
             int codPais = objPais.buscarCodigoPorNombre(cbxPais.getSelectedItem().toString());
             String fechaR = currentdate();
             String estado = "";
-
-            if (cbxtTipoDoc.getSelectedIndex() == 1) {
-                objCliente.insertarClienteJuridico(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), "A");
-                JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente");
-                clearfields();
+            ResultSet rs = null;
+            rs = objCliente.obtenerPersonaPorDoc(txtDocIdent.getText());
+            if (chkVigencia.isSelected()) {
+                estado = "A";
             } else {
-                if (cbxSexo.getSelectedItem().toString().equals("Masculino")) {
-                    sexo = true;
+                estado = "I";
+            }
+            if (rs.next()) {
+                objCliente.insertarClienteExistente(txtDocIdent.getText(), estado);
+                JOptionPane.showMessageDialog(this, "Cliente registrado");
+
+                listarSeguntipo();
+            } else {
+                if (cbxtTipoDoc.getSelectedIndex() == 1) {
+                    objCliente.insertarClienteJuridico(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), "A");
+                    JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente");
+                    clearfields();
+                    listarClientesJuridicos();
                 } else {
-                    sexo = false;
+                    if (cbxSexo.getSelectedItem().toString().equals("Masculino")) {
+                        sexo = true;
+                    } else {
+                        sexo = false;
+                    }
+
+                    objCliente.insertarClienteNatural(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), sexo, txtFecha.getText(), txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), estado);
+                    JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente");
+                    clearfields();
+                    listarClientesNaturales();
                 }
-                if (chkVigencia.isSelected()) {
-                    estado = "A";
-                } else {
-                    estado = "I";
-                }
-                objCliente.insertarClienteNatural(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), sexo, txtFecha.getText(), txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), estado);
-                JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente");
-                clearfields();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "error-->" + ex.getMessage());
@@ -803,7 +822,42 @@ public class jdManCliente extends javax.swing.JDialog {
 
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "No existe este cliente en nuestros registros");
+                    rs = objCliente.obtenerPersonaPorDoc(txtDocIdent.getText());
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(this, "Este usuario aun no esta registrado como cliente");
+
+                        cbxtTipoDoc.setSelectedIndex(rs.getInt("cod_tipo_doc") - 1);
+
+                        if (rs.getInt("cod_tipo_doc") == 2) {
+                            cbxPais.setSelectedItem(objPais.buscarPaisPorCodigo(rs.getInt("cod_pais")));
+                            txtNombre.setText(rs.getString("nombres"));
+                            txtApePaRS.setText(rs.getString("razon_social"));
+                            txtDireccion.setText(rs.getString("direccion"));
+                            txtTelefono.setText(rs.getString("telefono"));
+                            txtCorreo.setText(rs.getString("correo"));
+                            chkVigencia.setSelected(true);
+                            formulariotamano();
+                        } else {
+                            cbxPais.setSelectedItem(objPais.buscarPaisPorCodigo(rs.getInt("cod_pais")));
+                            txtNombre.setText(rs.getString("nombres"));
+                            txtApePaRS.setText(rs.getString("ape_paterno"));
+                            if (rs.getBoolean("sexo")) {
+                                cbxSexo.setSelectedIndex(0);
+                            } else {
+                                cbxSexo.setSelectedIndex(1);
+                            }
+                            txtFecha.setText(rs.getString("f_nacimiento"));
+                            txtApeMa.setText(rs.getString("ape_materno"));
+                            txtDireccion.setText(rs.getString("direccion"));
+                            txtTelefono.setText(rs.getString("telefono"));
+                            txtCorreo.setText(rs.getString("correo"));
+                            chkVigencia.setSelected(true);
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No existen registros de este documento");
+
+                    }
                 }
 
             } else {
