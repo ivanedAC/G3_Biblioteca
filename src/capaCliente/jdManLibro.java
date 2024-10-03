@@ -42,6 +42,7 @@ public class jdManLibro extends javax.swing.JDialog {
      * Creates new form jdManLibro
      */
     private void llenarCajas(String ISBN) {
+
         ResultSet rsLibro = null;
         ResultSet rs_autores = null;
         ResultSet rs_categorias = null;
@@ -59,15 +60,14 @@ public class jdManLibro extends javax.swing.JDialog {
                 spnEdicion.setValue(rsLibro.getInt("edicion"));
                 while (rs_autores.next()) {
                     listaDeIdAutores.add(rs_autores.getInt("autorcodigo"));
-                    agregarAutor(rs_autores.getInt("autorcodigo"));
+                    String x = agregarAutor(rs_autores.getInt("autorcodigo"));
+                    System.out.println(x);
                 }
-                
+
                 while (rs_categorias.next()) {
                     listaDeIdCategorias.add(rs_categorias.getInt("cod_categoria"));
                     agregarCategoria(rs_categorias.getInt("cod_categoria"));
                 }
-                
-
                 spnNumPaginas.setValue(rsLibro.getInt("num_paginas"));
                 cmbFormato.setSelectedItem(rsLibro.getString("formato"));
                 cmbTipoLibro.setSelectedItem(rsLibro.getString("tipo"));
@@ -324,6 +324,11 @@ public class jdManLibro extends javax.swing.JDialog {
         });
 
         btnEliminarAutores.setText("ELIMINAR");
+        btnEliminarAutores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAutoresActionPerformed(evt);
+            }
+        });
 
         btnAgregarCategorias.setText("AGREGAR");
         btnAgregarCategorias.addActionListener(new java.awt.event.ActionListener() {
@@ -333,6 +338,11 @@ public class jdManLibro extends javax.swing.JDialog {
         });
 
         btnEliminarCategorias.setText("ELIMINAR");
+        btnEliminarCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarCategoriasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -842,13 +852,31 @@ public class jdManLibro extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+        ResultSet rs_resultado = null;
         try {
             int opc = JOptionPane.showConfirmDialog(this, "¿Deseas eliminar el libro?", "Confirmacion", JOptionPane.OK_OPTION);
             if (opc == 0) {
-                objLibro.eliminarLibro(txtISBN.getText());
-                listarTabla();
-                limpiar();
-                JOptionPane.showMessageDialog(this, "Libro editado");
+                if (!txtISBN.getText().isBlank()) {
+                    rs_resultado = objLibro.eliminarLibro(txtISBN.getText());
+                    if (rs_resultado.next()) {
+                        switch (rs_resultado.getInt("resultado")) {
+                            case 0:
+                                JOptionPane.showMessageDialog(this, "Libro eliminado con exito");
+                                limpiar();
+                                listarTabla();
+                                break;
+                            case -1:
+                                JOptionPane.showMessageDialog(this, "Error del servidor al eliminar el libro");
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(this, "Libro no elimiando");
+                                break;
+                        }
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Debe ingresar un código ISBN");
+                }
             }
             // TODO add your handling code here:
         } catch (Exception ex) {
@@ -864,7 +892,7 @@ public class jdManLibro extends javax.swing.JDialog {
         ResultSet rs_format = null;
         ResultSet rs_tipo = null;
         try {
-            int opc = JOptionPane.showConfirmDialog(this, "¿Deseas eliminar el libro?", "Confirmacion", JOptionPane.OK_OPTION);
+            int opc = JOptionPane.showConfirmDialog(this, "¿Deseas editar el libro?", "Confirmacion", JOptionPane.OK_OPTION);
             if (opc == 0) {
                 rs_edit = objEditorial.buscarEditorialPorNombre(cmbEditorial.getSelectedItem().toString());
                 rs_format = objFormato.buscarFormatoPorNombre(cmbFormato.getSelectedItem().toString());
@@ -886,7 +914,7 @@ public class jdManLibro extends javax.swing.JDialog {
                                 JOptionPane.showMessageDialog(this, "Error del servidor al editar el libro");
                                 break;
                             default:
-                                JOptionPane.showMessageDialog(this, "Libro no actuallizado");
+                                JOptionPane.showMessageDialog(this, "El libro no se pudo editar");
                                 break;
                         }
                     }
@@ -896,7 +924,7 @@ public class jdManLibro extends javax.swing.JDialog {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al editar el libro el libro: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al editar el libro: " + e.getMessage());
         }
 
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -911,6 +939,30 @@ public class jdManLibro extends javax.swing.JDialog {
         txtISBN.setText(String.valueOf(tblDatos.getValueAt(tblDatos.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
     }//GEN-LAST:event_tblDatosMouseClicked
+
+    private void btnEliminarAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAutoresActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = listAutores.getSelectedIndex();
+        if (selectedIndex != -1) { // Verifica que hay un elemento seleccionado
+            listaDeIdAutores.remove(selectedIndex); // Remueve de la lista de IDs
+            DefaultListModel modelo = (DefaultListModel) listAutores.getModel();
+            modelo.remove(selectedIndex); // Remueve del modelo de la lista
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor selecciona un autor para eliminar.");
+        }
+    }//GEN-LAST:event_btnEliminarAutoresActionPerformed
+
+    private void btnEliminarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCategoriasActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = listCategorias.getSelectedIndex();
+        if (selectedIndex != -1) { // Verifica que hay un elemento seleccionado
+            listaDeIdCategorias.remove(selectedIndex); // Remueve de la lista de IDs
+            DefaultListModel modelo = (DefaultListModel) listCategorias.getModel();
+            modelo.remove(selectedIndex); // Remueve del modelo de la lista
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor selecciona una categoría para eliminar.");
+        }
+    }//GEN-LAST:event_btnEliminarCategoriasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarAutores;

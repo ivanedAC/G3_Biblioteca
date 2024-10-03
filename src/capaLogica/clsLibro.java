@@ -105,10 +105,11 @@ public class clsLibro {
         }
     }
 
-    public void eliminarLibro(String isbn) throws Exception {
+    public ResultSet eliminarLibro(String isbn) throws Exception {
         strSQL = String.format("SELECT pa_delete_libro('%s') as resultado",isbn);
         try {
             rs = objConectar.consultar(strSQL);
+            return rs;
         } catch (Exception e) {
             throw new Exception("Error al eliminar libro --> " + e.getMessage());
         }
@@ -137,7 +138,7 @@ public class clsLibro {
             rs = objConectar.consultar(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al registrar categoria -->" + e.getMessage());
+            throw new Exception("Error al editar categoria -->" + e.getMessage());
         }
     }
 }
