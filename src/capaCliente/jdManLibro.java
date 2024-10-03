@@ -59,14 +59,15 @@ public class jdManLibro extends javax.swing.JDialog {
                 cmbIdioma.setSelectedItem(rsLibro.getString("idioma"));
                 spnEdicion.setValue(rsLibro.getInt("edicion"));
                 while (rs_autores.next()) {
+                    agregarAutor(rs_autores.getInt("autorcodigo"));
                     listaDeIdAutores.add(rs_autores.getInt("autorcodigo"));
-                    String x = agregarAutor(rs_autores.getInt("autorcodigo"));
-                    System.out.println(x);
+                    
                 }
 
                 while (rs_categorias.next()) {
-                    listaDeIdCategorias.add(rs_categorias.getInt("cod_categoria"));
                     agregarCategoria(rs_categorias.getInt("cod_categoria"));
+                    listaDeIdCategorias.add(rs_categorias.getInt("cod_categoria"));
+                    
                 }
                 spnNumPaginas.setValue(rsLibro.getInt("num_paginas"));
                 cmbFormato.setSelectedItem(rsLibro.getString("formato"));
