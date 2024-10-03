@@ -41,7 +41,48 @@ public class jdManLibro extends javax.swing.JDialog {
     /**
      * Creates new form jdManLibro
      */
+    private void llenarCajas(String ISBN) {
+        ResultSet rsLibro = null;
+        ResultSet rs_autores = null;
+        ResultSet rs_categorias = null;
+        limpiar();
+        try {
+            rsLibro = objLibro.listarLibro(ISBN);
+            rs_autores = objLibro.buscarCodigosAutoresPorISBN(ISBN);
+            rs_categorias = objLibro.buscarCodigosCategoriasPorISBN(ISBN);
+
+            if (rsLibro.next()) {
+                txtISBN.setText(ISBN);
+                cmbEditorial.setSelectedItem(rsLibro.getString("editorial"));
+                txtNombre.setText(rsLibro.getString("libro_nombre"));
+                cmbIdioma.setSelectedItem(rsLibro.getString("idioma"));
+                spnEdicion.setValue(rsLibro.getInt("edicion"));
+                while (rs_autores.next()) {
+                    listaDeIdAutores.add(rs_autores.getInt("autorcodigo"));
+                    agregarAutor(rs_autores.getInt("autorcodigo"));
+                }
+                
+                while (rs_categorias.next()) {
+                    listaDeIdCategorias.add(rs_categorias.getInt("cod_categoria"));
+                    agregarCategoria(rs_categorias.getInt("cod_categoria"));
+                }
+                
+
+                spnNumPaginas.setValue(rsLibro.getInt("num_paginas"));
+                cmbFormato.setSelectedItem(rsLibro.getString("formato"));
+                cmbTipoLibro.setSelectedItem(rsLibro.getString("tipo"));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+//        rsLibro.getString("autores");
+//        rsLibro.getString("categorias");
+    }
+
     private void limpiar() {
+        listaDeIdAutores.clear();
+        listaDeIdCategorias.clear();
         txtISBN.setText("");
         txtNombre.setText("");
         cmbEditorial.setSelectedIndex(0);
@@ -53,30 +94,34 @@ public class jdManLibro extends javax.swing.JDialog {
         spnEdicion.setValue(0);
         spnNumPaginas.setValue(0);
     }
-    public void listarTabla(){
+
+    public void listarTabla() {
         ResultSet rsLibro = null;
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ISBN");
         modelo.addColumn("Editorial");
-        modelo.addColumn("Tipo doc");
-        modelo.addColumn("N° documento");
-        modelo.addColumn("Nombres");
-        modelo.addColumn("Apellidos");
-        modelo.addColumn("Sexo");
-        modelo.addColumn("Nacimiento");
-        modelo.addColumn("direccion");
-        modelo.addColumn("Telefono");
-        modelo.addColumn("Correo");
-        modelo.addColumn("Estado");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("N° de paginas");
+        modelo.addColumn("Edicion");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Formato");
+        modelo.addColumn("Idioma");
+        modelo.addColumn("Autores");
+        modelo.addColumn("Categorias");
 
         try {
             rsLibro = objLibro.listarLibro();
             while (rsLibro.next()) {
-                Object datos[][] = new Object[1][12];
-                datos[0][0] = rsLibro.getString("isbn");
-                
-
-                modelo.addRow(datos[0]);
+                modelo.addRow(new Object[]{rsLibro.getString("isbn"),
+                    rsLibro.getString("editorial"),
+                    rsLibro.getString("libro_nombre"),
+                    rsLibro.getString("num_paginas"),
+                    rsLibro.getString("edicion"),
+                    rsLibro.getString("tipo"),
+                    rsLibro.getString("formato"),
+                    rsLibro.getString("idioma"),
+                    rsLibro.getString("autores"),
+                    rsLibro.getString("categorias")});
             }
             tblDatos.setModel(modelo);
 
@@ -100,7 +145,7 @@ public class jdManLibro extends javax.swing.JDialog {
         }
         return "vacio";
     }
-    
+
     public static String agregarAutor(int id) throws Exception {
         DefaultListModel modelo = (DefaultListModel) listAutores.getModel();
         ResultSet rs_listaAut = objAutor.buscarAutor(id);
@@ -457,6 +502,11 @@ public class jdManLibro extends javax.swing.JDialog {
 
         btnBuscar.setBackground(new java.awt.Color(113, 49, 18));
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/buscar_24px.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(113, 49, 18));
@@ -585,6 +635,11 @@ public class jdManLibro extends javax.swing.JDialog {
         btnModificar.setForeground(new java.awt.Color(245, 224, 206));
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/editar_32px.png"))); // NOI18N
         btnModificar.setText(" MODIFICAR");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setBackground(new java.awt.Color(113, 49, 18));
         btnEliminar.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
@@ -660,6 +715,11 @@ public class jdManLibro extends javax.swing.JDialog {
 
             }
         ));
+        tblDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDatosMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblDatos);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -718,7 +778,49 @@ public class jdManLibro extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-
+        ResultSet rsGuardar = null;
+        ResultSet rs_edit = null;
+        ResultSet rs_idioma = null;
+        ResultSet rs_format = null;
+        ResultSet rs_tipo = null;
+        try {
+            if (btnNuevo.getText().equalsIgnoreCase(" nuevo")) {
+                limpiar();
+                btnNuevo.setText(" Guardar");
+            } else if (btnNuevo.getText().equalsIgnoreCase(" guardar")) {
+                rs_edit = objEditorial.buscarEditorialPorNombre(cmbEditorial.getSelectedItem().toString());
+                rs_format = objFormato.buscarFormatoPorNombre(cmbFormato.getSelectedItem().toString());
+                rs_tipo = objTipoLibro.buscarTipoLibroPorNombre(cmbTipoLibro.getSelectedItem().toString());
+                rs_idioma = objIdioma.buscarIdiomaPorNombre(cmbIdioma.getSelectedItem().toString());
+                if (rs_edit.next() && rs_idioma.next() && rs_format.next() && rs_tipo.next()) {
+                    rsGuardar = objLibro.registrarLibro(txtISBN.getText(),
+                            rs_edit.getInt("codigo"),
+                            txtNombre.getText(), (int) spnNumPaginas.getValue(), (int) spnEdicion.getValue(),
+                            rs_format.getInt("codigo"), rs_tipo.getInt("codigo"), rs_idioma.getInt("codigo"), listaDeIdAutores, listaDeIdCategorias);;
+                    if (rsGuardar.next()) {
+                        switch (rsGuardar.getInt("resultado")) {
+                            case 0:
+                                JOptionPane.showMessageDialog(this, "Libro registrado con exito");
+                                limpiar();
+                                listarTabla();
+                                break;
+                            case -1:
+                                JOptionPane.showMessageDialog(this, "Error del servidor al registrar el libro");
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(this, "Libro no registrado");
+                                break;
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al guardar los combos");
+                }
+                limpiar();
+                btnNuevo.setText(" Nuevo");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al registrar el libro el libro: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnAgregarAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutoresActionPerformed
@@ -741,15 +843,74 @@ public class jdManLibro extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         try {
-            objLibro.eliminarLibro(txtISBN.getText());
-            JOptionPane.showMessageDialog(this, "Cliente eliminado");
-            listarTabla();
-            limpiar();
+            int opc = JOptionPane.showConfirmDialog(this, "¿Deseas eliminar el libro?", "Confirmacion", JOptionPane.OK_OPTION);
+            if (opc == 0) {
+                objLibro.eliminarLibro(txtISBN.getText());
+                listarTabla();
+                limpiar();
+                JOptionPane.showMessageDialog(this, "Libro editado");
+            }
             // TODO add your handling code here:
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        ResultSet rsEditar = null;
+        ResultSet rs_edit = null;
+        ResultSet rs_idioma = null;
+        ResultSet rs_format = null;
+        ResultSet rs_tipo = null;
+        try {
+            int opc = JOptionPane.showConfirmDialog(this, "¿Deseas eliminar el libro?", "Confirmacion", JOptionPane.OK_OPTION);
+            if (opc == 0) {
+                rs_edit = objEditorial.buscarEditorialPorNombre(cmbEditorial.getSelectedItem().toString());
+                rs_format = objFormato.buscarFormatoPorNombre(cmbFormato.getSelectedItem().toString());
+                rs_tipo = objTipoLibro.buscarTipoLibroPorNombre(cmbTipoLibro.getSelectedItem().toString());
+                rs_idioma = objIdioma.buscarIdiomaPorNombre(cmbIdioma.getSelectedItem().toString());
+                if (rs_edit.next() && rs_idioma.next() && rs_format.next() && rs_tipo.next()) {
+                    rsEditar = objLibro.actualizarLibro(txtISBN.getText(),
+                            rs_edit.getInt("codigo"),
+                            txtNombre.getText(), (int) spnNumPaginas.getValue(), (int) spnEdicion.getValue(),
+                            rs_format.getInt("codigo"), rs_tipo.getInt("codigo"), rs_idioma.getInt("codigo"), listaDeIdAutores, listaDeIdCategorias);;
+                    if (rsEditar.next()) {
+                        switch (rsEditar.getInt("resultado")) {
+                            case 0:
+                                JOptionPane.showMessageDialog(this, "Libro editado con exito");
+                                limpiar();
+                                listarTabla();
+                                break;
+                            case -1:
+                                JOptionPane.showMessageDialog(this, "Error del servidor al editar el libro");
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(this, "Libro no actuallizado");
+                                break;
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al updatear los combos");
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al editar el libro el libro: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        llenarCajas(txtISBN.getText());
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tblDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosMouseClicked
+        // TODO add your handling code here:
+        txtISBN.setText(String.valueOf(tblDatos.getValueAt(tblDatos.getSelectedRow(), 0)));
+        btnBuscarActionPerformed(null);
+    }//GEN-LAST:event_tblDatosMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarAutores;
