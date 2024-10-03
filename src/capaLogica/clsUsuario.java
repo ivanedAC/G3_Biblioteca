@@ -107,6 +107,19 @@ public class clsUsuario {
         }
     }
 
+    public int modificarPass(Integer cod, String pass, String cpass) throws Exception {
+        strSQL = "SELECT pa_update_usuario_pass(" + cod + ",'" + pass + "','" + cpass + "') as resultado";
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return rs.getInt("resultado");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al modificar contraseña: " + e.getMessage());
+        }
+        return 0;
+    }
+
     public ResultSet buscarUsuario(Integer cod) throws Exception {
         strSQL = "SELECT * from listado_usuarios where codigo = " + cod;
         try {
@@ -147,7 +160,7 @@ public class clsUsuario {
                 return rs.getInt("resultado");
             }
         } catch (Exception e) {
-            throw new Exception("Error al buscar persona: " + e.getMessage());
+            throw new Exception("Error al registrar usuario existente: " + e.getMessage());
         }
         return 0;
     }

@@ -87,6 +87,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuSalir = new javax.swing.JMenuItem();
         mnuMantenimientos = new javax.swing.JMenu();
         jMnuUsuario = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         MnuAutor = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -250,6 +251,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuMantenimientos.add(jMnuUsuario);
 
+        jMenuItem4.setText("Contraseña");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        mnuMantenimientos.add(jMenuItem4);
+
         MnuAutor.setText("Autor");
         MnuAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -405,6 +414,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jLibro.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        jdManPass objFm = new jdManPass(this, true);
+        objFm.setLocationRelativeTo(null);
+        objFm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -422,6 +438,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMnuUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
