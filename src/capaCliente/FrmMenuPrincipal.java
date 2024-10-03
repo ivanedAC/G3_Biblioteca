@@ -259,6 +259,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuMantenimientos.add(MnuAutor);
 
         jMenuItem3.setText("Libro");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         mnuMantenimientos.add(jMenuItem3);
 
         jMenuItem2.setText("Cliente");
@@ -392,6 +397,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jProveedor.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        jdManLibro jLibro = new jdManLibro(this, false);
+        jLibro.setLocationRelativeTo(null);
+        jLibro.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
