@@ -6,6 +6,7 @@ package capaCliente;
 
 import capaLogica.clsEditorial;
 import java.sql.*;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +20,7 @@ public class jdManEditorial extends javax.swing.JDialog {
 
     public jdManEditorial(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setTitle("Mantenimiento de editorial");
         initComponents();
     }
 
@@ -182,6 +184,7 @@ public class jdManEditorial extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(230, 182, 139));
 
+        tblEditoriales.setBackground(new java.awt.Color(245, 224, 206));
         tblEditoriales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -357,11 +360,13 @@ public class jdManEditorial extends javax.swing.JDialog {
         try {
             if (btnNuevo.getText().equals("NUEVO")) {
                 btnNuevo.setText("GUARDAR");
+                btnNuevo.setIcon(new ImageIcon("src/recursos/guardar_32px.png"));
                 limpiarControles();
                 txtCodigo.setText(objEditorial.generarCodigoEditorial().toString());
                 txtNombre.requestFocus();
             } else {
                 btnNuevo.setText("NUEVO");
+                btnNuevo.setIcon(new ImageIcon("src/recursos/nuevo_32px.png"));
                 objEditorial.insertarEditorial(
                         Integer.parseInt(txtCodigo.getText()),
                         txtNombre.getText(),
@@ -406,7 +411,7 @@ public class jdManEditorial extends javax.swing.JDialog {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código");
             } else {
-                rp = JOptionPane.showConfirmDialog(this, "Está seguro de modificar la editorial",
+                rp = JOptionPane.showConfirmDialog(this, "Está seguro de modificar la editorial ",
                         "Modificar", JOptionPane.YES_NO_OPTION);
                 if (rp == 0) {
                     objEditorial.modficarEditorial(
