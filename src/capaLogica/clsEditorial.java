@@ -83,4 +83,13 @@ public class clsEditorial {
         }
         return 0;
     }
+    public ResultSet buscarEditorialPorNombre(String nom) throws Exception{
+        strSQL = "select * from editorial where nombre='"+nom+"'";
+        try {
+            rs=objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar la editorial--->" +e.getMessage());
+        }
+    }
 }
