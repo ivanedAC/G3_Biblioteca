@@ -49,17 +49,68 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         }
     }
 
+    public void accesoRe() {
+        //MnuItems : Acceso
+        MnuCliente.setVisible(true);
+        //Btn : Acceso
+        btnCliente.setVisible(true);
+        //MnuItems : No acceso
+        MnuEjemplar.setVisible(false);
+        MnuUsuario.setVisible(false);
+        MnuAutor.setVisible(false);
+        MnuContraseña.setVisible(false);
+        MnuLibro.setVisible(false);
+        MnuCategoria.setVisible(false);
+        MnuProveedor.setVisible(false);
+        //Btn : No Acceso
+        btnLibro.setVisible(false);
+        btnEjemplar.setVisible(false);
+        btnEditorial.setVisible(false);
+        btnAutor.setVisible(false);
+    }
+
+    public void accesoSuper() {
+        //MnuItems : Acceso
+        MnuLibro.setVisible(true);
+        MnuEjemplar.setVisible(true);
+        MnuProveedor.setVisible(true);
+        MnuCategoria.setVisible(true);
+        //Btn : Acceso
+        btnLibro.setVisible(true);
+        btnEjemplar.setVisible(true);
+        btnCategoria.setVisible(true);
+        btnProveedor.setVisible(true);
+        //MnuItems : No Acceso
+        MnuCliente.setVisible(false);
+        MnuUsuario.setVisible(false);
+        MnuAutor.setVisible(false);
+        MnuContraseña.setVisible(false);
+        //Btn : No Acceso
+        btnEditorial.setVisible(false);
+        btnAutor.setVisible(false);
+        btnCliente.setVisible(false);
+
+    }
+
     public void sinBotones() {
+        btnEditorial.setVisible(false);
         btnLibro.setVisible(false);
         btnAutor.setVisible(false);
         btnEjemplar.setVisible(false);
         btnCliente.setVisible(false);
+        btnProveedor.setVisible(false);
+        btnCategoria.setVisible(false);
     }
 
     public void botonesMantenimiento() {
+        btnEditorial.setVisible(true);
         btnLibro.setVisible(true);
         btnAutor.setVisible(true);
         btnEjemplar.setVisible(true);
+        btnCliente.setVisible(true);
+        btnProveedor.setVisible(true);
+        btnCategoria.setVisible(true);
+
     }
 
     public void botonesReportes() {
@@ -80,6 +131,9 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnLibro = new javax.swing.JButton();
         btnEjemplar = new javax.swing.JButton();
         btnCliente = new javax.swing.JButton();
+        btnEditorial = new javax.swing.JButton();
+        btnCategoria = new javax.swing.JButton();
+        btnProveedor = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -92,13 +146,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         mnuSalir = new javax.swing.JMenuItem();
         mnuMantenimientos = new javax.swing.JMenu();
-        jMnuUsuario = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        MnuUsuario = new javax.swing.JMenuItem();
+        MnuContraseña = new javax.swing.JMenuItem();
         MnuAutor = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        MnuLibro = new javax.swing.JMenuItem();
+        MnuCliente = new javax.swing.JMenuItem();
         MnuCategoria = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        MnuProveedor = new javax.swing.JMenuItem();
+        MnuEjemplar = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -164,7 +219,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         btnCliente.setBackground(new java.awt.Color(230, 182, 139));
         btnCliente.setForeground(new java.awt.Color(113, 49, 18));
-        btnCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/ejemplar (1).png"))); // NOI18N
+        btnCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cliente(1).png"))); // NOI18N
         btnCliente.setText("CLIENTE");
         btnCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
         btnCliente.setFocusable(false);
@@ -178,6 +233,57 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(btnCliente);
+
+        btnEditorial.setBackground(new java.awt.Color(230, 182, 139));
+        btnEditorial.setForeground(new java.awt.Color(113, 49, 18));
+        btnEditorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/editorial(1).png"))); // NOI18N
+        btnEditorial.setText("Editorial");
+        btnEditorial.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
+        btnEditorial.setFocusable(false);
+        btnEditorial.setHideActionText(true);
+        btnEditorial.setMaximumSize(new java.awt.Dimension(190, 50));
+        btnEditorial.setMinimumSize(new java.awt.Dimension(190, 50));
+        btnEditorial.setPreferredSize(new java.awt.Dimension(130, 50));
+        btnEditorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditorialActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnEditorial);
+
+        btnCategoria.setBackground(new java.awt.Color(230, 182, 139));
+        btnCategoria.setForeground(new java.awt.Color(113, 49, 18));
+        btnCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/categoria(1).png"))); // NOI18N
+        btnCategoria.setText("CATEGORIA");
+        btnCategoria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
+        btnCategoria.setFocusable(false);
+        btnCategoria.setHideActionText(true);
+        btnCategoria.setMaximumSize(new java.awt.Dimension(190, 50));
+        btnCategoria.setMinimumSize(new java.awt.Dimension(190, 50));
+        btnCategoria.setPreferredSize(new java.awt.Dimension(130, 50));
+        btnCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoriaActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCategoria);
+
+        btnProveedor.setBackground(new java.awt.Color(230, 182, 139));
+        btnProveedor.setForeground(new java.awt.Color(113, 49, 18));
+        btnProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/proveedor(1).png"))); // NOI18N
+        btnProveedor.setText("Proveedor");
+        btnProveedor.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
+        btnProveedor.setFocusable(false);
+        btnProveedor.setHideActionText(true);
+        btnProveedor.setMaximumSize(new java.awt.Dimension(190, 50));
+        btnProveedor.setMinimumSize(new java.awt.Dimension(190, 50));
+        btnProveedor.setPreferredSize(new java.awt.Dimension(130, 50));
+        btnProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedorActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnProveedor);
 
         jPanel1.setBackground(new java.awt.Color(113, 49, 18));
 
@@ -220,28 +326,28 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
                 .addGap(124, 124, 124)
                 .addComponent(jLabel3)
                 .addGap(34, 34, 34)
-                .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
+                .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
                 .addComponent(jLabel4)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19))))
+                    .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(19, 19, 19)))))
         );
 
         pnlFondo.setBackground(new java.awt.Color(153, 255, 255));
@@ -278,21 +384,21 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jMnuUsuario.setText("Usuario");
-        jMnuUsuario.addActionListener(new java.awt.event.ActionListener() {
+        MnuUsuario.setText("Usuario");
+        MnuUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMnuUsuarioActionPerformed(evt);
+                MnuUsuarioActionPerformed(evt);
             }
         });
-        mnuMantenimientos.add(jMnuUsuario);
+        mnuMantenimientos.add(MnuUsuario);
 
-        jMenuItem4.setText("Contraseña");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        MnuContraseña.setText("Contraseña");
+        MnuContraseña.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                MnuContraseñaActionPerformed(evt);
             }
         });
-        mnuMantenimientos.add(jMenuItem4);
+        mnuMantenimientos.add(MnuContraseña);
 
         MnuAutor.setText("Autor");
         MnuAutor.addActionListener(new java.awt.event.ActionListener() {
@@ -302,21 +408,21 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuMantenimientos.add(MnuAutor);
 
-        jMenuItem3.setText("Libro");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        MnuLibro.setText("Libro");
+        MnuLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                MnuLibroActionPerformed(evt);
             }
         });
-        mnuMantenimientos.add(jMenuItem3);
+        mnuMantenimientos.add(MnuLibro);
 
-        jMenuItem2.setText("Cliente");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        MnuCliente.setText("Cliente");
+        MnuCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                MnuClienteActionPerformed(evt);
             }
         });
-        mnuMantenimientos.add(jMenuItem2);
+        mnuMantenimientos.add(MnuCliente);
 
         MnuCategoria.setText("Categoria");
         MnuCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -326,13 +432,21 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuMantenimientos.add(MnuCategoria);
 
-        jMenuItem1.setText("Proveedor");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        MnuProveedor.setText("Proveedor");
+        MnuProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                MnuProveedorActionPerformed(evt);
             }
         });
-        mnuMantenimientos.add(jMenuItem1);
+        mnuMantenimientos.add(MnuProveedor);
+
+        MnuEjemplar.setText("Ejemplar");
+        MnuEjemplar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnuEjemplarActionPerformed(evt);
+            }
+        });
+        mnuMantenimientos.add(MnuEjemplar);
 
         jMenuBar1.add(mnuMantenimientos);
 
@@ -379,8 +493,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEjemplarActionPerformed
 
     private void mnuMantenimientosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuMantenimientosMouseClicked
-        sinBotones();
-        botonesMantenimiento();
+
     }//GEN-LAST:event_mnuMantenimientosMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -389,10 +502,25 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         frmLogin.setVisible(true);
         lblUser.setText(frmLogin.us1);
         lblCargo.setText(frmLogin.cargo);
+        switch (lblCargo.getText()) {
+            case "Recepcionista":
+                accesoRe();
+                break;
+            case "Supervisor":
+                accesoSuper();
+                break;
+            case "Administrador":
+                botonesMantenimiento();
+                botonesReportes();
+            default:
+                throw new AssertionError();
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        // TODO add your handling code here:
+        jdManCliente objFm = new jdManCliente(this, true);
+        objFm.setLocationRelativeTo(null);
+        objFm.setVisible(true);
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
@@ -405,13 +533,15 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         botonesReportes();
     }//GEN-LAST:event_mnuReportesMouseClicked
 
-    private void jMnuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuUsuarioActionPerformed
+    private void MnuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuUsuarioActionPerformed
         // TODO add your handling code here:
         jdManUsuario objFrm = new jdManUsuario(this, true);
         objFrm.setVisible(true);
-    }//GEN-LAST:event_jMnuUsuarioActionPerformed
+    }//GEN-LAST:event_MnuUsuarioActionPerformed
     private void btnLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibroActionPerformed
-        // TODO add your handling code here:
+        jdManLibro objFm = new jdManLibro(this, true);
+        objFm.setLocationRelativeTo(null);
+        objFm.setVisible(true);
     }//GEN-LAST:event_btnLibroActionPerformed
 
     private void MnuAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuAutorActionPerformed
@@ -420,14 +550,16 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jautor.setVisible(true);
     }//GEN-LAST:event_MnuAutorActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void MnuClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuClienteActionPerformed
         jdManCliente objCliente = new jdManCliente(this, true);
         objCliente.setLocationRelativeTo(null);
         objCliente.setVisible(true);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_MnuClienteActionPerformed
     private void btnAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutorActionPerformed
-        // TODO add your handling code here:
+        jdManAutor objFm = new jdManAutor(this, true);
+        objFm.setLocationRelativeTo(null);
+        objFm.setVisible(true);
     }//GEN-LAST:event_btnAutorActionPerformed
 
     private void MnuCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuCategoriaActionPerformed
@@ -436,26 +568,50 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jcategoria.setVisible(true);
     }//GEN-LAST:event_MnuCategoriaActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void MnuProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuProveedorActionPerformed
         jdManProveedor jProveedor = new jdManProveedor(this, true);
         jProveedor.setLocationRelativeTo(null);
         jProveedor.setVisible(true);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_MnuProveedorActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void MnuLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuLibroActionPerformed
         // TODO add your handling code here:
         jdManLibro jLibro = new jdManLibro(this, false);
         jLibro.setLocationRelativeTo(null);
         jLibro.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_MnuLibroActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void MnuContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuContraseñaActionPerformed
         // TODO add your handling code here:
         jdManPass objFm = new jdManPass(this, true);
         objFm.setLocationRelativeTo(null);
         objFm.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_MnuContraseñaActionPerformed
+
+    private void btnEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditorialActionPerformed
+        jdManEditorial objFm = new jdManEditorial(this, true);
+        objFm.setLocationRelativeTo(null);
+        objFm.setVisible(true);
+    }//GEN-LAST:event_btnEditorialActionPerformed
+
+    private void MnuEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuEjemplarActionPerformed
+        jdManEjemplar objFm = new jdManEjemplar(this, true);
+        objFm.setLocationRelativeTo(null);
+        objFm.setVisible(true);
+    }//GEN-LAST:event_MnuEjemplarActionPerformed
+
+    private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
+        jdManCategoria objFm = new jdManCategoria(this, true);
+        objFm.setLocationRelativeTo(null);
+        objFm.setVisible(true);
+    }//GEN-LAST:event_btnCategoriaActionPerformed
+
+    private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
+        jdManProveedor objFm = new jdManProveedor(this, true);
+        objFm.setLocationRelativeTo(null);
+        objFm.setVisible(true);
+    }//GEN-LAST:event_btnProveedorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -464,20 +620,24 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MnuAutor;
     private javax.swing.JMenuItem MnuCategoria;
+    private javax.swing.JMenuItem MnuCliente;
+    private javax.swing.JMenuItem MnuContraseña;
+    private javax.swing.JMenuItem MnuEjemplar;
+    private javax.swing.JMenuItem MnuLibro;
+    private javax.swing.JMenuItem MnuProveedor;
+    private javax.swing.JMenuItem MnuUsuario;
     private javax.swing.JButton btnAutor;
+    private javax.swing.JButton btnCategoria;
     private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnEditorial;
     private javax.swing.JButton btnEjemplar;
     private javax.swing.JButton btnLibro;
+    private javax.swing.JButton btnProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMnuUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;

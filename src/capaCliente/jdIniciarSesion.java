@@ -13,7 +13,6 @@ import java.sql.ResultSet;
  * @author ander
  */
 public class jdIniciarSesion extends javax.swing.JDialog {
-
     public String us = "";
     public String us1 = "";
     public String cargo = "";
@@ -257,7 +256,7 @@ public class jdIniciarSesion extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Ningun campo debe estar vacío", "Campos vacios", JOptionPane.ERROR_MESSAGE);
         }
-
+        
 
     }//GEN-LAST:event_btnEnviarDatosActionPerformed
 
