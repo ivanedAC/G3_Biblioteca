@@ -51,7 +51,7 @@ public class clsJDBC {
             rs = sent.executeQuery(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error en la conslulta  " + e.getMessage());
+            throw new Exception("Error al consultar BD: " + e.getMessage());
         } finally{
             if (con != null) {
                 desconectar();
@@ -66,7 +66,7 @@ public class clsJDBC {
             sent = con.createStatement();
             sent.executeUpdate(strSQL);
         } catch (Exception e) {
-            throw new Exception("Error al ejecutar Update "+ e.getMessage());
+            throw new Exception("Error al ejecutar BD: "+ e.getMessage());
         } finally {
             if (con != null) {
                 desconectar();
