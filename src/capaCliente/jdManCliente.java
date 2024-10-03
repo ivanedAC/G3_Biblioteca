@@ -321,7 +321,6 @@ public class jdManCliente extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 215, 171));
         setMaximumSize(new java.awt.Dimension(32767, 32767));
-        setPreferredSize(new java.awt.Dimension(1332, 725));
 
         jPanel1.setBackground(new java.awt.Color(230, 182, 139));
         jPanel1.setPreferredSize(new java.awt.Dimension(1332, 725));
