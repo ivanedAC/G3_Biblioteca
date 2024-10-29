@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.DefaultComboBoxModel;
@@ -37,7 +38,7 @@ public class jdManCliente extends javax.swing.JDialog {
     public jdManCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         setTitle("Mantenimiento Cliente");
         listarPaises();
         listartipoDocumento();
@@ -53,7 +54,7 @@ public class jdManCliente extends javax.swing.JDialog {
         txtCorreo.setText("");
         txtDireccion.setText("");
         txtDocIdent.setText("");
-        txtFecha.setText("");
+        calendarFNac.setDate(null);
         txtNombre.setText("");
         txtTelefono.setText("");
         cbxPais.setSelectedIndex(0);
@@ -78,7 +79,7 @@ public class jdManCliente extends javax.swing.JDialog {
         lblapeMa.setVisible(false);
         lblApePaRS.setText("RAZON SOCIAL");
         txtApeMa.setVisible(false);
-        txtFecha.setVisible(false);
+        calendarFNac.setVisible(false);
         cbxSexo.setVisible(false);
     }
 
@@ -89,7 +90,7 @@ public class jdManCliente extends javax.swing.JDialog {
         lblapeMa.setVisible(true);
         lblApePaRS.setText("APELLIDO PATERNO");
         txtApeMa.setVisible(true);
-        txtFecha.setVisible(true);
+        calendarFNac.setVisible(true);
         cbxSexo.setVisible(true);
     }
 
@@ -300,7 +301,7 @@ public class jdManCliente extends javax.swing.JDialog {
             }
         } else {
             if (txtApePaRS.getText().isBlank() || txtCorreo.getText().isBlank() || txtDireccion.getText().isBlank() || txtDocIdent.getText().isBlank()
-                    || txtNombre.getText().isBlank() || txtTelefono.getText().isBlank() || txtApeMa.getText().isBlank() || txtFecha.getText().isBlank()) {
+                    || txtNombre.getText().isBlank() || txtTelefono.getText().isBlank() || txtApeMa.getText().isBlank() || calendarFNac.getDate().equals("")) {
                 campos = false;
             } else {
                 campos = true;
@@ -340,7 +341,6 @@ public class jdManCliente extends javax.swing.JDialog {
         lblSexo = new javax.swing.JLabel();
         cbxSexo = new javax.swing.JComboBox<>();
         lblFecha = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JFormattedTextField();
         lblTelefono = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
@@ -351,6 +351,7 @@ public class jdManCliente extends javax.swing.JDialog {
         lblCorreo = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         chkVigencia = new javax.swing.JCheckBox();
+        calendarFNac = new com.toedter.calendar.JDateChooser();
         jPanel5 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -476,17 +477,6 @@ public class jdManCliente extends javax.swing.JDialog {
         lblFecha.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         lblFecha.setText("FECHA NACIMIENTO");
 
-        try {
-            txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaActionPerformed(evt);
-            }
-        });
-
         lblTelefono.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         lblTelefono.setText("TELEFONO");
 
@@ -545,18 +535,18 @@ public class jdManCliente extends javax.swing.JDialog {
                 .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chkVigencia)
                     .addGroup(panelFormularioLayout.createSequentialGroup()
-                        .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtFecha)
-                            .addComponent(cbxtTipoDoc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxPais, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtApePaRS)
-                            .addComponent(cbxSexo, 0, 220, Short.MAX_VALUE)
-                            .addComponent(txtTelefono)
-                            .addComponent(txtDireccion)
-                            .addComponent(txtCorreo)
-                            .addComponent(txtDocIdent)
-                            .addComponent(txtNombre)
-                            .addComponent(txtApeMa))
+                        .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(calendarFNac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxtTipoDoc, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxPais, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtApePaRS, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxSexo, javax.swing.GroupLayout.Alignment.LEADING, 0, 220, Short.MAX_VALUE)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDocIdent, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtApeMa, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -594,11 +584,14 @@ public class jdManCliente extends javax.swing.JDialog {
                 .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblSexo)
                     .addComponent(cbxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFecha)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelFormularioLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(lblFecha))
+                    .addGroup(panelFormularioLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(calendarFNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(29, 29, 29)
                 .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTelefono)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -612,7 +605,7 @@ public class jdManCliente extends javax.swing.JDialog {
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(chkVigencia)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(230, 182, 139));
@@ -794,8 +787,9 @@ public class jdManCliente extends javax.swing.JDialog {
                         } else {
                             sexo = false;
                         }
-
-                        objCliente.insertarClienteNatural(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), sexo, txtFecha.getText(), txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), estado);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String fechita = sdf.format(calendarFNac.getCalendar().getTime());
+                        objCliente.insertarClienteNatural(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), sexo, fechita, txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), estado);
                         JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente");
                         clearfields();
                         listarClientesNaturales();
@@ -861,7 +855,12 @@ public class jdManCliente extends javax.swing.JDialog {
                         } else {
                             cbxSexo.setSelectedIndex(1);
                         }
-                        txtFecha.setText(rs.getString("f_nacimiento"));
+                        String fechita = rs.getString("f_nacimiento");
+                        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                        java.util.Date fechaNac = formato.parse(fechita);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(fechaNac);
+                        calendarFNac.setCalendar(calendar);
                         txtApeMa.setText(rs.getString("ape_materno"));
                         txtDireccion.setText(rs.getString("direccion"));
                         txtTelefono.setText(rs.getString("telefono"));
@@ -894,7 +893,12 @@ public class jdManCliente extends javax.swing.JDialog {
                             } else {
                                 cbxSexo.setSelectedIndex(1);
                             }
-                            txtFecha.setText(rs.getString("f_nacimiento"));
+                            String fechita = rs.getString("f_nacimiento");
+                            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                            java.util.Date fechaNac = formato.parse(fechita);
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(fechaNac);
+                            calendarFNac.setCalendar(calendar);
                             txtApeMa.setText(rs.getString("ape_materno"));
                             txtDireccion.setText(rs.getString("direccion"));
                             txtTelefono.setText(rs.getString("telefono"));
@@ -940,13 +944,15 @@ public class jdManCliente extends javax.swing.JDialog {
                     }
                 } else {
                     try {
-                        boolean sex=true;
+                        boolean sex = true;
                         if (cbxSexo.getSelectedItem().toString().equals("Masculino")) {
-                            sex=true;
-                        }else{
-                            sex=false;
+                            sex = true;
+                        } else {
+                            sex = false;
                         }
-                        objCliente.modificarClienteNatural(objPais.buscarCodigoPorNombre(cbxPais.getSelectedItem().toString()), (int) cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), txtFecha.getText(), txtDireccion.getText(), txtTelefono.getText(), currentdate().toString(), txtCorreo.getText(), estado, sex);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String fechita = sdf.format(calendarFNac.getCalendar().getTime());
+                        objCliente.modificarClienteNatural(objPais.buscarCodigoPorNombre(cbxPais.getSelectedItem().toString()), (int) cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), fechita, txtDireccion.getText(), txtTelefono.getText(), currentdate().toString(), txtCorreo.getText(), estado, sex);
                         JOptionPane.showMessageDialog(this, "Se ha modificado el cliente");
                         listarClientesNaturales();
                         clearfields();
@@ -1028,10 +1034,6 @@ public class jdManCliente extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblPersonaNaturalMouseClicked
 
-    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -1045,6 +1047,7 @@ public class jdManCliente extends javax.swing.JDialog {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup buttonGroup1;
+    private com.toedter.calendar.JDateChooser calendarFNac;
     private javax.swing.JComboBox<String> cbxPais;
     private javax.swing.JComboBox<String> cbxSexo;
     private javax.swing.JComboBox<String> cbxtTipoDoc;
@@ -1074,7 +1077,6 @@ public class jdManCliente extends javax.swing.JDialog {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtDocIdent;
-    private javax.swing.JFormattedTextField txtFecha;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables

@@ -511,8 +511,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             case "Administrador":
                 botonesMantenimiento();
                 botonesReportes();
-            default:
-                throw new AssertionError();
+            
         }
     }//GEN-LAST:event_formWindowOpened
 
