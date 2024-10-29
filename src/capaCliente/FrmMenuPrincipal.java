@@ -26,7 +26,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         FondoPanel fondo = new FondoPanel();  // Crear el fondo
         pnlFondo.setLayout(new BorderLayout());  // Mantén el layout que necesites
-
         pnlFondo.add(fondo, BorderLayout.CENTER);  // Agregar el panel de fondo dentro del panel diseñado
         pnlFondo.revalidate();  // Refresca el panel
         pnlFondo.repaint();     // Fuerza la actualización del fondo

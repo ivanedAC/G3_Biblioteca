@@ -940,7 +940,13 @@ public class jdManCliente extends javax.swing.JDialog {
                     }
                 } else {
                     try {
-                        objCliente.modificarClienteNatural(objPais.buscarCodigoPorNombre(cbxPais.getSelectedItem().toString()), (int) cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), txtFecha.getText(), txtDireccion.getText(), txtTelefono.getText(), currentdate().toString(), txtCorreo.getText(), estado);
+                        boolean sex=true;
+                        if (cbxSexo.getSelectedItem().toString().equals("Masculino")) {
+                            sex=true;
+                        }else{
+                            sex=false;
+                        }
+                        objCliente.modificarClienteNatural(objPais.buscarCodigoPorNombre(cbxPais.getSelectedItem().toString()), (int) cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), txtFecha.getText(), txtDireccion.getText(), txtTelefono.getText(), currentdate().toString(), txtCorreo.getText(), estado, sex);
                         JOptionPane.showMessageDialog(this, "Se ha modificado el cliente");
                         listarClientesNaturales();
                         clearfields();

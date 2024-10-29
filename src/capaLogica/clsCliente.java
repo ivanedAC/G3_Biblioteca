@@ -151,12 +151,10 @@ public class clsCliente {
         }
     }
     
-    public void modificarClienteNatural(int cpais, int ctipodoc, String ndoc, String nom,String ape_pa, String ape_ma,String f_nac,String direccion, String telefono,String f_reg,String correo,String estado)throws Exception{
+    public void modificarClienteNatural(int cpais, int ctipodoc, String ndoc, String nom,String ape_pa, String ape_ma,String f_nac,String direccion, String telefono,String f_reg,String correo,String estado, boolean sex)throws Exception{
        int cod=buscarCodigoCliente(ndoc);
-       boolean sex=buscarSexoPorNDoc(ndoc);
        strSQL="select pa_update_clientenatural("+cod+","+cpais+","+ctipodoc+",'"+ndoc+"', '"+nom+"', '"+ape_pa+"', '"+ape_ma+"', "+sex+", '"+f_nac+"', '"+direccion+"', '"+telefono+"', '"+f_reg+"','"+correo+"', '"+estado+"')";
         try {
-            
             objConectar.consultar(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al modificar cliente natural-->"+e.getMessage());
