@@ -118,13 +118,11 @@ public class jdManCliente extends javax.swing.JDialog {
             while (rsClientesN.next()) {
                 Object datos[][] = new Object[1][12];
                 datos[0][0] = rsClientesN.getString("codigo");
-                nombrepais = objPais.buscarPaisPorCodigo(rsClientesN.getInt("cod_pais"));
-                datos[0][1] = nombrepais;
-                nombreTipoDoc = objDocumento.nombreTipoDocumento(rsClientesN.getInt("cod_tipo_doc"));
-                datos[0][2] = nombreTipoDoc;
+                datos[0][1] = rsClientesN.getString("pais");
+                datos[0][2] = rsClientesN.getString("tipo_documento");
                 datos[0][3] = rsClientesN.getString("numero_documento");
                 datos[0][4] = rsClientesN.getString("nombres");
-                datos[0][5] = rsClientesN.getString("ape_paterno") + " " + rsClientesN.getString("ape_materno");
+                datos[0][5] = rsClientesN.getString("apellidos");
                 if (rsClientesN.getBoolean("sexo")) {
                     sexo = "Masculino";
                 } else {
@@ -174,10 +172,8 @@ public class jdManCliente extends javax.swing.JDialog {
                 // Crear un array para la fila y llenarlo con datos
                 Object[] datos = new Object[10];
                 datos[0] = rsClientesJ.getString("codigo");
-                nombrepais = objPais.buscarPaisPorCodigo(rsClientesJ.getInt("cod_pais"));
-                datos[1] = nombrepais;
-                nombreTipoDoc = objDocumento.nombreTipoDocumento(rsClientesJ.getInt("cod_tipo_doc"));
-                datos[2] = nombreTipoDoc;
+                datos[1] = rsClientesJ.getString("pais");
+                datos[2] = rsClientesJ.getString("nombres");
                 datos[3] = rsClientesJ.getString("numero_documento");
                 datos[4] = rsClientesJ.getString("nombres");
                 datos[5] = rsClientesJ.getString("razon_social");
