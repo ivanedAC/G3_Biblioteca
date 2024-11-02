@@ -179,7 +179,7 @@ public class jdManUsuario extends javax.swing.JDialog {
         txtPass1.setText("");
         cboxSede.setSelectedItem(0);
     }
-    
+
     public boolean esMayorDeEdad(Date fechaNacimiento) {
         Calendar fechaActual = Calendar.getInstance();
 
@@ -981,28 +981,52 @@ public class jdManUsuario extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
+            ResultSet rsUsu = objUsu.listarUsuarios();
+            boolean acceso = true;
             if (!txtCode.getText().isBlank() && !txtNroDoc.getText().isBlank() && !txtNom.getText().isBlank()
                     && !txtApePat.getText().isBlank() && !txtApeMat.getText().isBlank() && !txtDir.getText().isBlank()
                     && !txtCel.getText().isBlank() && !txtCor.getText().isBlank() && !txtUsu.getText().isBlank()
                     && calendarFNac.getCalendar() != null) {
                 ResultSet rs = objUsu.buscarUsuario(Integer.valueOf(txtCode.getText()));
                 if (rs.next()) {
-                    int i = JOptionPane.showConfirmDialog(null, "¿Está seguro modificar a este Usuario?",
-                            "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if (i == 0) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        String fechita = sdf.format(calendarFNac.getCalendar().getTime());
-                        objUsu.modificarUsuario(Integer.valueOf(txtCode.getText()), objPais.buscarCodigoPorNombre(cboxPais.getSelectedItem().toString()),
-                                objTDoc.obtenerTipoDocumento(cboxTipoDoc.getSelectedItem().toString()),
-                                txtNroDoc.getText(), txtNom.getText(), txtApePat.getText(), txtApeMat.getText(),
-                                (cboxSex.getSelectedItem().toString().equalsIgnoreCase("Masculino")),
-                                fechita, txtDir.getText(), txtCel.getText(), "", txtCor.getText(),
-                                objTUsuario.obtenerTipoUsuario(cboxTUser.getSelectedItem().toString()),
-                                txtUsu.getText(), String.valueOf(cboxEstado.getSelectedItem().toString().charAt(0)),
-                                objSede.obtenerSede(cboxSede.getSelectedItem().toString()));
-                        JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");
-                        limpiarControles();
-                        listarUsuarios();
+                    while (rsUsu.next()) {
+                        if (rsUsu.getInt("codigo") == rs.getInt("codigo")) {
+                            continue;
+                        }
+                        if (txtNroDoc.getText().equals(rsUsu.getString("numero_documento"))) {
+                            JOptionPane.showMessageDialog(null, "El número de documento ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (txtUsu.getText().equals(rsUsu.getString("usuario"))) {
+                            JOptionPane.showMessageDialog(null, "El nombre de usuario ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (!esMayorDeEdad(calendarFNac.getDate())) {
+                            JOptionPane.showMessageDialog(null, "El usuario ingresado debe ser mayor de edad", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                    }
+                    if (acceso) {
+                        int i = JOptionPane.showConfirmDialog(null, "¿Está seguro modificar a este Usuario?",
+                                "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+                        if (i == 0) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            String fechita = sdf.format(calendarFNac.getCalendar().getTime());
+                            objUsu.modificarUsuario(Integer.valueOf(txtCode.getText()), objPais.buscarCodigoPorNombre(cboxPais.getSelectedItem().toString()),
+                                    objTDoc.obtenerTipoDocumento(cboxTipoDoc.getSelectedItem().toString()),
+                                    txtNroDoc.getText(), txtNom.getText(), txtApePat.getText(), txtApeMat.getText(),
+                                    (cboxSex.getSelectedItem().toString().equalsIgnoreCase("Masculino")),
+                                    fechita, txtDir.getText(), txtCel.getText(), "", txtCor.getText(),
+                                    objTUsuario.obtenerTipoUsuario(cboxTUser.getSelectedItem().toString()),
+                                    txtUsu.getText(), String.valueOf(cboxEstado.getSelectedItem().toString().charAt(0)),
+                                    objSede.obtenerSede(cboxSede.getSelectedItem().toString()));
+                            JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");
+                            limpiarControles();
+                            listarUsuarios();
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "El código ingresado no existe", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);

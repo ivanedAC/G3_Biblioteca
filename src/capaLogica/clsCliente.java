@@ -90,7 +90,14 @@ public class clsCliente {
     }
     
     public ResultSet listarClientesN( ) throws Exception{
-        strSQL = "select P.*, C.estado as estado from cliente C inner join persona P on C.cod_persona=P.codigo where P.cod_tipo_doc != 2";
+        strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, Pe.nombres, (Pe.ape_paterno || ' ' || Pe.ape_materno) as apellidos,\n" +
+"	Pe.sexo, Pe.f_nacimiento, Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n" +
+"	from persona Pe    \n" +
+"	inner join cliente Cl on Pe.codigo=Cl.cod_persona \n" +
+"	inner join pais Pa on Pa.codigo=Pe.cod_pais\n" +
+"	inner join tipo_documento TD on Pe.cod_tipo_doc=TD.codigo\n" +
+"	where Pe.cod_tipo_doc !=2 \n"
+                + "order by 1";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
@@ -100,7 +107,14 @@ public class clsCliente {
     }
     
     public ResultSet listarClientesJ( ) throws Exception{
-        strSQL = "select P.*, C.estado as estado from cliente C inner join persona P on C.cod_persona=P.codigo where P.cod_tipo_doc = 2";
+        strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, Pe.nombres, Pe.razon_social,\n" +
+"	Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n" +
+"	from persona Pe    \n" +
+"	inner join cliente Cl on Pe.codigo=Cl.cod_persona \n" +
+"	inner join pais Pa on Pa.codigo=Pe.cod_pais\n" +
+"	inner join tipo_documento TD on Pe.cod_tipo_doc=TD.codigo\n" +
+"	where Pe.cod_tipo_doc =2 \n"
+                + "order by 1";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
