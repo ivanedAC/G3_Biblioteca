@@ -190,8 +190,8 @@ public class clsUsuario {
         }
         return 0;
     }
-    
-       public ResultSet obtenerData(String usu) throws Exception {
+
+    public ResultSet obtenerData(String usu) throws Exception {
         strSQL = "SELECT * from listado_usuarios where usuario ='" + usu + "'";
         try {
             rs = objConectar.consultar(strSQL);

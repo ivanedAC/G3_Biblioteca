@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -177,6 +178,22 @@ public class jdManUsuario extends javax.swing.JDialog {
         txtPass.setText("");
         txtPass1.setText("");
         cboxSede.setSelectedItem(0);
+    }
+    
+    public boolean esMayorDeEdad(Date fechaNacimiento) {
+        Calendar fechaActual = Calendar.getInstance();
+
+        Calendar fechaNacimientoCal = Calendar.getInstance();
+        fechaNacimientoCal.setTime(fechaNacimiento);
+
+        int añosDiferencia = fechaActual.get(Calendar.YEAR) - fechaNacimientoCal.get(Calendar.YEAR);
+
+        if (fechaActual.get(Calendar.DAY_OF_YEAR) < fechaNacimientoCal.get(Calendar.DAY_OF_YEAR)) {
+            añosDiferencia--;
+        }
+
+        // Retornar verdadero si la diferencia es mayor o igual a 18
+        return añosDiferencia >= 18;
     }
 
     /**
@@ -356,6 +373,11 @@ public class jdManUsuario extends javax.swing.JDialog {
         txtCel.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         txtCel.setForeground(new java.awt.Color(113, 49, 18));
         txtCel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtCel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCelKeyTyped(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(113, 49, 18));
@@ -431,22 +453,20 @@ public class jdManUsuario extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(238, 238, 238))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(238, 238, 238)))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -775,34 +795,61 @@ public class jdManUsuario extends javax.swing.JDialog {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         try {
-
+            ResultSet rs = objUsu.listarUsuarios();
+            boolean acceso = true;
             if (btnNuevo.getText().equalsIgnoreCase("Nuevo")) {
                 btnNuevo.setText("Guardar");
+                limpiarControles();
                 txtCode.setText(String.valueOf(objUsu.generarCodigoUsuario()));
                 txtNroDoc.requestFocus();
             } else {
                 if (!txtCode.getText().isBlank() && !txtNroDoc.getText().isBlank() && !txtNom.getText().isBlank()
                         && !txtApePat.getText().isBlank() && !txtApeMat.getText().isBlank() && !txtDir.getText().isBlank()
                         && !txtCel.getText().isBlank() && !txtCor.getText().isBlank() && !txtUsu.getText().isBlank()
-                        && !txtPass.getText().isBlank() && !txtPass.getText().isBlank()) {
+                        && !txtPass.getText().isBlank() && !txtPass.getText().isBlank() && calendarFNac.getCalendar() != null) {
+
+                    while (rs.next()) {
+                        if (txtNroDoc.getText().equals(rs.getString("numero_documento"))) {
+                            JOptionPane.showMessageDialog(null, "El número de documento ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (txtCode.getText().equals(rs.getString("codigo"))) {
+                            JOptionPane.showMessageDialog(null, "El código ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (txtUsu.getText().equals(rs.getString("usuario"))) {
+                            JOptionPane.showMessageDialog(null, "El nombre de usuario ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (!esMayorDeEdad(calendarFNac.getDate())) {
+                            JOptionPane.showMessageDialog(null, "El usuario ingresado debe ser mayor de edad", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                    }
                     if (objUsu.buscarCodigoPersona(txtNroDoc.getText()) == 0) {
-                        if (txtPass.getText().equals(txtPass1.getText())) {
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                            String fechita = sdf.format(calendarFNac.getCalendar().getTime());
-                            objUsu.registrarUsuario(Integer.valueOf(txtCode.getText()), objPais.buscarCodigoPorNombre(cboxPais.getSelectedItem().toString()),
-                                    objTDoc.obtenerTipoDocumento(cboxTipoDoc.getSelectedItem().toString()),
-                                    txtNroDoc.getText(), txtNom.getText(), txtApePat.getText(), txtApeMat.getText(),
-                                    (cboxSex.getSelectedItem().toString().equalsIgnoreCase("Masculino")),
-                                    fechita, txtDir.getText(), txtCel.getText(), "", txtCor.getText(),
-                                    objTUsuario.obtenerTipoUsuario(cboxTUser.getSelectedItem().toString()),
-                                    txtUsu.getText(), txtPass.getText(), String.valueOf(cboxEstado.getSelectedItem().toString().charAt(0)),
-                                    objSede.obtenerSede(cboxSede.getSelectedItem().toString()));
-                            JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
-                            btnNuevo.setText("Nuevo");
-                            listarUsuarios();
-                            limpiarControles();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Las contraseñas deben coincidir", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                        if (acceso) {
+                            if (txtPass.getText().equals(txtPass1.getText())) {
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                String fechita = sdf.format(calendarFNac.getCalendar().getTime());
+                                objUsu.registrarUsuario(Integer.valueOf(txtCode.getText()), objPais.buscarCodigoPorNombre(cboxPais.getSelectedItem().toString()),
+                                        objTDoc.obtenerTipoDocumento(cboxTipoDoc.getSelectedItem().toString()),
+                                        txtNroDoc.getText(), txtNom.getText(), txtApePat.getText(), txtApeMat.getText(),
+                                        (cboxSex.getSelectedItem().toString().equalsIgnoreCase("Masculino")),
+                                        fechita, txtDir.getText(), txtCel.getText(), "", txtCor.getText(),
+                                        objTUsuario.obtenerTipoUsuario(cboxTUser.getSelectedItem().toString()),
+                                        txtUsu.getText(), txtPass.getText(), String.valueOf(cboxEstado.getSelectedItem().toString().charAt(0)),
+                                        objSede.obtenerSede(cboxSede.getSelectedItem().toString()));
+                                JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
+                                btnNuevo.setText("Nuevo");
+                                listarUsuarios();
+                                limpiarControles();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Las contraseñas deben coincidir", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            }
                         }
                     } else {
                         int i = JOptionPane.showConfirmDialog(null, "La persona ingresada ya existe, ¿Desea registrarlo como usuario?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -907,13 +954,18 @@ public class jdManUsuario extends javax.swing.JDialog {
             if (txtCode.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código a eliminar!");
             } else {
-                int i = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar a este Usuario?",
-                        "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-                if (i == 0) {
-                    objUsu.eliminarUsuario(Integer.valueOf(txtCode.getText()));
-                    JOptionPane.showMessageDialog(null, "Usuario eliminado");
-                    limpiarControles();
-                    listarUsuarios();
+                ResultSet rs = objUsu.buscarUsuario(Integer.valueOf(txtCode.getText()));
+                if (rs.next()) {
+                    int i = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar a este Usuario?",
+                            "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+                    if (i == 0) {
+                        objUsu.eliminarUsuario(Integer.valueOf(txtCode.getText()));
+                        JOptionPane.showMessageDialog(null, "Usuario eliminado");
+                        limpiarControles();
+                        listarUsuarios();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El código ingresado no existe", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                 }
             }
         } catch (Exception e) {
@@ -931,23 +983,29 @@ public class jdManUsuario extends javax.swing.JDialog {
         try {
             if (!txtCode.getText().isBlank() && !txtNroDoc.getText().isBlank() && !txtNom.getText().isBlank()
                     && !txtApePat.getText().isBlank() && !txtApeMat.getText().isBlank() && !txtDir.getText().isBlank()
-                    && !txtCel.getText().isBlank() && !txtCor.getText().isBlank() && !txtUsu.getText().isBlank()) {
-                int i = JOptionPane.showConfirmDialog(null, "¿Está seguro modificar a este Usuario?",
-                        "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-                if (i == 0) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    String fechita = sdf.format(calendarFNac.getCalendar().getTime());
-                    objUsu.modificarUsuario(Integer.valueOf(txtCode.getText()), objPais.buscarCodigoPorNombre(cboxPais.getSelectedItem().toString()),
-                            objTDoc.obtenerTipoDocumento(cboxTipoDoc.getSelectedItem().toString()),
-                            txtNroDoc.getText(), txtNom.getText(), txtApePat.getText(), txtApeMat.getText(),
-                            (cboxSex.getSelectedItem().toString().equalsIgnoreCase("Masculino")),
-                            fechita, txtDir.getText(), txtCel.getText(), "", txtCor.getText(),
-                            objTUsuario.obtenerTipoUsuario(cboxTUser.getSelectedItem().toString()),
-                            txtUsu.getText(), String.valueOf(cboxEstado.getSelectedItem().toString().charAt(0)),
-                            objSede.obtenerSede(cboxSede.getSelectedItem().toString()));
-                    JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");
-                    limpiarControles();
-                    listarUsuarios();
+                    && !txtCel.getText().isBlank() && !txtCor.getText().isBlank() && !txtUsu.getText().isBlank()
+                    && calendarFNac.getCalendar() != null) {
+                ResultSet rs = objUsu.buscarUsuario(Integer.valueOf(txtCode.getText()));
+                if (rs.next()) {
+                    int i = JOptionPane.showConfirmDialog(null, "¿Está seguro modificar a este Usuario?",
+                            "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+                    if (i == 0) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String fechita = sdf.format(calendarFNac.getCalendar().getTime());
+                        objUsu.modificarUsuario(Integer.valueOf(txtCode.getText()), objPais.buscarCodigoPorNombre(cboxPais.getSelectedItem().toString()),
+                                objTDoc.obtenerTipoDocumento(cboxTipoDoc.getSelectedItem().toString()),
+                                txtNroDoc.getText(), txtNom.getText(), txtApePat.getText(), txtApeMat.getText(),
+                                (cboxSex.getSelectedItem().toString().equalsIgnoreCase("Masculino")),
+                                fechita, txtDir.getText(), txtCel.getText(), "", txtCor.getText(),
+                                objTUsuario.obtenerTipoUsuario(cboxTUser.getSelectedItem().toString()),
+                                txtUsu.getText(), String.valueOf(cboxEstado.getSelectedItem().toString().charAt(0)),
+                                objSede.obtenerSede(cboxSede.getSelectedItem().toString()));
+                        JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");
+                        limpiarControles();
+                        listarUsuarios();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El código ingresado no existe", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
@@ -955,8 +1013,6 @@ public class jdManUsuario extends javax.swing.JDialog {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al modificar usuario: " + ex.getMessage());
         }
-
-
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
@@ -965,19 +1021,32 @@ public class jdManUsuario extends javax.swing.JDialog {
             if (txtCode.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código a dar de baja!");
             } else {
-                int i = JOptionPane.showConfirmDialog(null, "¿Está seguro de dar de baja a este Usuario?",
-                        "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-                if (i == 0) {
-                    objUsu.darBajaUsuario(Integer.valueOf(txtCode.getText()));
-                    JOptionPane.showMessageDialog(null, "Usuario dado de baja");
-                    limpiarControles();
-                    listarUsuarios();
+                ResultSet rs = objUsu.buscarUsuario(Integer.valueOf(txtCode.getText()));
+                if (rs.next()) {
+                    int i = JOptionPane.showConfirmDialog(null, "¿Está seguro de dar de baja a este Usuario?",
+                            "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+                    if (i == 0) {
+                        objUsu.darBajaUsuario(Integer.valueOf(txtCode.getText()));
+                        JOptionPane.showMessageDialog(null, "Usuario dado de baja");
+                        limpiarControles();
+                        listarUsuarios();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El código ingresado no existe", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                 }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al dar de baja a usuario: " + e.getMessage());
         }
     }//GEN-LAST:event_btnDarBajaActionPerformed
+
+    private void txtCelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCelKeyTyped
 
     /**
      * @param args the command line arguments
