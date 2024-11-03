@@ -5,6 +5,7 @@
 package capaCliente;
 
 import capaLogica.clsUsuario;
+import capaLogica.clsUsuarioSTATIC;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 
@@ -13,9 +14,8 @@ import java.sql.ResultSet;
  * @author ander
  */
 public class jdIniciarSesion extends javax.swing.JDialog {
-    public String us = "";
-    public String us1 = "";
-    public String cargo = "";
+
+    clsUsuario objUsuario = new clsUsuario();
 
     /**
      * Creates new form jdIniciarSesion
@@ -34,7 +34,7 @@ public class jdIniciarSesion extends javax.swing.JDialog {
             cap.append((char) random);
         }
 
-        System.out.println(cap.toString());
+        //System.out.println(cap.toString());
         return cap.toString();
     }
 
@@ -219,7 +219,6 @@ public class jdIniciarSesion extends javax.swing.JDialog {
         // TODO add your handling code here:
         // TODO add your handling code here:
         boolean vacio = txtUsuario.getText().isBlank() || txtContrasena.getText().isBlank() || txtCaptcha.getText().isBlank();
-        clsUsuario objUsuario = new clsUsuario();
         ResultSet rs_login = null;
         ResultSet rs_datos = null;
         if (!vacio) {
@@ -227,19 +226,21 @@ public class jdIniciarSesion extends javax.swing.JDialog {
                 try {
                     rs_login = objUsuario.login(txtUsuario.getText(), txtContrasena.getText());
                     if (rs_login.next()) {
-                        us = rs_login.getString("usuario");
-                        rs_datos = objUsuario.obtenerData(us);
+                        clsUsuarioSTATIC.nomUsuario = rs_login.getString("usuario");
+                        rs_datos = objUsuario.obtenerData(clsUsuarioSTATIC.nomUsuario);
                         if (rs_datos.next()) {
-                            us1 = rs_datos.getString("nombre_completo");
-                            cargo = rs_datos.getString("cargo");
+                            clsUsuarioSTATIC.codigo = rs_datos.getInt("codigo");
+                            clsUsuarioSTATIC.nombre_completo = rs_datos.getString("nombre_completo");
+                            clsUsuarioSTATIC.cargo = rs_datos.getString("cargo");
+                            clsUsuarioSTATIC.sede = rs_datos.getString("sede");
                         }
                     }
-                    if (!us.equals("")) {
+                    if (!clsUsuarioSTATIC.nomUsuario.equals("")) {
                         if (objUsuario.validar_vigencia(rs_login.getInt("codigo")) == 0) {
-                            JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + us);
+                            JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + clsUsuarioSTATIC.nomUsuario);
                             this.dispose();
                         } else if (objUsuario.validar_vigencia(rs_login.getInt("codigo")) == 1) {
-                            JOptionPane.showMessageDialog(this, "Este usuario no tiene permitido el acceso " + us);
+                            JOptionPane.showMessageDialog(this, "Este usuario no tiene permitido el acceso " + clsUsuarioSTATIC.nomUsuario);
                         } else {
                             JOptionPane.showMessageDialog(this, "Ocurrio un problema al validar el usuario");
                         }
@@ -256,7 +257,7 @@ public class jdIniciarSesion extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Ningun campo debe estar vacío", "Campos vacios", JOptionPane.ERROR_MESSAGE);
         }
-        
+
 
     }//GEN-LAST:event_btnEnviarDatosActionPerformed
 

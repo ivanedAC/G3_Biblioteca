@@ -4,10 +4,12 @@
  */
 package capaCliente;
 
+import capaLogica.clsUsuarioSTATIC;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -115,7 +117,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     public void botonesReportes() {
         btnCliente.setVisible(true);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -143,6 +145,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         pnlFondo = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mnuCerrarSesion = new javax.swing.JMenuItem();
         mnuSalir = new javax.swing.JMenuItem();
         mnuMantenimientos = new javax.swing.JMenu();
         MnuUsuario = new javax.swing.JMenuItem();
@@ -153,6 +156,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         MnuCategoria = new javax.swing.JMenuItem();
         MnuProveedor = new javax.swing.JMenuItem();
         MnuEjemplar = new javax.swing.JMenuItem();
+        mnuOperaciones = new javax.swing.JMenu();
+        mnuPrestamo = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -366,6 +371,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Login");
 
+        mnuCerrarSesion.setText("Cerrar Sesión");
+        mnuCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCerrarSesionActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuCerrarSesion);
+
         mnuSalir.setText("Salir");
         mnuSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -449,6 +462,18 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuMantenimientos);
 
+        mnuOperaciones.setText("Operaciones");
+
+        mnuPrestamo.setText("Préstamo");
+        mnuPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPrestamoActionPerformed(evt);
+            }
+        });
+        mnuOperaciones.add(mnuPrestamo);
+
+        jMenuBar1.add(mnuOperaciones);
+
         mnuReportes.setText("Reportes");
         mnuReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -499,8 +524,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         sinBotones();
         frmLogin.setLocationRelativeTo(null);
         frmLogin.setVisible(true);
-        lblUser.setText(frmLogin.us1);
-        lblCargo.setText(frmLogin.cargo);
+        lblUser.setText(clsUsuarioSTATIC.nombre_completo);
+        lblCargo.setText(clsUsuarioSTATIC.cargo);
         switch (lblCargo.getText()) {
             case "Recepcionista":
                 accesoRe();
@@ -511,7 +536,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             case "Administrador":
                 botonesMantenimiento();
                 botonesReportes();
-            
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -611,6 +635,21 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         objFm.setVisible(true);
     }//GEN-LAST:event_btnProveedorActionPerformed
 
+    private void mnuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar sesión?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0){
+            this.dispose();
+            new FrmMenuPrincipal().setVisible(true);
+        }
+    }//GEN-LAST:event_mnuCerrarSesionActionPerformed
+
+    private void mnuPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPrestamoActionPerformed
+        // TODO add your handling code here:
+        jdTranPrestamo objJd = new jdTranPrestamo(this, true);
+        objJd.setLocationRelativeTo(null);
+        objJd.setVisible(true);
+    }//GEN-LAST:event_mnuPrestamoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -641,7 +680,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblCargo;
     private javax.swing.JLabel lblUser;
+    private javax.swing.JMenuItem mnuCerrarSesion;
     private javax.swing.JMenu mnuMantenimientos;
+    private javax.swing.JMenu mnuOperaciones;
+    private javax.swing.JMenuItem mnuPrestamo;
     private javax.swing.JMenu mnuReportes;
     private javax.swing.JMenuItem mnuSalir;
     private javax.swing.JPanel pnlFondo;
