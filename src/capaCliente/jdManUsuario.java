@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  *
@@ -180,7 +182,7 @@ public class jdManUsuario extends javax.swing.JDialog {
         cboxSede.setSelectedItem(0);
     }
 
-    public boolean esMayorDeEdad(Date fechaNacimiento) {
+    private boolean esMayorDeEdad(Date fechaNacimiento) {
         Calendar fechaActual = Calendar.getInstance();
 
         Calendar fechaNacimientoCal = Calendar.getInstance();
@@ -194,6 +196,20 @@ public class jdManUsuario extends javax.swing.JDialog {
 
         // Retornar verdadero si la diferencia es mayor o igual a 18
         return añosDiferencia >= 18;
+    }
+
+    private boolean validarEmail(String email) {
+        // Expresión regular para validar el formato de correo electrónico
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+
+        // Compilar la expresión regular
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // Comparar el correo con la expresión regular
+        Matcher matcher = pattern.matcher(email);
+
+        // Retornar true si coincide, false si no
+        return matcher.matches();
     }
 
     /**
@@ -274,6 +290,11 @@ public class jdManUsuario extends javax.swing.JDialog {
         cboxTipoDoc.setForeground(new java.awt.Color(113, 49, 18));
         cboxTipoDoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboxTipoDoc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cboxTipoDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxTipoDocActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(113, 49, 18));
@@ -307,6 +328,11 @@ public class jdManUsuario extends javax.swing.JDialog {
         txtNroDoc.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         txtNroDoc.setForeground(new java.awt.Color(113, 49, 18));
         txtNroDoc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtNroDoc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNroDocKeyTyped(evt);
+            }
+        });
 
         txtNom.setBackground(new java.awt.Color(245, 224, 206));
         txtNom.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
@@ -345,6 +371,11 @@ public class jdManUsuario extends javax.swing.JDialog {
         txtCode.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         txtCode.setForeground(new java.awt.Color(113, 49, 18));
         txtCode.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodeKeyTyped(evt);
+            }
+        });
 
         btnBuscar.setBackground(new java.awt.Color(113, 49, 18));
         btnBuscar.setForeground(new java.awt.Color(245, 224, 206));
@@ -387,6 +418,11 @@ public class jdManUsuario extends javax.swing.JDialog {
         txtCor.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         txtCor.setForeground(new java.awt.Color(113, 49, 18));
         txtCor.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtCor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorKeyTyped(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(113, 49, 18));
@@ -400,6 +436,11 @@ public class jdManUsuario extends javax.swing.JDialog {
         txtUsu.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         txtUsu.setForeground(new java.awt.Color(113, 49, 18));
         txtUsu.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtUsu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuKeyTyped(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(113, 49, 18));
@@ -807,7 +848,6 @@ public class jdManUsuario extends javax.swing.JDialog {
                         && !txtApePat.getText().isBlank() && !txtApeMat.getText().isBlank() && !txtDir.getText().isBlank()
                         && !txtCel.getText().isBlank() && !txtCor.getText().isBlank() && !txtUsu.getText().isBlank()
                         && !txtPass.getText().isBlank() && !txtPass.getText().isBlank() && calendarFNac.getCalendar() != null) {
-
                     while (rs.next()) {
                         if (txtNroDoc.getText().equals(rs.getString("numero_documento"))) {
                             JOptionPane.showMessageDialog(null, "El número de documento ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
@@ -826,6 +866,31 @@ public class jdManUsuario extends javax.swing.JDialog {
                         }
                         if (!esMayorDeEdad(calendarFNac.getDate())) {
                             JOptionPane.showMessageDialog(null, "El usuario ingresado debe ser mayor de edad", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (txtCel.getText().length() != 9) {
+                            JOptionPane.showMessageDialog(null, "El número de celular debe tener exactamente 9 dígitos", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (cboxTipoDoc.getSelectedItem().toString().equals("DNI") && txtNroDoc.getText().length() != 8) {
+                            JOptionPane.showMessageDialog(null, "El DNI debe tener exactamente 8 dígitos", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (cboxTipoDoc.getSelectedItem().toString().equals("RUC") && txtNroDoc.getText().length() != 11) {
+                            JOptionPane.showMessageDialog(null, "El número de RUC debe tener exactamente 11 dígitos", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (cboxTipoDoc.getSelectedItem().toString().equals("Carnet de Extranjería") && txtNroDoc.getText().length() > 12) {
+                            JOptionPane.showMessageDialog(null, "El Carnet de Extranjería debe tener como máximo 12 dígitos", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                            acceso = false;
+                            break;
+                        }
+                        if (!validarEmail(txtCor.getText())) {
+                            JOptionPane.showMessageDialog(null, "El formato de correo electrónico ingresado no es válido", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                             acceso = false;
                             break;
                         }
@@ -851,7 +916,7 @@ public class jdManUsuario extends javax.swing.JDialog {
                                 JOptionPane.showMessageDialog(null, "Las contraseñas deben coincidir", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                             }
                         }
-                    } else {
+                    } else if (acceso) {
                         int i = JOptionPane.showConfirmDialog(null, "La persona ingresada ya existe, ¿Desea registrarlo como usuario?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE);
                         if (txtPass.getText().equals(txtPass1.getText())) {
                             if (i == 0) {
@@ -983,56 +1048,85 @@ public class jdManUsuario extends javax.swing.JDialog {
         try {
             ResultSet rsUsu = objUsu.listarUsuarios();
             boolean acceso = true;
-            if (!txtCode.getText().isBlank() && !txtNroDoc.getText().isBlank() && !txtNom.getText().isBlank()
-                    && !txtApePat.getText().isBlank() && !txtApeMat.getText().isBlank() && !txtDir.getText().isBlank()
-                    && !txtCel.getText().isBlank() && !txtCor.getText().isBlank() && !txtUsu.getText().isBlank()
-                    && calendarFNac.getCalendar() != null) {
-                ResultSet rs = objUsu.buscarUsuario(Integer.valueOf(txtCode.getText()));
-                if (rs.next()) {
-                    while (rsUsu.next()) {
-                        if (rsUsu.getInt("codigo") == rs.getInt("codigo")) {
-                            continue;
+            if (txtCode.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un código a modificar!");
+            } else {
+                if (!txtNroDoc.getText().isBlank() && !txtNom.getText().isBlank()
+                        && !txtApePat.getText().isBlank() && !txtApeMat.getText().isBlank() && !txtDir.getText().isBlank()
+                        && !txtCel.getText().isBlank() && !txtCor.getText().isBlank() && !txtUsu.getText().isBlank()
+                        && calendarFNac.getCalendar() != null) {
+                    ResultSet rs = objUsu.buscarUsuario(Integer.valueOf(txtCode.getText()));
+                    if (rs.next()) {
+                        while (rsUsu.next()) {
+                            if (rsUsu.getInt("codigo") == rs.getInt("codigo")) {
+                                continue;
+                            }
+                            if (txtNroDoc.getText().equals(rsUsu.getString("numero_documento"))) {
+                                JOptionPane.showMessageDialog(null, "El número de documento ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                                acceso = false;
+                                break;
+                            }
+                            if (txtUsu.getText().equals(rsUsu.getString("usuario"))) {
+                                JOptionPane.showMessageDialog(null, "El nombre de usuario ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                                acceso = false;
+                                break;
+                            }
+                            if (!esMayorDeEdad(calendarFNac.getDate())) {
+                                JOptionPane.showMessageDialog(null, "El usuario ingresado debe ser mayor de edad", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                                acceso = false;
+                                break;
+                            }
+                            if (txtCel.getText().length() != 9) {
+                                JOptionPane.showMessageDialog(null, "El número de celular debe tener exactamente 9 dígitos", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                                acceso = false;
+                                break;
+                            }
+                            if (cboxTipoDoc.getSelectedItem().toString().equals("DNI") && txtNroDoc.getText().length() != 8) {
+                                JOptionPane.showMessageDialog(null, "El DNI debe tener exactamente 8 dígitos", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                                acceso = false;
+                                break;
+                            }
+                            if (cboxTipoDoc.getSelectedItem().toString().equals("RUC") && txtNroDoc.getText().length() != 11) {
+                                JOptionPane.showMessageDialog(null, "El número de RUC debe tener exactamente 11 dígitos", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                                acceso = false;
+                                break;
+                            }
+                            if (cboxTipoDoc.getSelectedItem().toString().equals("Carnet de Extranjería") && txtNroDoc.getText().length() > 12) {
+                                JOptionPane.showMessageDialog(null, "El Carnet de Extranjería debe tener como máximo 12 dígitos", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                                acceso = false;
+                                break;
+                            }
+                            if (!validarEmail(txtCor.getText())) {
+                                JOptionPane.showMessageDialog(null, "El formato de correo electrónico ingresado no es válido", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                                acceso = false;
+                                break;
+                            }
                         }
-                        if (txtNroDoc.getText().equals(rsUsu.getString("numero_documento"))) {
-                            JOptionPane.showMessageDialog(null, "El número de documento ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
-                            acceso = false;
-                            break;
+                        if (acceso) {
+                            int i = JOptionPane.showConfirmDialog(null, "¿Está seguro modificar a este Usuario?",
+                                    "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+                            if (i == 0) {
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                String fechita = sdf.format(calendarFNac.getCalendar().getTime());
+                                objUsu.modificarUsuario(Integer.valueOf(txtCode.getText()), objPais.buscarCodigoPorNombre(cboxPais.getSelectedItem().toString()),
+                                        objTDoc.obtenerTipoDocumento(cboxTipoDoc.getSelectedItem().toString()),
+                                        txtNroDoc.getText(), txtNom.getText(), txtApePat.getText(), txtApeMat.getText(),
+                                        (cboxSex.getSelectedItem().toString().equalsIgnoreCase("Masculino")),
+                                        fechita, txtDir.getText(), txtCel.getText(), "", txtCor.getText(),
+                                        objTUsuario.obtenerTipoUsuario(cboxTUser.getSelectedItem().toString()),
+                                        txtUsu.getText(), String.valueOf(cboxEstado.getSelectedItem().toString().charAt(0)),
+                                        objSede.obtenerSede(cboxSede.getSelectedItem().toString()));
+                                JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");
+                                limpiarControles();
+                                listarUsuarios();
+                            }
                         }
-                        if (txtUsu.getText().equals(rsUsu.getString("usuario"))) {
-                            JOptionPane.showMessageDialog(null, "El nombre de usuario ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
-                            acceso = false;
-                            break;
-                        }
-                        if (!esMayorDeEdad(calendarFNac.getDate())) {
-                            JOptionPane.showMessageDialog(null, "El usuario ingresado debe ser mayor de edad", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
-                            acceso = false;
-                            break;
-                        }
-                    }
-                    if (acceso) {
-                        int i = JOptionPane.showConfirmDialog(null, "¿Está seguro modificar a este Usuario?",
-                                "Mensaje", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-                        if (i == 0) {
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                            String fechita = sdf.format(calendarFNac.getCalendar().getTime());
-                            objUsu.modificarUsuario(Integer.valueOf(txtCode.getText()), objPais.buscarCodigoPorNombre(cboxPais.getSelectedItem().toString()),
-                                    objTDoc.obtenerTipoDocumento(cboxTipoDoc.getSelectedItem().toString()),
-                                    txtNroDoc.getText(), txtNom.getText(), txtApePat.getText(), txtApeMat.getText(),
-                                    (cboxSex.getSelectedItem().toString().equalsIgnoreCase("Masculino")),
-                                    fechita, txtDir.getText(), txtCel.getText(), "", txtCor.getText(),
-                                    objTUsuario.obtenerTipoUsuario(cboxTUser.getSelectedItem().toString()),
-                                    txtUsu.getText(), String.valueOf(cboxEstado.getSelectedItem().toString().charAt(0)),
-                                    objSede.obtenerSede(cboxSede.getSelectedItem().toString()));
-                            JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");
-                            limpiarControles();
-                            listarUsuarios();
-                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El código ingresado no existe", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "El código ingresado no existe", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al modificar usuario: " + ex.getMessage());
@@ -1070,7 +1164,58 @@ public class jdManUsuario extends javax.swing.JDialog {
         if (!Character.isDigit(objTecla)) {
             evt.consume();
         }
+        if (txtCel.getText().length() > 8) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtCelKeyTyped
+
+    private void txtCodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodeKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodeKeyTyped
+
+    private void txtNroDocKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroDocKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+        if (cboxTipoDoc.getSelectedItem().toString().equals("DNI") && txtNroDoc.getText().length() > 7) {
+            evt.consume();
+        }
+
+        if (cboxTipoDoc.getSelectedItem().toString().equals("RUC") && txtNroDoc.getText().length() > 10) {
+            evt.consume();
+        }
+
+        if (cboxTipoDoc.getSelectedItem().toString().equals("Carnet de Extranjería") && txtNroDoc.getText().length() > 11) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNroDocKeyTyped
+
+    private void txtCorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if ((int) objTecla == 32) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCorKeyTyped
+
+    private void cboxTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxTipoDocActionPerformed
+        // TODO add your handling code here:
+        txtNroDoc.setText("");
+    }//GEN-LAST:event_cboxTipoDocActionPerformed
+
+    private void txtUsuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if ((int) objTecla == 32) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtUsuKeyTyped
 
     /**
      * @param args the command line arguments

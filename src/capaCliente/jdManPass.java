@@ -234,18 +234,21 @@ public class jdManPass extends javax.swing.JDialog {
     private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
         // TODO add your handling code here:
         try {
-            int cod = Integer.parseInt(tblDatos.getValueAt(tblDatos.getSelectedRow(), 0).toString());
-
-            if (!txtP.getText().isBlank() && !txtP1.getText().isBlank()) {
-                int opc = JOptionPane.showConfirmDialog(null, "¿Está seguro en modificar la contraseña de este usuario?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                if (opc == 0) {
-                    int i = objUsu.modificarPass(cod, txtP.getText(), txtP1.getText());
-                    if (i == 0) {
-                        JOptionPane.showMessageDialog(null, "Contraseña modificada correctamente");
-                    }
-                }
+            if (tblDatos.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un usuario a modificar!");
             } else {
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                int cod = Integer.parseInt(tblDatos.getValueAt(tblDatos.getSelectedRow(), 0).toString());
+                if (!txtP.getText().isBlank() && !txtP1.getText().isBlank()) {
+                    int opc = JOptionPane.showConfirmDialog(null, "¿Está seguro en modificar la contraseña de este usuario?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    if (opc == 0) {
+                        int i = objUsu.modificarPass(cod, txtP.getText(), txtP1.getText());
+                        if (i == 0) {
+                            JOptionPane.showMessageDialog(null, "Contraseña modificada correctamente");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al modificar contraseña: " + e.getMessage());
