@@ -1000,6 +1000,8 @@ public class jdManUsuario extends javax.swing.JDialog {
                     txtUsu.setText(rsUsu.getString("usuario"));
                     cboxEstado.setSelectedItem(estado);
                     cboxSede.setSelectedItem(rsUsu.getString("sede"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "El código ingresado no existe", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                 }
             }
         } catch (Exception ex) {

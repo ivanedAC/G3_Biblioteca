@@ -13,42 +13,57 @@ import java.util.ArrayList;
  * @author Edgar
  */
 public class clsLibro {
+
     String strSQL;
     clsJDBC objConectar = new clsJDBC();
     ResultSet rs;
-    
-    public String generarEstructuraArray(ArrayList x){
+
+    public String generarEstructuraArray(ArrayList x) {
         String normal = "Array[";
         int i = 0;
         for (Object indice : x) {
-           normal += indice;
-           if(i!=x.size()-1){
-               normal += ",";
-           } else {
-               normal += "]";
-           }
-           i++;
+            normal += indice;
+            if (i != x.size() - 1) {
+                normal += ",";
+            } else {
+                normal += "]";
+            }
+            i++;
         }
         return normal;
     }
-    public ResultSet buscarCodigosAutoresPorISBN(String ISBN) throws Exception{
-        strSQL = String.format("select autorcodigo from libro li INNER JOIN autor_libro au ON li.isbn = au.isbn where li.isbn = '%s'",ISBN);
+
+    public ResultSet buscarCodigosAutoresPorISBN(String ISBN) throws Exception {
+        strSQL = String.format("select autorcodigo from libro li INNER JOIN autor_libro au ON li.isbn = au.isbn where li.isbn = '%s'", ISBN);
         try {
-           rs = objConectar.consultar(strSQL); 
-           return rs;
+            rs = objConectar.consultar(strSQL);
+            return rs;
         } catch (Exception e) {
-             throw new Exception("Error al buscar Autores por ISBN -->" + e.getMessage());
+            throw new Exception("Error al buscar Autores por ISBN -->" + e.getMessage());
         }
     }
-    public ResultSet buscarCodigosCategoriasPorISBN(String ISBN) throws Exception{
-        strSQL = String.format("select cod_categoria from libro li INNER JOIN libro_categoria au ON li.isbn = au.isbn where li.isbn = '%s'",ISBN);
+
+    public ResultSet buscarCodigosCategoriasPorISBN(String ISBN) throws Exception {
+        strSQL = String.format("select cod_categoria from libro li INNER JOIN libro_categoria au ON li.isbn = au.isbn where li.isbn = '%s'", ISBN);
         try {
-           rs = objConectar.consultar(strSQL); 
-           return rs;
+            rs = objConectar.consultar(strSQL);
+            return rs;
         } catch (Exception e) {
-             throw new Exception("Error al buscar Categorias por ISBN -->" + e.getMessage());
+            throw new Exception("Error al buscar Categorias por ISBN -->" + e.getMessage());
         }
     }
+
+    public ResultSet listarLibrosParaPrestamos() throws Exception {
+        strSQL = "select distinct ll.* from listadolibros ll inner join ejemplar ejem on \n"
+                + "ejem.isbn = ll.isbn";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar libros -->" + e.getMessage());
+        }
+    }
+
     public ResultSet listarLibro() throws Exception {
         strSQL = "select * from listadoLibros";
         try {
@@ -58,8 +73,9 @@ public class clsLibro {
             throw new Exception("Error al listar libros -->" + e.getMessage());
         }
     }
+
     public ResultSet listarLibro(String isbn) throws Exception {
-        strSQL = "select * from listadoLibros where isbn ='"+isbn+"'";
+        strSQL = "select * from listadoLibros where isbn ='" + isbn + "'";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
@@ -68,22 +84,22 @@ public class clsLibro {
         }
     }
 
-    public ResultSet registrarLibro(String isbn,Integer editorial, String nombre,Integer num_pagina, Integer edicion, Integer cod_form, Integer cod_tipo, Integer idioma, ArrayList autores, ArrayList categorias) throws Exception {
-        strSQL = String.format("SELECT pa_insert_libro('%s', %d, '%s', %d, %d, %d, %d, %d,",isbn,editorial,nombre, num_pagina, edicion, cod_form,cod_tipo, idioma);
-        if(autores.isEmpty()){
+    public ResultSet registrarLibro(String isbn, Integer editorial, String nombre, Integer num_pagina, Integer edicion, Integer cod_form, Integer cod_tipo, Integer idioma, ArrayList autores, ArrayList categorias) throws Exception {
+        strSQL = String.format("SELECT pa_insert_libro('%s', %d, '%s', %d, %d, %d, %d, %d,", isbn, editorial, nombre, num_pagina, edicion, cod_form, cod_tipo, idioma);
+        if (autores.isEmpty()) {
             strSQL += "null,";
-            if(categorias.isEmpty()){
-                strSQL+= "null";
+            if (categorias.isEmpty()) {
+                strSQL += "null";
             } else {
-                strSQL+= generarEstructuraArray(categorias);
+                strSQL += generarEstructuraArray(categorias);
             }
-            
+
         } else {
             strSQL += generarEstructuraArray(autores) + ",";
-            if(categorias.isEmpty()){
-                strSQL+= "null";
+            if (categorias.isEmpty()) {
+                strSQL += "null";
             } else {
-                strSQL+= generarEstructuraArray(categorias);
+                strSQL += generarEstructuraArray(categorias);
             }
         }
         strSQL += ") as resultado";
@@ -106,7 +122,7 @@ public class clsLibro {
     }
 
     public ResultSet eliminarLibro(String isbn) throws Exception {
-        strSQL = String.format("SELECT pa_delete_libro('%s') as resultado",isbn);
+        strSQL = String.format("SELECT pa_delete_libro('%s') as resultado", isbn);
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
@@ -115,22 +131,22 @@ public class clsLibro {
         }
     }
 
-    public ResultSet actualizarLibro(String isbn,Integer editorial, String nombre,Integer num_pagina, Integer edicion, Integer cod_form, Integer cod_tipo, Integer idioma, ArrayList autores, ArrayList categorias) throws Exception {
-        strSQL = String.format("SELECT pa_update_libro('%s', %d, '%s', %d, %d, %d, %d, %d,",isbn,editorial,nombre, num_pagina, edicion, cod_form,cod_tipo, idioma);
-        if(autores.isEmpty()){
+    public ResultSet actualizarLibro(String isbn, Integer editorial, String nombre, Integer num_pagina, Integer edicion, Integer cod_form, Integer cod_tipo, Integer idioma, ArrayList autores, ArrayList categorias) throws Exception {
+        strSQL = String.format("SELECT pa_update_libro('%s', %d, '%s', %d, %d, %d, %d, %d,", isbn, editorial, nombre, num_pagina, edicion, cod_form, cod_tipo, idioma);
+        if (autores.isEmpty()) {
             strSQL += "null,";
-            if(categorias.isEmpty()){
-                strSQL+= "null";
+            if (categorias.isEmpty()) {
+                strSQL += "null";
             } else {
-                strSQL+= generarEstructuraArray(categorias);
+                strSQL += generarEstructuraArray(categorias);
             }
-            
+
         } else {
             strSQL += generarEstructuraArray(autores) + ",";
-            if(categorias.isEmpty()){
-                strSQL+= "null";
+            if (categorias.isEmpty()) {
+                strSQL += "null";
             } else {
-                strSQL+= generarEstructuraArray(categorias);
+                strSQL += generarEstructuraArray(categorias);
             }
         }
         strSQL += ") as resultado";

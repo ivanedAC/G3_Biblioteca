@@ -16,6 +16,9 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.text.JTextComponent;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,6 +29,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     clsPrestamo objPrestamo = new clsPrestamo();
     clsCliente objCliente = new clsCliente();
     clsEjemplar objEjem = new clsEjemplar();
+    clsTipoDocumento objTDoc = new clsTipoDocumento();
 
     /**
      * Creates new form jdTranPrestamo
@@ -33,6 +37,93 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     public jdTranPrestamo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    private void llenarTablaInicial() {
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        modelo.addColumn("Código");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("ISBN");
+        modelo.addColumn("Estado");
+        modelo.addColumn("Editorial");
+        modelo.addColumn("Sede");
+        tblDetalles.setModel(modelo);
+    }
+
+    private void mostrarDatosCliente(Integer cod) throws Exception {
+        ResultSet rsCli = objCliente.buscarClientePorCodigo(cod);
+        if (rsCli.next()) {
+            String nom = rsCli.getString("nombres");
+            String apeP = rsCli.getString("ape_paterno");
+            String apeM = rsCli.getString("ape_materno");
+
+            lblCodCli.setText(rsCli.getString("cod_cliente"));
+            if (rsCli.getString("razon_social") == null) {
+                lblTipoPerCli.setText("P. Natural");
+                lblNomCli.setText(nom + " " + apeP + " " + apeM);
+            } else {
+                lblTipoPerCli.setText("P. Jurídica");
+                lblNomCli.setText(nom);
+            }
+
+            lblTipoDocCli.setText(objTDoc.nombreTipoDocumento(rsCli.getInt("cod_tipo_doc")));
+            lblNroDocCli.setText(rsCli.getString("numero_documento"));
+        }
+    }
+
+    private void agregarEjemplar(String isbn) throws Exception {
+        try {
+            ResultSet rsEjems = objEjem.obtenerEjemplares(isbn);
+            ResultSet rsEjem = null;
+            DefaultTableModel modelo = (DefaultTableModel) tblDetalles.getModel();
+            boolean repetido = false;
+
+            while (rsEjems.next()) {
+                if (rsEjems.getString("sede").equals(clsUsuarioSTATIC.sede)) {
+                    rsEjem = objEjem.buscarPorCodigo(rsEjems.getInt("codigo"));
+                    break;
+                }
+            }
+
+            for (int i = 0; i < tblDetalles.getRowCount(); i++) {
+                if (tblDetalles.getValueAt(i, 2).toString().equals(isbn)) {
+                    repetido = true;
+                }
+            }
+
+            if (repetido) {
+                JOptionPane.showMessageDialog(null, "No se puede llevar dos ejemplares del mismo libro", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
+            } else {
+                if (rsEjem == null) {
+                    JOptionPane.showMessageDialog(null, "El libro seleccionado no tiene ejemplares disponibles en esta sede");
+                } else if (rsEjem.next()) {
+                    modelo.addRow(new Object[]{rsEjem.getString("codigo"), rsEjem.getString("libro"),
+                        rsEjem.getString("isbn"), rsEjem.getString("editorial"), rsEjem.getString("sede"), rsEjem.getString("estado")});
+                }
+            }
+            tblDetalles.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private void eliminarEjemplar(int cod) {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblDetalles.getModel();
+            for (int i = 0; i < tblDetalles.getRowCount(); i++) {
+                if (Integer.parseInt(String.valueOf(tblDetalles.getValueAt(i, 0))) == cod) {
+                    modelo.removeRow(i);
+                }
+            }
+            tblDetalles.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
     }
 
     private void mostrarFechaLim() {
@@ -48,7 +139,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         dateTextField.setEditable(false);
         dateTextField.setBackground(Color.WHITE); // Fondo blanco para que se vea igual
         dateTextField.setForeground(Color.BLACK);
-        
+
         for (Component comp : calendarFLim.getComponents()) {
             if (comp instanceof JButton) {
                 comp.setEnabled(false); // Deshabilitar el botón para evitar abrir el calendario
@@ -74,28 +165,35 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         spnHora = new javax.swing.JSpinner();
         spnMin = new javax.swing.JSpinner();
+        btnAgregarEjem2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtNomCli = new javax.swing.JLabel();
-        txtCodCli = new javax.swing.JTextField();
-        txtNroDocCli = new javax.swing.JLabel();
+        lblNomCli = new javax.swing.JLabel();
+        lblNroDocCli = new javax.swing.JLabel();
         btnNuevoCli = new javax.swing.JButton();
         btnElegirCli = new javax.swing.JButton();
+        lblCodCli = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        lblTipoPerCli = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        lblTipoDocCli = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDetalles = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txtNomEjem = new javax.swing.JLabel();
-        txtCodEjem = new javax.swing.JTextField();
+        lblNomEjem = new javax.swing.JLabel();
         btnAgregarEjem = new javax.swing.JButton();
         btnEliminarEjem = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        txtISBNEjem = new javax.swing.JLabel();
+        lblISBNEjem = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        lblEditorialEjem = new javax.swing.JLabel();
+        lblCodEjem = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -131,6 +229,8 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         JFormattedTextField txtField2 = ((JSpinner.DefaultEditor) spnMin.getEditor()).getTextField();
         txtField2.setEditable(false);
 
+        btnAgregarEjem2.setText("Buscar");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -141,19 +241,21 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCodPre, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodPre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAgregarEjem2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
-                        .addGap(32, 32, 32)
+                        .addGap(18, 18, 18)
                         .addComponent(calendarFLim, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
                         .addComponent(spnHora, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spnMin, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +274,8 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
                         .addComponent(jLabel6)
-                        .addComponent(txtCodPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCodPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgregarEjem2)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -184,15 +287,35 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
         jLabel4.setText("Código:");
 
-        jLabel5.setText("Nro Documento:");
+        jLabel5.setText("Nro Doc:");
 
-        txtNomCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblNomCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        txtNroDocCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblNroDocCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnNuevoCli.setText("Nuevo");
+        btnNuevoCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoCliActionPerformed(evt);
+            }
+        });
 
         btnElegirCli.setText("Elegir Cliente");
+        btnElegirCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElegirCliActionPerformed(evt);
+            }
+        });
+
+        lblCodCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel9.setText("Tipo Persona:");
+
+        lblTipoPerCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel10.setText("Tipo Doc:");
+
+        lblTipoDocCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -203,80 +326,114 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel10))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(125, 125, 125)
-                                .addComponent(txtNroDocCli, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblTipoDocCli, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtNomCli, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCodCli, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                                .addComponent(btnElegirCli)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnNuevoCli)
-                                .addGap(163, 163, 163))))
+                                .addComponent(lblNroDocCli, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblCodCli, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblTipoPerCli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblNomCli, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnElegirCli)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnNuevoCli)
+                        .addGap(35, 35, 35))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(133, 133, 133))))
+                        .addGap(53, 53, 53))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtCodCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevoCli)
-                    .addComponent(btnElegirCli))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnElegirCli)
+                            .addComponent(btnNuevoCli)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblCodCli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblTipoPerCli, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNomCli, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtNomCli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNroDocCli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(lblNroDocCli, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(lblTipoDocCli, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel11.setText("EJEMPLARES:");
+        jLabel11.setText("EJEMPLARES");
 
         tblDetalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
+        tblDetalles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDetallesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDetalles);
 
         jLabel12.setText("Código:");
 
         jLabel13.setText("Nombre:");
 
-        txtNomEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblNomEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnAgregarEjem.setText("Agregar");
+        btnAgregarEjem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarEjemActionPerformed(evt);
+            }
+        });
 
         btnEliminarEjem.setText("Eliminar");
+        btnEliminarEjem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarEjemActionPerformed(evt);
+            }
+        });
 
         jLabel15.setText("ISBN:");
 
-        txtISBNEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblISBNEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel16.setText("Editorial:");
+
+        lblEditorialEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lblCodEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -293,43 +450,50 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                             .addComponent(jLabel11)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13))))
+                                .addComponent(jLabel13))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtCodEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblCodEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtISBNEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(txtNomEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregarEjem)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminarEjem)
-                        .addGap(45, 45, 45))))
+                                .addComponent(lblISBNEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblEditorialEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblNomEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgregarEjem)
+                            .addComponent(btnEliminarEjem))
+                        .addGap(41, 41, 41))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel12)
-                        .addComponent(txtCodEjem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel15))
-                    .addComponent(txtISBNEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtNomEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblCodEjem, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel15))
+                            .addComponent(lblEditorialEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblISBNEjem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(13, 13, 13)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNomEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnAgregarEjem)
+                        .addGap(18, 18, 18)
                         .addComponent(btnEliminarEjem)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,6 +503,11 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
 
@@ -388,7 +557,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -403,6 +572,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             // TODO add your handling code here:
             txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
             mostrarFechaLim();
+            llenarTablaInicial();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -419,12 +589,100 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_spnHoraStateChanged
 
+    private void btnNuevoCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoCliActionPerformed
+        // TODO add your handling code here:
+        jdManCliente objJd = new jdManCliente(null, true);
+        objJd.setLocationRelativeTo(null);
+        objJd.setVisible(true);
+    }//GEN-LAST:event_btnNuevoCliActionPerformed
+
+    private void btnElegirCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirCliActionPerformed
+        try {
+            // TODO add your handling code here:
+            jdBuscarCliente objJd = new jdBuscarCliente(null, true);
+            objJd.setLocationRelativeTo(null);
+            objJd.setVisible(true);
+            mostrarDatosCliente(objJd.codCli);
+        } catch (Exception ex) {
+            Logger.getLogger(jdTranPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnElegirCliActionPerformed
+
+    private void btnAgregarEjemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEjemActionPerformed
+        // TODO add your handling code here:
+        jdAgregarEjemplar objJd = new jdAgregarEjemplar(null, true);
+        objJd.setLocationRelativeTo(null);
+        objJd.setVisible(true);
+        String isbn = objJd.isbn;
+        try {
+            if (tblDetalles.getRowCount() == 3) {
+                JOptionPane.showMessageDialog(null, "Solo se puede llevar 3 ejemplares en un préstamo");
+            } else {
+                agregarEjemplar(isbn);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
+    }//GEN-LAST:event_btnAgregarEjemActionPerformed
+
+    private void btnEliminarEjemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEjemActionPerformed
+        // TODO add your handling code here:
+        if (tblDetalles.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un libro a eliminar del préstamo!");
+        } else {
+            if (JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este libro del préstamo?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+                lblCodEjem.setText("");
+                lblNomEjem.setText("");
+                lblEditorialEjem.setText("");
+                lblISBNEjem.setText("");
+                eliminarEjemplar(Integer.parseInt(tblDetalles.getValueAt(tblDetalles.getSelectedRow(), 0).toString()));
+            }
+        }
+
+
+    }//GEN-LAST:event_btnEliminarEjemActionPerformed
+
+    private void tblDetallesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetallesMouseClicked
+        try {
+            // TODO add your handling code here:
+            ResultSet rsEjem = objEjem.buscarPorCodigo(Integer.parseInt(tblDetalles.getValueAt(tblDetalles.getSelectedRow(), 0).toString()));
+            if (rsEjem.next()) {
+                lblCodEjem.setText(rsEjem.getString("codigo"));
+                lblNomEjem.setText(rsEjem.getString("libro"));
+                lblISBNEjem.setText(rsEjem.getString("isbn"));
+                lblEditorialEjem.setText(rsEjem.getString("editorial"));
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_tblDetallesMouseClicked
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            // TODO add your handling code here:
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fechita = sdf.format(calendarFLim.getCalendar().getTime());
+            
+            objPrestamo.registrarPrestamo(Integer.valueOf(txtCodPre.getText()),
+                    Integer.valueOf(lblCodCli.getText()), fechita , spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles);
+            JOptionPane.showMessageDialog(null, "Préstamo registrado exitosamente");
+            
+            txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
+            mostrarFechaLim();
+            llenarTablaInicial();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarEjem;
+    private javax.swing.JButton btnAgregarEjem2;
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnElegirCli;
     private javax.swing.JButton btnEliminarEjem;
@@ -433,10 +691,12 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private javax.swing.JButton btnSalir;
     private com.toedter.calendar.JDateChooser calendarFLim;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -444,20 +704,24 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCodCli;
+    private javax.swing.JLabel lblCodEjem;
+    private javax.swing.JLabel lblEditorialEjem;
+    private javax.swing.JLabel lblISBNEjem;
+    private javax.swing.JLabel lblNomCli;
+    private javax.swing.JLabel lblNomEjem;
+    private javax.swing.JLabel lblNroDocCli;
+    private javax.swing.JLabel lblTipoDocCli;
+    private javax.swing.JLabel lblTipoPerCli;
     private javax.swing.JSpinner spnHora;
     private javax.swing.JSpinner spnMin;
     private javax.swing.JTable tblDetalles;
-    private javax.swing.JTextField txtCodCli;
-    private javax.swing.JTextField txtCodEjem;
     private javax.swing.JTextField txtCodPre;
-    private javax.swing.JLabel txtISBNEjem;
-    private javax.swing.JLabel txtNomCli;
-    private javax.swing.JLabel txtNomEjem;
-    private javax.swing.JLabel txtNroDocCli;
     // End of variables declaration//GEN-END:variables
 }
