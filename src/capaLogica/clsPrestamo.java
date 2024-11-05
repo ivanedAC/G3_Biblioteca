@@ -39,6 +39,16 @@ public class clsPrestamo {
         }
     }
     
+    public ResultSet buscarPrestamos(Integer cli) throws Exception {
+        strSQL = "select * from prestamo where cod_cliente = " + cli;
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar préstamo: " + e.getMessage());
+        }
+    }
+    
     public Integer generarCorrelativo() throws Exception {
         strSQL = "select COALESCE(Max(correlativo),0)+1 as codigo from prestamo";
         try {
@@ -68,12 +78,20 @@ public class clsPrestamo {
             con.setAutoCommit(false);
             sent = con.createStatement();
             ResultSet rsCliente = objCli.buscarClientePorCodigo(cli);
+            ResultSet rsPresCli = buscarPrestamos(cli);
             ResultSet rsEjem;
 
             if (rsCliente.next()) {
                 if (!rsCliente.getString("estado").equals("A")) {
                     throw new Exception("Error, el estado del cliente no le permite tramitar préstamos");
                 } else {
+                    
+                    while (rsPresCli.next()){
+                        if (rsPresCli.getString("estado").equals("P")){
+                            throw new Exception("El cliente seleccionado tiene algún préstamo pendientes");
+                        }
+                    }
+                    
                     strSQL = "INSERT INTO PRESTAMO values (" + codPre + "," + clsUsuarioSTATIC.codigo + ","
                             + cli + ", CURRENT_DATE,(SELECT CURRENT_TIME::time(0)),'" + f_limite + "','" + h_limite + "'," + "'P'," + generarCorrelativo() + ");";
                     sent.executeUpdate(strSQL);

@@ -228,6 +228,12 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
         jLabel7.setText("Fecha Límite:");
 
+        txtCodPre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodPreKeyTyped(evt);
+            }
+        });
+
         jLabel8.setText("Hora Límite:");
 
         spnHora.setModel(new javax.swing.SpinnerNumberModel(7, 7, 18, 1));
@@ -681,7 +687,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
-            ResultSet rsPre = objPrestamo.buscarPrestamo(Integer.valueOf(txtCodPre.getText()));
             if (txtCodPre.getText().isBlank()) {
                 JOptionPane.showMessageDialog(null, "El código ingresado no es válido");
             } else {
@@ -691,19 +696,36 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                     if (tblDetalles.getRowCount() == 0) {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un ejemplar a prestar");
                     } else {
+                        ResultSet rsPre = objPrestamo.buscarPrestamo(Integer.valueOf(txtCodPre.getText()));
+                        ResultSet rsPresCli = objPrestamo.buscarPrestamos(Integer.valueOf(lblCodCli.getText()));
+                        boolean permitir = true;
+
                         if (rsPre.next()) {
                             JOptionPane.showMessageDialog(null, "El código de préstamo ingresado ya existe");
                         } else {
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                            String fechita = sdf.format(calendarFLim.getCalendar().getTime());
 
-                            objPrestamo.registrarPrestamo(Integer.valueOf(txtCodPre.getText()),
-                                    Integer.valueOf(lblCodCli.getText()), fechita, spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles);
-                            JOptionPane.showMessageDialog(null, "Préstamo registrado exitosamente");
-                            limpiarTodo();
-                            txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
-                            mostrarFechaLim();
-                            llenarTablaInicial();
+                            while (rsPresCli.next()) {
+                                if (rsPresCli.getString("estado").equals("P")) {
+                                    permitir = false;
+                                    break;
+                                }
+                            }
+
+                            if (permitir) {
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                String fechita = sdf.format(calendarFLim.getCalendar().getTime());
+
+                                objPrestamo.registrarPrestamo(Integer.valueOf(txtCodPre.getText()),
+                                        Integer.valueOf(lblCodCli.getText()), fechita, spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles);
+                                JOptionPane.showMessageDialog(null, "Préstamo registrado exitosamente");
+                                limpiarTodo();
+                                txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
+                                mostrarFechaLim();
+                                llenarTablaInicial();
+
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Este cliente no puede realizar préstamos porque aún tiene alguno vigente, debe tramitar su devolución/anulación primero", "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
+                            }
                         }
                     }
                 }
@@ -721,12 +743,16 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             ResultSet rsPre = objPrestamo.buscarPrestamo(Integer.valueOf(txtCodPre.getText()));
             if (rsPre.next()) {
                 if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular el préstamo con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
-                    objPrestamo.anularPrestamo(rsPre.getInt("codigo"));
-                    JOptionPane.showMessageDialog(null, "Préstamo anulado correctamente");
-                    limpiarTodo();
-                    txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
-                    mostrarFechaLim();
-                    llenarTablaInicial();
+                    if (rsPre.getString("estado").equals("P")) {
+                        objPrestamo.anularPrestamo(rsPre.getInt("codigo"));
+                        JOptionPane.showMessageDialog(null, "Préstamo anulado correctamente");
+                        limpiarTodo();
+                        txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
+                        mostrarFechaLim();
+                        llenarTablaInicial();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El préstamo que intenta anular no se encuentra vigente", "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "El código ingresado no existe");
@@ -742,6 +768,14 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             this.dispose();
         }
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtCodPreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodPreKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodPreKeyTyped
 
     /**
      * @param args the command line arguments

@@ -843,6 +843,7 @@ public class jdManUsuario extends javax.swing.JDialog {
                 limpiarControles();
                 txtCode.setText(String.valueOf(objUsu.generarCodigoUsuario()));
                 txtNroDoc.requestFocus();
+                txtCode.setEditable(false);
             } else {
                 if (!txtCode.getText().isBlank() && !txtNroDoc.getText().isBlank() && !txtNom.getText().isBlank()
                         && !txtApePat.getText().isBlank() && !txtApeMat.getText().isBlank() && !txtDir.getText().isBlank()
@@ -909,6 +910,7 @@ public class jdManUsuario extends javax.swing.JDialog {
                                         txtUsu.getText(), txtPass.getText(), String.valueOf(cboxEstado.getSelectedItem().toString().charAt(0)),
                                         objSede.obtenerSede(cboxSede.getSelectedItem().toString()));
                                 JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
+                                txtCode.setEditable(true);
                                 btnNuevo.setText("Nuevo");
                                 listarUsuarios();
                                 limpiarControles();
