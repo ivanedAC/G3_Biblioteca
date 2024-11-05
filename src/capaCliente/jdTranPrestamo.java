@@ -228,6 +228,12 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
         jLabel7.setText("Fecha Límite:");
 
+        txtCodPre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodPreKeyTyped(evt);
+            }
+        });
+
         jLabel8.setText("Hora Límite:");
 
         spnHora.setModel(new javax.swing.SpinnerNumberModel(7, 7, 18, 1));
@@ -742,6 +748,14 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             this.dispose();
         }
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtCodPreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodPreKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodPreKeyTyped
 
     /**
      * @param args the command line arguments
