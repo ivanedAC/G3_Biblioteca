@@ -49,9 +49,10 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         modelo.addColumn("Código");
         modelo.addColumn("Nombre");
         modelo.addColumn("ISBN");
-        modelo.addColumn("Estado");
         modelo.addColumn("Editorial");
         modelo.addColumn("Sede");
+        modelo.addColumn("Estado");
+
         tblDetalles.setModel(modelo);
     }
 
@@ -147,6 +148,20 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         }
     }
 
+    private void limpiarTodo() {
+        lblCodCli.setText("");
+        lblNomCli.setText("");
+        lblTipoPerCli.setText("");
+        lblTipoDocCli.setText("");
+        lblNroDocCli.setText("");
+        lblCodEjem.setText("");
+        lblEditorialEjem.setText("");
+        lblISBNEjem.setText("");
+        lblNomEjem.setText("");
+        spnHora.setValue(7);
+        spnMin.setValue(0);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -165,7 +180,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         spnHora = new javax.swing.JSpinner();
         spnMin = new javax.swing.JSpinner();
-        btnAgregarEjem2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -229,8 +243,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         JFormattedTextField txtField2 = ((JSpinner.DefaultEditor) spnMin.getEditor()).getTextField();
         txtField2.setEditable(false);
 
-        btnAgregarEjem2.setText("Buscar");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -242,10 +254,8 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodPre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAgregarEjem2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCodPre, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                        .addGap(96, 96, 96)
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
                         .addComponent(calendarFLim, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -274,8 +284,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
                         .addComponent(jLabel6)
-                        .addComponent(txtCodPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAgregarEjem2)))
+                        .addComponent(txtCodPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -510,8 +519,18 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         });
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         btnAnular.setText("Anular");
+        btnAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -615,10 +634,12 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         objJd.setVisible(true);
         String isbn = objJd.isbn;
         try {
-            if (tblDetalles.getRowCount() == 3) {
-                JOptionPane.showMessageDialog(null, "Solo se puede llevar 3 ejemplares en un préstamo");
-            } else {
-                agregarEjemplar(isbn);
+            if (!isbn.equals("")) {
+                if (tblDetalles.getRowCount() == 3) {
+                    JOptionPane.showMessageDialog(null, "Solo se puede llevar 3 ejemplares en un préstamo");
+                } else {
+                    agregarEjemplar(isbn);
+                }
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -660,21 +681,67 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
-            // TODO add your handling code here:
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String fechita = sdf.format(calendarFLim.getCalendar().getTime());
-            
-            objPrestamo.registrarPrestamo(Integer.valueOf(txtCodPre.getText()),
-                    Integer.valueOf(lblCodCli.getText()), fechita , spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles);
-            JOptionPane.showMessageDialog(null, "Préstamo registrado exitosamente");
-            
-            txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
-            mostrarFechaLim();
-            llenarTablaInicial();
+            ResultSet rsPre = objPrestamo.buscarPrestamo(Integer.valueOf(txtCodPre.getText()));
+            if (txtCodPre.getText().isBlank()) {
+                JOptionPane.showMessageDialog(null, "El código ingresado no es válido");
+            } else {
+                if (lblCodCli.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente");
+                } else {
+                    if (tblDetalles.getRowCount() == 0) {
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un ejemplar a prestar");
+                    } else {
+                        if (rsPre.next()) {
+                            JOptionPane.showMessageDialog(null, "El código de préstamo ingresado ya existe");
+                        } else {
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            String fechita = sdf.format(calendarFLim.getCalendar().getTime());
+
+                            objPrestamo.registrarPrestamo(Integer.valueOf(txtCodPre.getText()),
+                                    Integer.valueOf(lblCodCli.getText()), fechita, spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles);
+                            JOptionPane.showMessageDialog(null, "Préstamo registrado exitosamente");
+                            limpiarTodo();
+                            txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
+                            mostrarFechaLim();
+                            llenarTablaInicial();
+                        }
+                    }
+                }
+
+            }
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
+        try {
+            // TODO add your handling code here:
+            ResultSet rsPre = objPrestamo.buscarPrestamo(Integer.valueOf(txtCodPre.getText()));
+            if (rsPre.next()) {
+                if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular el préstamo con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+                    objPrestamo.anularPrestamo(rsPre.getInt("codigo"));
+                    JOptionPane.showMessageDialog(null, "Préstamo anulado correctamente");
+                    limpiarTodo();
+                    txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
+                    mostrarFechaLim();
+                    llenarTablaInicial();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El código ingresado no existe");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnAnularActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(null, "¿Está seguro de salir?, Perderá todos los datos que haya ingresado.", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -682,7 +749,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarEjem;
-    private javax.swing.JButton btnAgregarEjem2;
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnElegirCli;
     private javax.swing.JButton btnEliminarEjem;

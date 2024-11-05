@@ -6,6 +6,11 @@ package capaLogica;
 
 import capaDatos.clsJDBC;
 import java.sql.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.JTable;
 
 /**
@@ -33,16 +38,23 @@ public class clsPrestamo {
             throw new Exception("Error al buscar préstamo: " + e.getMessage());
         }
     }
-
-    public Integer generarCodPrestamo() throws Exception {
-        strSQL = "select COALESCE(Max(codigo),0)+1 as codigo from prestamo";
-        Integer codPre = -1;
+    
+    public Integer generarCorrelativo() throws Exception {
+        strSQL = "select COALESCE(Max(correlativo),0)+1 as codigo from prestamo";
         try {
             rs = objConectar.consultar(strSQL);
             while (rs.next()) {
-                codPre = rs.getInt("codigo");
+                return rs.getInt("codigo");
             }
-            String cod = "" + clsUsuarioSTATIC.codigo + objSede.obtenerSede(clsUsuarioSTATIC.sede) + codPre;
+        } catch (Exception e) {
+            throw new Exception("Error al generar correlativo de préstamo: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public Integer generarCodPrestamo() throws Exception {
+        try {
+            String cod = "" + clsUsuarioSTATIC.codigo + objSede.obtenerSede(clsUsuarioSTATIC.sede) + generarCorrelativo();
             return Integer.valueOf(cod);
         } catch (Exception e) {
             throw new Exception("Error al generar código de préstamo: " + e.getMessage());
@@ -63,7 +75,7 @@ public class clsPrestamo {
                     throw new Exception("Error, el estado del cliente no le permite tramitar préstamos");
                 } else {
                     strSQL = "INSERT INTO PRESTAMO values (" + codPre + "," + clsUsuarioSTATIC.codigo + ","
-                            + cli + ", CURRENT_DATE, CURRENT_TIME,'" + f_limite + "','" + h_limite + "'," + "'P');";
+                            + cli + ", CURRENT_DATE,(SELECT CURRENT_TIME::time(0)),'" + f_limite + "','" + h_limite + "'," + "'P'," + generarCorrelativo() + ");";
                     sent.executeUpdate(strSQL);
                     int c = tblDetalles.getRowCount();
 
@@ -103,6 +115,75 @@ public class clsPrestamo {
             throw new Exception("Error al registrar préstamo: " + e.getMessage());
         } finally {
             objConectar.desconectar();
+        }
+    }
+
+    public boolean validarHoraAnularPrestamo(String fecha, String hora) throws Exception {
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        try {
+            LocalDate fechaIngresada = LocalDate.parse(fecha, formatoFecha);
+            LocalTime horaIngresada = LocalTime.parse(hora, formatoHora).withNano(0); // Elimina precisión de microsegundos
+
+            LocalDate fechaActual = LocalDate.now();
+            LocalTime horaActual = LocalTime.now();
+
+            if (!fechaIngresada.equals(fechaActual)) {
+                return false;
+            }
+
+            if (horaIngresada.isAfter(horaActual)) {
+                return false;
+            }
+
+            long minutosDiferencia = Duration.between(horaIngresada, horaActual).toMinutes();
+
+            return minutosDiferencia <= 30;
+
+        } catch (DateTimeParseException e) {
+            System.err.println("Error de formato en la fecha o la hora: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void anularPrestamo(Integer cod) throws Exception {
+        try {
+            objConectar.conectar();
+            con = objConectar.getCon();
+            con.setAutoCommit(false);
+            sent = con.createStatement();
+
+            ResultSet rsPre = buscarPrestamo(cod);
+            String fecha = "", hora = "", estado = "";
+            boolean validar = false;
+
+            if (rsPre.next()) {
+                fecha = rsPre.getString("f_registro");
+                hora = rsPre.getString("h_registro");
+                validar = validarHoraAnularPrestamo(fecha, hora);
+                estado = rsPre.getString("estado");
+            } else {
+                throw new Exception("El préstamo ingresado no existe");
+            }
+
+            if (validar) {
+                if (estado.equals("P")) {
+                    strSQL = "UPDATE PRESTAMO SET ESTADO = 'A' where codigo =" + cod + ";";
+                    sent.executeUpdate(strSQL);
+                    strSQL = "update ejemplar set estado = 'D' where codigo in (select cod_ejemplar from detalle_prestamo where cod_prestamo ="
+                            + cod + ");";
+                    sent.executeUpdate(strSQL);
+                    con.commit();
+                } else {
+                    throw new Exception("No se pueden anular préstamos que no están pendientes");
+                }
+            } else {
+                throw new Exception("El préstamo elegido ya no se puede anular, debe tramitar la devolución");
+            }
+        } catch (Exception e) {
+            con.rollback();
+            throw new Exception("Error al anular préstamo: " + e.getMessage());
         }
     }
 

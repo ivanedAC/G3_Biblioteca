@@ -28,7 +28,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
      * Creates new form jdManLibro
      */
     clsLibro objLibro = new clsLibro();
-    public String isbn;
+    public String isbn = "";
 
     /**
      * Creates new form jdManLibro
