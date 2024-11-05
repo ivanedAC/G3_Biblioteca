@@ -50,6 +50,7 @@ public class jdManCategoria extends javax.swing.JDialog {
         txtCodigo.setText("");
         txtNombre.setText("");
         txtCodigo.requestFocus();
+        txtCodigo.setEditable(true);
     }
 
 
@@ -338,8 +339,7 @@ public class jdManCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-
-
+        String nombre = txtNombre.getText();
         try {
             if (btnNuevo.getText().equals("NUEVO")) {
                 btnNuevo.setText("GUARDAR");
@@ -347,7 +347,13 @@ public class jdManCategoria extends javax.swing.JDialog {
                 limpiarControles();
                 txtCodigo.setText(objCategoria.generarCodCategoria().toString());
                 txtNombre.requestFocus();
+                txtCodigo.setEditable(false);
             } else {
+                if (nombre.isBlank()) {
+                    JOptionPane.showMessageDialog(rootPane, "Debe ingresar un nombre para agregar un autor");
+                    limpiarControles();
+                    return;
+                }
                 btnNuevo.setText("NUEVO");
                 btnNuevo.setIcon(new ImageIcon("src/recursos/nuevo_32px.png"));
                 objCategoria.registrarCategoria(Integer.parseInt(txtCodigo.getText()), txtNombre.getText());
@@ -362,7 +368,7 @@ public class jdManCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        ResultSet rsCat = null;
+         ResultSet rsCat = null;
         try {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para realizar la búsqueda");
@@ -383,14 +389,22 @@ public class jdManCategoria extends javax.swing.JDialog {
     private void tblAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutorMouseClicked
         txtCodigo.setText(String.valueOf(tblAutor.getValueAt(tblAutor.getSelectedRow(),0)));
         btnBuscarActionPerformed(null);
+        nombreOriginal = txtNombre.getText();
 
     }//GEN-LAST:event_tblAutorMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+       ResultSet rs;
         try {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código a eliminar");
             } else {
+                rs = objCategoria.verificar(Integer.parseInt(txtCodigo.getText()));
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(rootPane, "No se puede eliminar porque está asociado a un proceso");
+                    limpiarControles();
+                    return;
+                }
                 int rp = 0;
                 rp = JOptionPane.showConfirmDialog(this,
                         "Estás seguro que deseas eliminar el código: " + txtCodigo.getText() + "\n" + txtNombre.getText(),
@@ -411,19 +425,23 @@ public class jdManCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int codigo;
+        String nombre = txtNombre.getText();
         try {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para actualizar");
-            } else if (txtNombre.getText().equals("")) {
+            } else if (nombre.isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un nombre de Categoria");
             } else {
+                codigo = objCategoria.categoriaNombre(nombreOriginal);
+                txtCodigo.setText(String.valueOf(codigo));
                 int rp = 0;
                 rp = JOptionPane.showConfirmDialog(this,
-                        "Estás seguro que deseas actualizar el: " + txtCodigo.getText() + "\n" + txtNombre.getText(),
+                        "Estás seguro que deseas actualizar el: " + txtCodigo.getText() + "\n" + nombreOriginal,
                         "Actualizar",
                         JOptionPane.YES_NO_OPTION);
                 if (rp == JOptionPane.YES_OPTION) {
-                    objCategoria.actualizarCategoria(Integer.parseInt(txtCodigo.getText()), txtNombre.getText());
+                    objCategoria.actualizarCategoria(Integer.parseInt(txtCodigo.getText()), nombre);
                     JOptionPane.showMessageDialog(this, "Se ha actualizado el codigo: " + txtCodigo.getText());
                     limpiarControles();
                     listarCategorias();
