@@ -40,6 +40,30 @@ public class clsAutor {
         return 0;
     }
 
+  
+    public ResultSet verificar(int cod) throws Exception {
+        strSQL = "select cod_categoria, isbn from libro_categoria where cod_categoria=" + cod;
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error " + e.getMessage());
+        }
+    }
+
+    public Integer categoriaNombre (String nom) throws Exception {
+        strSQL = "select nombre, codigo from categoria where nombre = '" + nom + "'";
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error " + e.getMessage());
+        }
+        return 0;
+    }  
+
   public  ResultSet verificar (int cod) throws Exception {
         strSQL = "select au.nombre, lb.nombre from autor_libro al inner join autor au on al.autorcodigo = au.codigo inner join libro lb on al.isbn = lb.isbn where au.codigo=" + cod;
         try {
