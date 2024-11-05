@@ -772,7 +772,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private void txtCodPreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodPreKeyTyped
         // TODO add your handling code here:
         Character objTecla = evt.getKeyChar();
-        if (!Character.isDigit(objTecla)) {
+        if (!Character.isDigit(objTecla)){
             evt.consume();
         }
     }//GEN-LAST:event_txtCodPreKeyTyped
