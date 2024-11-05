@@ -51,29 +51,6 @@ public class clsAutor {
         }
     }
 
-    public Integer categoriaNombre (String nom) throws Exception {
-        strSQL = "select nombre, codigo from categoria where nombre = '" + nom + "'";
-        try {
-            rs = objConectar.consultar(strSQL);
-            if (rs.next()) {
-                return rs.getInt("codigo");
-            }
-        } catch (Exception e) {
-            throw new Exception("Error " + e.getMessage());
-        }
-        return 0;
-    }  
-
-  public  ResultSet verificar (int cod) throws Exception {
-        strSQL = "select au.nombre, lb.nombre from autor_libro al inner join autor au on al.autorcodigo = au.codigo inner join libro lb on al.isbn = lb.isbn where au.codigo=" + cod;
-        try {
-            rs = objConectar.consultar(strSQL);
-            return rs;
-        } catch (Exception e) {
-            throw new Exception("El autor se encuentra asociado a un libro" + e.getMessage());
-        }
-    }
-
     public Integer generarCodAutor() throws Exception {
         strSQL = "select COALESCE(MAX(codigo),0)+1 as codigo from autor";
         try {

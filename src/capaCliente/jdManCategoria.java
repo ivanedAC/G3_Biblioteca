@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 public class jdManCategoria extends javax.swing.JDialog {
 
     clsCategoria objCategoria = new clsCategoria();
+    private String nombreOriginal;
 
     private void listarCategorias() {
         ResultSet rsCat = null;

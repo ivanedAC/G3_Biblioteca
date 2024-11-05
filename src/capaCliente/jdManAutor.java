@@ -20,6 +20,7 @@ public class jdManAutor extends javax.swing.JDialog {
 
     clsAutor objAutor = new clsAutor();
     clsPais objPais = new clsPais();
+    private String nombreOriginal;
 
     private void listarAutores() {
         ResultSet rsAutores = null;
