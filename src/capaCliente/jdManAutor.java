@@ -63,6 +63,7 @@ public class jdManAutor extends javax.swing.JDialog {
         cmbPais.setSelectedIndex(0);
         cmbSexo.setSelectedIndex(0);
         txtCodigo.requestFocus();
+        txtCodigo.setEditable(true);
     }
 
     private void listarPaises() {
@@ -400,6 +401,7 @@ public class jdManAutor extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         char sexo;
+        String nombre = txtNombre.getText();
 
         try {
             if (btnNuevo.getText().equals("NUEVO")) {
@@ -408,6 +410,7 @@ public class jdManAutor extends javax.swing.JDialog {
                 limpiarControles();
                 txtCodigo.setText(objAutor.generarCodAutor().toString());
                 txtNombre.requestFocus();
+                txtCodigo.setEditable(false);
             } else {
                 btnNuevo.setText("NUEVO");
                 btnNuevo.setIcon(new ImageIcon("src/recursos/nuevo_32px.png"));
@@ -416,6 +419,11 @@ public class jdManAutor extends javax.swing.JDialog {
                     sexo = 'M';
                 } else {
                     sexo = 'F';
+                }
+                if (nombre.isBlank()) {
+                    JOptionPane.showMessageDialog(rootPane, "Debe ingresar un nombre para agregar un autor");
+                    limpiarControles();
+                    return;
                 }
                 objAutor.registrarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex() + 1, txtNombre.getText(), sexo);
                 JOptionPane.showMessageDialog(this, "Registro exitoso del autor:  " + "\n" + txtNombre.getText());
@@ -458,14 +466,23 @@ public class jdManAutor extends javax.swing.JDialog {
     private void tblAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutorMouseClicked
         txtCodigo.setText(String.valueOf(tblAutor.getValueAt(tblAutor.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
+        nombreOriginal = txtNombre.getText();
 
     }//GEN-LAST:event_tblAutorMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        ResultSet rs;
         try {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código a eliminar");
             } else {
+                rs = objAutor.verificar(Integer.parseInt(txtCodigo.getText()));
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(rootPane, "No se puede eliminar porque está asociado a un proceso");
+                    limpiarControles();
+                    return;
+                }
+
                 int rp = 0;
                 rp = JOptionPane.showConfirmDialog(this,
                         "Estás seguro que deseas eliminar el código: " + txtCodigo.getText() + "\n" + txtNombre.getText(),
@@ -487,15 +504,19 @@ public class jdManAutor extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         char sexo;
+        int codigo;
+        String nombre = txtNombre.getText();
         try {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para actualizar");
-            } else if (txtNombre.getText().equals("")) {
+            } else if (nombre.isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un nombre de Autor");
             } else {
+                codigo = objAutor.autorNombre(nombreOriginal);
+                txtCodigo.setText(String.valueOf(codigo));
                 int rp = 0;
                 rp = JOptionPane.showConfirmDialog(this,
-                        "Estás seguro que deseas actualizar el: " + txtCodigo.getText() + "\n" + txtNombre.getText(),
+                        "Estás seguro que deseas actualizar el: " + txtCodigo.getText() + "\n" + nombre,
                         "Actualizar",
                         JOptionPane.YES_NO_OPTION);
                 if (rp == JOptionPane.YES_OPTION) {
@@ -503,8 +524,8 @@ public class jdManAutor extends javax.swing.JDialog {
                         sexo = 'M';
                     } else {
                         sexo = 'F';
-                    }
-                    objAutor.actualizarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex() + 1, txtNombre.getText(), sexo);
+                    }                  
+                    objAutor.actualizarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex() + 1, nombre, sexo);
                     JOptionPane.showMessageDialog(this, "Se ha actualizado el codigo: " + txtCodigo.getText());
                     limpiarControles();
                     listarAutores();
