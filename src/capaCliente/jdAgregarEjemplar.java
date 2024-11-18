@@ -33,6 +33,48 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
     /**
      * Creates new form jdManLibro
      */
+    public void busquedaAvanzada(String nombre) {
+        ResultSet rsLibro = null;
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ISBN");
+        modelo.addColumn("Editorial");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("N° de paginas");
+        modelo.addColumn("Edicion");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Formato");
+        modelo.addColumn("Idioma");
+        modelo.addColumn("Autores");
+        modelo.addColumn("Categorias");
+
+        try {
+            if (rbtnNombre.isSelected()) {
+                rsLibro = objLibro.listarLibrosParaPrestamosbusquedaAvanzadaNombre(nombre);
+            }else if(rbtnISBN.isSelected()){
+                rsLibro = objLibro.listarLibrosParaPrestamosbusquedaAvanzadaISBN(nombre);
+            }else{
+                rsLibro = objLibro.listarLibrosParaPrestamosbusquedaAvanzadaEditorial(nombre);
+            }
+            
+            while (rsLibro.next()) {
+                modelo.addRow(new Object[]{rsLibro.getString("isbn"),
+                    rsLibro.getString("editorial"),
+                    rsLibro.getString("libro_nombre"),
+                    rsLibro.getString("num_paginas"),
+                    rsLibro.getString("edicion"),
+                    rsLibro.getString("tipo"),
+                    rsLibro.getString("formato"),
+                    rsLibro.getString("idioma"),
+                    rsLibro.getString("autores"),
+                    rsLibro.getString("categorias")});
+            }
+            tblDatos.setModel(modelo);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error al listar en tabla" + e.getMessage());
+        }
+    }
+
     public void listarTabla() {
         ResultSet rsLibro = null;
         DefaultTableModel modelo = new DefaultTableModel();
@@ -67,11 +109,12 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "error al listar en tabla" + e.getMessage());
         }
     }
-    
+
     public jdAgregarEjemplar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         listarTabla();
+        rbtnNombre.setSelected(true);
     }
 
     /**
@@ -83,12 +126,17 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel5 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblDatos = new javax.swing.JTable();
+        txtbusquedaAvanzada = new javax.swing.JTextField();
+        rbtnNombre = new javax.swing.JRadioButton();
+        rbtnISBN = new javax.swing.JRadioButton();
+        rbtnEditorial = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -150,20 +198,56 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         ));
         jScrollPane4.setViewportView(tblDatos);
 
+        txtbusquedaAvanzada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtbusquedaAvanzadaActionPerformed(evt);
+            }
+        });
+        txtbusquedaAvanzada.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtbusquedaAvanzadaKeyReleased(evt);
+            }
+        });
+
+        buttonGroup1.add(rbtnNombre);
+        rbtnNombre.setText("Nombre");
+
+        buttonGroup1.add(rbtnISBN);
+        rbtnISBN.setText("ISBN");
+
+        buttonGroup1.add(rbtnEditorial);
+        rbtnEditorial.setText("Editorial");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(txtbusquedaAvanzada, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(rbtnNombre)
+                        .addGap(71, 71, 71)
+                        .addComponent(rbtnISBN)
+                        .addGap(66, 66, 66)
+                        .addComponent(rbtnEditorial)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtbusquedaAvanzada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbtnNombre)
+                    .addComponent(rbtnISBN)
+                    .addComponent(rbtnEditorial))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -198,7 +282,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        if (tblDatos.getSelectedRow() != -1){
+        if (tblDatos.getSelectedRow() != -1) {
             isbn = tblDatos.getValueAt(tblDatos.getSelectedRow(), 0).toString();
             this.dispose();
         } else {
@@ -206,12 +290,27 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void txtbusquedaAvanzadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbusquedaAvanzadaActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtbusquedaAvanzadaActionPerformed
+
+    private void txtbusquedaAvanzadaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbusquedaAvanzadaKeyReleased
+        busquedaAvanzada(txtbusquedaAvanzada.getText());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtbusquedaAvanzadaKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JRadioButton rbtnEditorial;
+    private javax.swing.JRadioButton rbtnISBN;
+    private javax.swing.JRadioButton rbtnNombre;
     private javax.swing.JTable tblDatos;
+    private javax.swing.JTextField txtbusquedaAvanzada;
     // End of variables declaration//GEN-END:variables
 }

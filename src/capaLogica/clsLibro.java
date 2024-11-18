@@ -63,6 +63,43 @@ public class clsLibro {
             throw new Exception("Error al listar libros -->" + e.getMessage());
         }
     }
+    public ResultSet listarLibrosParaPrestamosbusquedaAvanzadaNombre(String nombre) throws Exception {
+        strSQL = "select distinct ll.* from listadolibros ll inner join ejemplar ejem on \n"
+                + "ejem.isbn = ll.isbn \n"
+                + "where upper(ll.libro_nombre) LIKE upper('%"+nombre+"%')";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar libros -->" + e.getMessage());
+        }
+    }
+    
+    public ResultSet listarLibrosParaPrestamosbusquedaAvanzadaISBN(String isbn) throws Exception {
+        strSQL = "select distinct ll.* from listadolibros ll inner join ejemplar ejem on \n"
+                + "ejem.isbn = ll.isbn \n"
+                + "where upper(ll.isbn) LIKE upper('%"+isbn+"%')";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar libros -->" + e.getMessage());
+        }
+    }
+    
+    public ResultSet listarLibrosParaPrestamosbusquedaAvanzadaEditorial(String editorial) throws Exception {
+        strSQL = "select distinct ll.* from listadolibros ll inner join ejemplar ejem on \n"
+                + "ejem.isbn = ll.isbn \n"
+                + "where upper(ll.editorial) LIKE upper('%"+editorial+"%')";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar libros -->" + e.getMessage());
+        }
+    }
+    
+    
 
     public ResultSet listarLibro() throws Exception {
         strSQL = "select * from listadoLibros";
