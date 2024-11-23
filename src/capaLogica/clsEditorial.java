@@ -92,4 +92,17 @@ public class clsEditorial {
             throw new Exception("Error al buscar la editorial--->" +e.getMessage());
         }
     }
+
+    public Integer obtenerCodigoEditorial(String nom) throws Exception{
+        strSQL = "select * from editorial where nombre='"+nom+"'";
+        try {
+            rs=objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al buscar la editorial--->" +e.getMessage());
+        }
+        return 0;
+    }
 }
