@@ -49,6 +49,16 @@ public class clsPrestamo {
         }
     }
     
+    public ResultSet buscarPrestamoVigentes(Integer cli) throws Exception {
+        strSQL = "select * from prestamo where estado = 'P' and cod_cliente = " + cli;
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar préstamo: " + e.getMessage());
+        }
+    }
+    
     public Integer generarCorrelativo() throws Exception {
         strSQL = "select COALESCE(Max(correlativo),0)+1 as codigo from prestamo";
         try {
@@ -93,7 +103,7 @@ public class clsPrestamo {
                     }
                     
                     strSQL = "INSERT INTO PRESTAMO values (" + codPre + "," + clsUsuarioSTATIC.codigo + ","
-                            + cli + ", CURRENT_DATE,(SELECT CURRENT_TIME::time(0)),'" + f_limite + "','" + h_limite + "'," + "'P'," + generarCorrelativo() + ");";
+                            + cli + ", CURRENT_DATE,(SELECT CURRENT_TIME::time(0)),'" + f_limite + "','" + h_limite + "'," + "'P'," + generarCorrelativo() + "," + objSede.obtenerSede(clsUsuarioSTATIC.sede)+");";
                     sent.executeUpdate(strSQL);
                     int c = tblDetalles.getRowCount();
 

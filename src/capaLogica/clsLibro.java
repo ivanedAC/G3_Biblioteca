@@ -56,7 +56,7 @@ public class clsLibro {
     public ResultSet listarLibrosParaPrestamos() throws Exception {
         strSQL = "select distinct ll.* from listadolibros ll inner join ejemplar ejem on \n"
                 + "ejem.isbn = ll.isbn";
-        try {
+        try {   
             rs = objConectar.consultar(strSQL);
             return rs;
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class clsLibro {
     public ResultSet listarLibrosParaPrestamosbusquedaAvanzadaISBN(String isbn) throws Exception {
         strSQL = "select distinct ll.* from listadolibros ll inner join ejemplar ejem on \n"
                 + "ejem.isbn = ll.isbn \n"
-                + "where upper(ll.isbn) LIKE upper('%"+isbn+"%')";
+                + "where upper(ll.isbn) LIKE upper('"+isbn+"%')";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;

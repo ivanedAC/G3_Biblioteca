@@ -39,7 +39,12 @@ public class jdBuscarCliente extends javax.swing.JDialog {
     public void listarClientesNaturales() {
         ResultSet rsClientesN = null;
         String sexo = "";
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         modelo.addColumn("Codigo");
         modelo.addColumn("Pais");
         modelo.addColumn("Tipo doc");
@@ -89,7 +94,12 @@ public class jdBuscarCliente extends javax.swing.JDialog {
 
     public void listarClientesJuridicos() {
         ResultSet rsClientesJ = null;
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
 
         // Definir las columnas del modelo
         modelo.addColumn("Código");

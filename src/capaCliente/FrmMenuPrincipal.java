@@ -117,7 +117,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     public void botonesReportes() {
         btnCliente.setVisible(true);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,6 +158,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         MnuEjemplar = new javax.swing.JMenuItem();
         mnuOperaciones = new javax.swing.JMenu();
         mnuPrestamo = new javax.swing.JMenuItem();
+        mnuDevolucion = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -472,6 +473,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuOperaciones.add(mnuPrestamo);
 
+        mnuDevolucion.setText("Devolución");
+        mnuDevolucion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuDevolucionActionPerformed(evt);
+            }
+        });
+        mnuOperaciones.add(mnuDevolucion);
+
         jMenuBar1.add(mnuOperaciones);
 
         mnuReportes.setText("Reportes");
@@ -637,7 +646,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCerrarSesionActionPerformed
         // TODO add your handling code here:
-        if (JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar sesión?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0){
+        if (JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar sesión?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
             this.dispose();
             new FrmMenuPrincipal().setVisible(true);
         }
@@ -649,6 +658,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         objJd.setLocationRelativeTo(null);
         objJd.setVisible(true);
     }//GEN-LAST:event_mnuPrestamoActionPerformed
+
+    private void mnuDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDevolucionActionPerformed
+        // TODO add your handling code here:
+        jdTranDevolucion objJd = new jdTranDevolucion(this, true);
+        objJd.setLocationRelativeTo(null);
+        objJd.setVisible(true);
+    }//GEN-LAST:event_mnuDevolucionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -681,6 +697,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblCargo;
     private javax.swing.JLabel lblUser;
     private javax.swing.JMenuItem mnuCerrarSesion;
+    private javax.swing.JMenuItem mnuDevolucion;
     private javax.swing.JMenu mnuMantenimientos;
     private javax.swing.JMenu mnuOperaciones;
     private javax.swing.JMenuItem mnuPrestamo;

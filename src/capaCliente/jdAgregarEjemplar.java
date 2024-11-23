@@ -35,7 +35,12 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
      */
     public void busquedaAvanzada(String nombre) {
         ResultSet rsLibro = null;
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };;
         modelo.addColumn("ISBN");
         modelo.addColumn("Editorial");
         modelo.addColumn("Nombre");
@@ -50,12 +55,12 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         try {
             if (rbtnNombre.isSelected()) {
                 rsLibro = objLibro.listarLibrosParaPrestamosbusquedaAvanzadaNombre(nombre);
-            }else if(rbtnISBN.isSelected()){
+            } else if (rbtnISBN.isSelected()) {
                 rsLibro = objLibro.listarLibrosParaPrestamosbusquedaAvanzadaISBN(nombre);
-            }else{
+            } else {
                 rsLibro = objLibro.listarLibrosParaPrestamosbusquedaAvanzadaEditorial(nombre);
             }
-            
+
             while (rsLibro.next()) {
                 modelo.addRow(new Object[]{rsLibro.getString("isbn"),
                     rsLibro.getString("editorial"),
@@ -69,7 +74,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
                     rsLibro.getString("categorias")});
             }
             tblDatos.setModel(modelo);
-
+            tblDatos.getTableHeader().setReorderingAllowed(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "error al listar en tabla" + e.getMessage());
         }
@@ -77,7 +82,12 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
 
     public void listarTabla() {
         ResultSet rsLibro = null;
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         modelo.addColumn("ISBN");
         modelo.addColumn("Editorial");
         modelo.addColumn("Nombre");
@@ -104,7 +114,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
                     rsLibro.getString("categorias")});
             }
             tblDatos.setModel(modelo);
-
+            tblDatos.getTableHeader().setReorderingAllowed(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "error al listar en tabla" + e.getMessage());
         }
