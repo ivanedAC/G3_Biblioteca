@@ -34,4 +34,16 @@ public class clsTipoLibro {
             throw new Exception("Error al buscar el tipo de libro--->" +e.getMessage());
         }
     }
+    public Integer obtenerCodigoTipoLibro(String nom) throws Exception{
+        strSQL = "select * from tipo_libro where nombre='"+nom+"'";
+        try {
+            rs=objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al obtener codigo de tipo libro ---> "+e.getMessage());
+        }
+        return 0;
+    }
 }
