@@ -23,6 +23,7 @@ public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
     public jdAgregarEjemplarReserva(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        rbtnNombre.setSelected(true);
     }
     
     clsLibro objLibro = new clsLibro();
