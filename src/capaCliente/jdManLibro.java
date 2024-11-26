@@ -380,18 +380,19 @@ public class jdManLibro extends javax.swing.JDialog {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnEliminarAutores, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                                    .addComponent(btnAgregarAutores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnEliminarAutores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAgregarAutores)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(btnEliminarCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(btnAgregarCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(btnAgregarCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(12, 12, 12))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
@@ -612,8 +613,6 @@ public class jdManLibro extends javax.swing.JDialog {
 
         jSeparator3.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/libroMantenimiento.png"))); // NOI18N
 
         jLabel1.setBackground(new java.awt.Color(255, 173, 133));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -876,12 +875,6 @@ public class jdManLibro extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void btnAgregarAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutoresActionPerformed
-        // TODO add your handling code here:
-        jdConsultarAutores consultarAutores = new jdConsultarAutores(new FrmMenuPrincipal(), true);
-        consultarAutores.setVisible(true);
-    }//GEN-LAST:event_btnAgregarAutoresActionPerformed
-
     private void btnAgregarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCategoriasActionPerformed
         // TODO add your handling code here:
         jdConsultarCategorias consultarCategorias = new jdConsultarCategorias(new FrmMenuPrincipal(), true);
@@ -1006,6 +999,12 @@ public class jdManLibro extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Por favor selecciona una categoría para eliminar.");
         }
     }//GEN-LAST:event_btnEliminarCategoriasActionPerformed
+
+    private void btnAgregarAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutoresActionPerformed
+        // TODO add your handling code here:
+        jdConsultarAutores consultarAutores = new jdConsultarAutores(new FrmMenuPrincipal(), true);
+        consultarAutores.setVisible(true);
+    }//GEN-LAST:event_btnAgregarAutoresActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarAutores;

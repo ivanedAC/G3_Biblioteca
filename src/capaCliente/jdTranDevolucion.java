@@ -123,8 +123,26 @@ public class jdTranDevolucion extends javax.swing.JDialog {
         DefaultTableModel modelo = (DefaultTableModel) tblEjemplaresP.getModel();
 
         while (rsEjemV.next()) {
+            String estado ="";
+            switch (rsEjemV.getString("estado")) {
+                case "P":
+                    estado = "Prestado";
+                    break;
+                case "X":
+                    estado = "Dañado";
+                    break;
+                case "D":
+                    estado = "Disponible";
+                    break;
+                case "R":
+                    estado = "Reservado";
+                    break;
+                default:
+                    throw new Exception("Error al obtener estado");
+            }
+
             modelo.addRow(new Object[]{rsEjemV.getString("codigo"), rsEjemV.getString("libro"),
-                rsEjemV.getString("isbn"), rsEjemV.getString("editorial"), rsEjemV.getString("sede"), rsEjemV.getString("estado")});
+                rsEjemV.getString("isbn"), rsEjemV.getString("editorial"), rsEjemV.getString("sede"), estado});
         }
 
     }
@@ -624,8 +642,11 @@ public class jdTranDevolucion extends javax.swing.JDialog {
             jdBuscarClienteConPrestamos objJd = new jdBuscarClienteConPrestamos(null, true);
             objJd.setLocationRelativeTo(null);
             objJd.setVisible(true);
-            mostrarDatosCliente(objJd.codCli);
-            llenarTablaP();
+            if (objJd.codCli != -1) {
+                mostrarDatosCliente(objJd.codCli);
+                llenarTablaInicial();
+                llenarTablaP();
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -650,8 +671,41 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                                 String sancion = cboxSanciones.getSelectedItem().toString();
                                 int indice = sancion.indexOf("-");
 
+                                String estado = "";
+
+                                switch (rsEjem.getString("estado")) {
+                                    case "P":
+                                        estado = "Prestado";
+                                        break;
+                                    case "X":
+                                        estado = "Dañado";
+                                        break;
+                                    case "D":
+                                        estado = "Disponible";
+                                        break;
+                                    case "R":
+                                        estado = "Reservado";
+                                        break;
+                                    default:
+                                        throw new Exception("Error al obtener estado");
+                                }
+                                String san = "";
+
+                                ResultSet rsPre = objPrestamo.buscarPrestamo(codPrestamo);
+
+                                boolean san1 = false;
+
+                                if (rsPre.next()) {
+                                    san1 = objDev.validarFLimite(rsPre.getString("f_limite"), rsPre.getString("h_limite"));
+                                }
+
+                                if (san1 && cboxSanciones.getSelectedIndex() == 0) {
+                                    JOptionPane.showMessageDialog(null, "El sistema le asignará automáticamente una sanción por tardanza en la devolución");
+                                    sancion = "Codigo-1";
+                                }
+
                                 modelo.addRow(new Object[]{rsEjem.getString("codigo"), rsEjem.getString("libro"),
-                                    rsEjem.getString("isbn"), rsEjem.getString("editorial"), rsEjem.getString("sede"), rsEjem.getString("estado"), sancion.substring(indice + 1)});
+                                    rsEjem.getString("isbn"), rsEjem.getString("editorial"), rsEjem.getString("sede"), estado, sancion.substring(indice + 1)});
                                 eliminarEjemplar(cod);
                                 limpiarEjemplar();
                             } else {

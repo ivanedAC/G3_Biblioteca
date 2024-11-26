@@ -23,9 +23,7 @@ public class jdBuscarCliente extends javax.swing.JDialog {
     /**
      * Creates new form jdManCliente
      */
-    public Integer codCli;
-    clsPais objPais = new clsPais();
-    clsTipoDocumento objDocumento = new clsTipoDocumento();
+    public Integer codCli = -1;
     clsCliente objCliente = new clsCliente();
 
     public jdBuscarCliente(java.awt.Frame parent, boolean modal) {
@@ -39,9 +37,9 @@ public class jdBuscarCliente extends javax.swing.JDialog {
     public void listarClientesNaturales() {
         ResultSet rsClientesN = null;
         String sexo = "";
-        DefaultTableModel modelo = new DefaultTableModel(){
+        DefaultTableModel modelo = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
@@ -58,13 +56,8 @@ public class jdBuscarCliente extends javax.swing.JDialog {
         modelo.addColumn("Correo");
         modelo.addColumn("Estado");
 
-        String nombrepais = "";
-        String nombreTipoDoc = "";
-        String nom = txtNombre.getText();
-        String ape = txtApellido.getText();
-        String num_doc = txtNumDocumento.getText();
         try {
-            rsClientesN = objCliente.listarClientesN(nom,ape,num_doc);
+            rsClientesN = objCliente.listarClientesN(txtNombre.getText(), txtApellido.getText(), txtNumDocumento.getText());
             while (rsClientesN.next()) {
                 Object datos[][] = new Object[1][12];
                 datos[0][0] = rsClientesN.getString("codigo");
@@ -88,6 +81,7 @@ public class jdBuscarCliente extends javax.swing.JDialog {
                 modelo.addRow(datos[0]);
             }
             tblPersonaNatural.setModel(modelo);
+            tblPersonaNatural.getTableHeader().setReorderingAllowed(false);
             adjustColumnSizes(tblPersonaNatural);
 
         } catch (Exception e) {
@@ -97,9 +91,9 @@ public class jdBuscarCliente extends javax.swing.JDialog {
 
     public void listarClientesJuridicos() {
         ResultSet rsClientesJ = null;
-        DefaultTableModel modelo = new DefaultTableModel(){
+        DefaultTableModel modelo = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
@@ -116,14 +110,9 @@ public class jdBuscarCliente extends javax.swing.JDialog {
         modelo.addColumn("Correo");
         modelo.addColumn("Estado");
 
-        String nombrepais;
-        String nombreTipoDoc;
-        String nom = txtNombre.getText();
-        String ape = txtApellido.getText();
-        String num_doc = txtNumDocumento.getText();
 
         try {
-            rsClientesJ = objCliente.listarClientesJ(nom,ape,num_doc);
+            rsClientesJ = objCliente.listarClientesJ(txtNombre.getText(), txtApellido.getText(), txtNumDocumento.getText());
 
             // Recorrer el ResultSet y llenar el modelo
             while (rsClientesJ.next()) {
@@ -146,6 +135,7 @@ public class jdBuscarCliente extends javax.swing.JDialog {
 
             // Establecer el modelo en la tabla
             tblPersonaNatural.setModel(modelo);
+            tblPersonaNatural.getTableHeader().setReorderingAllowed(false);
 
             // Ajustar el tamaño de las columnas al contenido
             adjustColumnSizes(tblPersonaNatural);
@@ -401,7 +391,7 @@ public class jdBuscarCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (tblPersonaNatural.getSelectedRow() == -1){
+        if (tblPersonaNatural.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Debe elegir un cliente!", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
         } else {
             codCli = Integer.valueOf(tblPersonaNatural.getValueAt(tblPersonaNatural.getSelectedRow(), 0).toString());

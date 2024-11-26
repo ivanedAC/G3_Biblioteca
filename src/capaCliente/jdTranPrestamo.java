@@ -104,8 +104,28 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                 if (rsEjem == null) {
                     JOptionPane.showMessageDialog(null, "El libro seleccionado no tiene ejemplares disponibles en esta sede");
                 } else if (rsEjem.next()) {
+
+                    String estado = "";
+
+                    switch (rsEjem.getString("estado")) {
+                        case "P":
+                            estado = "Prestado";
+                            break;
+                        case "X":
+                            estado = "Dañado";
+                            break;
+                        case "D":
+                            estado = "Disponible";
+                            break;
+                        case "R":
+                            estado = "Reservado";
+                            break;
+                        default:
+                            throw new Exception("Error al obtener estado");
+                    }
+
                     modelo.addRow(new Object[]{rsEjem.getString("codigo"), rsEjem.getString("libro"),
-                        rsEjem.getString("isbn"), rsEjem.getString("editorial"), rsEjem.getString("sede"), rsEjem.getString("estado")});
+                        rsEjem.getString("isbn"), rsEjem.getString("editorial"), rsEjem.getString("sede"), estado});
                 }
             }
             tblDetalles.setModel(modelo);
@@ -497,14 +517,14 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblCodEjem, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel12)
-                                .addComponent(jLabel15))
-                            .addComponent(lblEditorialEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblISBNEjem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblCodEjem, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                                .addComponent(jLabel15)
+                                .addComponent(lblEditorialEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblISBNEjem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel12))
                         .addGap(13, 13, 13)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblNomEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -630,7 +650,9 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             jdBuscarCliente objJd = new jdBuscarCliente(null, true);
             objJd.setLocationRelativeTo(null);
             objJd.setVisible(true);
-            mostrarDatosCliente(objJd.codCli);
+            if (objJd.codCli != -1) {
+                mostrarDatosCliente(objJd.codCli);
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

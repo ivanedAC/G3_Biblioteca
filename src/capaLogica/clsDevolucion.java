@@ -67,7 +67,7 @@ public class clsDevolucion {
         }
     }
 
-    public boolean validarHora120Horas(String fecha, String hora) throws Exception {
+    public boolean validarFLimite(String fecha, String hora) throws Exception {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -112,14 +112,14 @@ public class clsDevolucion {
                         rsEjem = objEjem.buscarPorCodigo(Integer.parseInt(tblDetalles.getValueAt(i, 0).toString()));
                         int codEjem = Integer.parseInt(tblDetalles.getValueAt(i, 0).toString());
                         if (rsEjem.next()) {
-                            if (tblDetalles.getValueAt(i, 6).toString().equals("Ninguna")) {
+                            if (tblDetalles.getValueAt(i, 6).toString().equals("Ninguna") || tblDetalles.getValueAt(i, 6).toString().equals("1")) {
                                 String sancion = "null";
 
-                                if (validarHora120Horas(rsPre.getString("f_limite"), rsPre.getString("h_limite"))) {
+                                if (validarFLimite(rsPre.getString("f_limite"), rsPre.getString("h_limite"))) {
                                     sancion = "1";
                                 }
 
-                                if (rsEjem.getString("sede").equals(clsUsuarioSTATIC.sede)) {
+                                if (rsPre.getInt("cod_sede") == (objSede.obtenerSede(clsUsuarioSTATIC.sede))) {
                                     strSQL = "INSERT INTO DETALLE_DEVOLUCION values (" + codEjem + "," + codDev + "," + sancion + ");";
                                     sent.executeUpdate(strSQL);
 
@@ -130,7 +130,7 @@ public class clsDevolucion {
                                     throw new Exception("El ejemplar que intenta devolver no ha sido prestado en esta sede");
                                 }
                             } else {
-                                if (rsEjem.getString("sede").equals(clsUsuarioSTATIC.sede)) {
+                                if (rsPre.getInt("cod_sede") == (objSede.obtenerSede(clsUsuarioSTATIC.sede))) {
                                     strSQL = "INSERT INTO DETALLE_DEVOLUCION values (" + codEjem + "," + codDev + "," + tblDetalles.getValueAt(i, 6).toString() + ");";
                                     sent.executeUpdate(strSQL);
 
@@ -156,16 +156,31 @@ public class clsDevolucion {
                             + "SELECT dd.cod_ejemplar\n"
                             + "FROM devolucion dev\n"
                             + "INNER JOIN detalle_devolucion dd ON dev.codigo = dd.cod_devolucion\n"
-                            + "WHERE dev.codigo = " + codPre + ";";
+                            + "WHERE dev.cod_prestamo = " + codPre + ";";
                     ResultSet rsEjemPen = sent.executeQuery(strSQL);
 
+                    strSQL = "SELECT dd.cod_ejemplar\n"
+                            + "FROM devolucion dev\n"
+                            + "INNER JOIN detalle_devolucion dd ON dev.codigo = dd.cod_devolucion\n"
+                            + "WHERE dev.cod_prestamo = " + codPre
+                            + " EXCEPT\n"
+                            + "SELECT cod_ejemplar\n"
+                            + "FROM prestamo pre\n"
+                            + "INNER JOIN detalle_prestamo dp ON dp.cod_prestamo = pre.codigo\n"
+                            + "WHERE pre.codigo = " + codPre + ";";
+                    ResultSet rsEjemAjenos = sent.executeQuery(strSQL);
+                    
+                    if (rsEjemAjenos.next()){
+                        throw new Exception("Está intentando devolver ejemplares que no le pertenecen a su préstamo");
+                    }
+                    
                     if (!rsEjemPen.next()) {
                         strSQL = "UPDATE PRESTAMO SET ESTADO = 'C' where codigo =" + codPre + ";";
                         sent.executeUpdate(strSQL);
                     }
-                    
+
                     con.commit();
-                    
+
                 }
             } else {
                 throw new Exception("Error, el préstamo ingresado no existe");

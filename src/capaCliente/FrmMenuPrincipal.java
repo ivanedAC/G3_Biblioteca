@@ -675,6 +675,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar sesión?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
             this.dispose();
+            clsUsuarioSTATIC.cerrarSesion();
             new FrmMenuPrincipal().setVisible(true);
         }
     }//GEN-LAST:event_mnuCerrarSesionActionPerformed
