@@ -114,7 +114,7 @@ public class jdManCliente extends javax.swing.JDialog {
         String nombrepais = "";
         String nombreTipoDoc = "";
         try {
-            rsClientesN = objCliente.listarClientesN();
+            rsClientesN = objCliente.listarClientesNatural();
             while (rsClientesN.next()) {
                 Object datos[][] = new Object[1][12];
                 datos[0][0] = rsClientesN.getString("codigo");
@@ -163,9 +163,10 @@ public class jdManCliente extends javax.swing.JDialog {
 
         String nombrepais;
         String nombreTipoDoc;
+        
 
         try {
-            rsClientesJ = objCliente.listarClientesJ();
+            rsClientesJ = objCliente.listarClientesJuridicos();
 
             // Recorrer el ResultSet y llenar el modelo
             while (rsClientesJ.next()) {

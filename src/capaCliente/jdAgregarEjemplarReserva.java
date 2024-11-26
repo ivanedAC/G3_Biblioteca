@@ -4,35 +4,31 @@
  */
 package capaCliente;
 
-import capaLogica.clsAutor;
-import capaLogica.clsCategoria;
-import capaLogica.clsEditorial;
-import capaLogica.clsFormato;
-import capaLogica.clsIdioma;
 import capaLogica.clsLibro;
-import capaLogica.clsTipoLibro;
+import capaLogica.clsSede;
+import capaLogica.clsUsuarioSTATIC;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Edgar
+ * @author ander
  */
-public class jdAgregarEjemplar extends javax.swing.JDialog {
+public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
 
     /**
-     * Creates new form jdManLibro
+     * Creates new form jdAgregarEjemplarReserva
      */
+    public jdAgregarEjemplarReserva(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+    }
+    
     clsLibro objLibro = new clsLibro();
+    clsSede objSede = new clsSede();
     public String isbn = "";
-
-    /**
-     * Creates new form jdManLibro
-     */
+    
     public void busquedaAvanzada(String nombre) {
         ResultSet rsLibro = null;
         DefaultTableModel modelo = new DefaultTableModel() {
@@ -45,7 +41,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         modelo.addColumn("Editorial");
         modelo.addColumn("Nombre");
         modelo.addColumn("N° de paginas");
-        modelo.addColumn("Edicion");
+        modelo.addColumn("Edicion");  
         modelo.addColumn("Tipo");
         modelo.addColumn("Formato");
         modelo.addColumn("Idioma");
@@ -53,12 +49,14 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         modelo.addColumn("Categorias");
 
         try {
+            int codSede = objSede.obtenerSede(clsUsuarioSTATIC.sede);
+
             if (rbtnNombre.isSelected()) {
-                rsLibro = objLibro.listarLibrosParaPrestamosbusquedaAvanzadaNombre(nombre);
+                rsLibro = objLibro.listarLibrosPrestadosBusquedaAvanzadaNombre(nombre, codSede);
             } else if (rbtnISBN.isSelected()) {
-                rsLibro = objLibro.listarLibrosParaPrestamosbusquedaAvanzadaISBN(nombre);
+                rsLibro = objLibro.listarLibrosPrestadosBusquedaAvanzadaISBN(nombre, codSede);
             } else {
-                rsLibro = objLibro.listarLibrosParaPrestamosbusquedaAvanzadaEditorial(nombre);
+                rsLibro = objLibro.listarLibrosPrestadosParaBusquedaAvanzadaEditorial(nombre, codSede);
             }
 
             while (rsLibro.next()) {
@@ -100,7 +98,9 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         modelo.addColumn("Categorias");
 
         try {
-            rsLibro = objLibro.listarLibrosParaPrestamos();
+            int codSede = objSede.obtenerSede(clsUsuarioSTATIC.sede);
+
+            rsLibro = objLibro.listarLibrosSoloReserva(codSede);
             while (rsLibro.next()) {
                 modelo.addRow(new Object[]{rsLibro.getString("isbn"),
                     rsLibro.getString("editorial"),
@@ -118,13 +118,6 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "error al listar en tabla" + e.getMessage());
         }
-    }
-
-    public jdAgregarEjemplar(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-        listarTabla();
-        rbtnNombre.setSelected(true);
     }
 
     /**
@@ -149,6 +142,11 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         rbtnEditorial = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel5.setBackground(new java.awt.Color(251, 230, 211));
 
@@ -192,7 +190,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -235,16 +233,16 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1021, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(txtbusquedaAvanzada, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
+                        .addGap(47, 47, 47)
                         .addComponent(rbtnNombre)
-                        .addGap(69, 69, 69)
-                        .addComponent(rbtnISBN)
                         .addGap(70, 70, 70)
+                        .addComponent(rbtnISBN)
+                        .addGap(71, 71, 71)
                         .addComponent(rbtnEditorial)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 253, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -284,11 +282,6 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnSalirActionPerformed
-
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         if (tblDatos.getSelectedRow() != -1) {
@@ -299,6 +292,11 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     private void txtbusquedaAvanzadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbusquedaAvanzadaActionPerformed
 
         // TODO add your handling code here:
@@ -308,6 +306,16 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         busquedaAvanzada(txtbusquedaAvanzada.getText());
         // TODO add your handling code here:
     }//GEN-LAST:event_txtbusquedaAvanzadaKeyReleased
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        listarTabla();
+    }//GEN-LAST:event_formWindowOpened
+
+    /**
+     * @param args the command line arguments
+     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNuevo;

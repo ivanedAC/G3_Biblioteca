@@ -78,7 +78,7 @@ public class clsLibro {
     public ResultSet listarLibrosParaPrestamosbusquedaAvanzadaISBN(String isbn) throws Exception {
         strSQL = "select distinct ll.* from listadolibros ll inner join ejemplar ejem on \n"
                 + "ejem.isbn = ll.isbn \n"
-                + "where upper(ll.isbn) LIKE upper('"+isbn+"%')";
+                + "where (ll.isbn) LIKE ('%"+isbn+"%')";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
@@ -91,6 +91,86 @@ public class clsLibro {
         strSQL = "select distinct ll.* from listadolibros ll inner join ejemplar ejem on \n"
                 + "ejem.isbn = ll.isbn \n"
                 + "where upper(ll.editorial) LIKE upper('%"+editorial+"%')";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar libros -->" + e.getMessage());
+        }
+    }
+    
+    public ResultSet listarLibrosSoloReserva(int codSede) throws Exception {
+        strSQL = "SELECT DISTINCT ll.*\n" +
+            "FROM listadolibros ll\n" +
+            "INNER JOIN ejemplar ejem ON ejem.isbn = ll.isbn\n" +
+            "WHERE ll.isbn IN (\n" +
+            "    SELECT ejem.isbn\n" +
+            "    FROM ejemplar ejem\n" +
+            "	where ejem.cod_sede="+codSede+"\n" +
+            "    GROUP BY ejem.isbn\n" +
+            "    HAVING SUM(CASE WHEN ejem.estado != 'P' THEN 1 ELSE 0 END) = 0) \n" +
+            "ORDER BY 3;";
+        
+        try {   
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar libros -->" + e.getMessage());
+        }
+    }
+    
+    public ResultSet listarLibrosPrestadosBusquedaAvanzadaNombre(String nombre, int codSede) throws Exception {
+        strSQL = "SELECT DISTINCT ll.*\n" +
+            "FROM listadolibros ll\n" +
+            "INNER JOIN ejemplar ejem ON ejem.isbn = ll.isbn\n" +
+            "WHERE ll.isbn IN (\n" +
+            "    SELECT ejem.isbn\n" +
+            "    FROM ejemplar ejem\n" +
+            "	where ejem.cod_sede="+codSede+"\n" +
+            "    GROUP BY ejem.isbn\n" +
+            "    HAVING SUM(CASE WHEN ejem.estado != 'P' THEN 1 ELSE 0 END) = 0)\n" +
+            "	and upper(ll.libro_nombre) LIKE upper('%"+nombre+"%')\n" +
+            "ORDER BY 3;";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar libros -->" + e.getMessage());
+        }
+    }
+    
+    public ResultSet listarLibrosPrestadosBusquedaAvanzadaISBN(String isbn, int codSede) throws Exception {
+        strSQL = "SELECT DISTINCT ll.*\n" +
+            "FROM listadolibros ll\n" +
+            "INNER JOIN ejemplar ejem ON ejem.isbn = ll.isbn\n" +
+            "WHERE ll.isbn IN (\n" +
+            "    SELECT ejem.isbn\n" +
+            "    FROM ejemplar ejem\n" +
+            "	where ejem.cod_sede="+codSede+"\n" +
+            "    GROUP BY ejem.isbn\n" +
+            "    HAVING SUM(CASE WHEN ejem.estado != 'P' THEN 1 ELSE 0 END) = 0)\n" +
+            "	and (ll.isbn) LIKE ('%"+isbn+"%')\n" +
+            "ORDER BY 3;";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar libros -->" + e.getMessage());
+        }
+    }
+    
+    public ResultSet listarLibrosPrestadosParaBusquedaAvanzadaEditorial(String editorial, int codSede) throws Exception {
+        strSQL = "SELECT DISTINCT ll.*\n" +
+            "FROM listadolibros ll\n" +
+            "INNER JOIN ejemplar ejem ON ejem.isbn = ll.isbn\n" +
+            "WHERE ll.isbn IN (\n" +
+            "    SELECT ejem.isbn\n" +
+            "    FROM ejemplar ejem\n" +
+            "	where ejem.cod_sede="+codSede+"\n" +
+            "    GROUP BY ejem.isbn\n" +
+            "    HAVING SUM(CASE WHEN ejem.estado != 'P' THEN 1 ELSE 0 END) = 0)\n" +
+            "	and upper(ll.editorial) LIKE upper('%"+editorial+"%')\n" +
+            "ORDER BY 3;";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;

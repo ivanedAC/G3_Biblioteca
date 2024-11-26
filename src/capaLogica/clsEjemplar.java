@@ -64,7 +64,17 @@ public class clsEjemplar {
             throw new Exception("Error al obtener primer ejemplar: " + e.getMessage());
         }
     }
-
+    
+    public ResultSet obtenerEjemplaresPrestados(String isbn) throws Exception {
+        strSQL = "select * from listadoEjemplares where estado = 'P' and isbn ilike '" + isbn + "';";
+        try {
+            rs = objConetar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al obtener primer ejemplar: " + e.getMessage());
+        }
+    }
+    
     public ResultSet buscarEjemplares(String isbn, String libro, String autor, int codEditorial, int codTipoL, int codSede) throws Exception{
         strSQL = "SELECT "
                 + "li.isbn, "
@@ -73,14 +83,15 @@ public class clsEjemplar {
                 + "li.edicion, "
                 + "ed.nombre AS editorial, "
                 + "SUM(CASE WHEN ej.estado = 'D' THEN 1 ELSE 0 END) AS Disponible, "
-                + "SUM(CASE WHEN ej.estado = 'P' THEN 1 ELSE 0 END) AS Prestados "
+                + "SUM(CASE WHEN ej.estado = 'P' THEN 1 ELSE 0 END) AS Prestados, "
+                + "SUM(CASE WHEN ej.estado = 'R' THEN 1 ELSE 0 END) AS Reservas "
                 + "FROM (SELECT * FROM libro WHERE isbn LIKE '%"+isbn+"%' AND UPPER(nombre) LIKE UPPER('%"+libro+"%') AND cod_tipo_libro="+codTipoL+") li "
                 + "INNER JOIN ejemplar ej ON ej.isbn = li.isbn "
                 + "INNER JOIN autor_libro auli ON auli.isbn = li.isbn "
                 + "INNER JOIN autor au ON au.codigo = auli.autorcodigo "
                 + "INNER JOIN sede se on se.codigo = ej.cod_sede "
                 + "INNER JOIN editorial ed on ed.codigo = li.cod_editorial "
-                + "WHERE ej.estado IN ('D', 'P') AND se.codigo="+codSede+"  AND UPPER(au.nombre) LIKE UPPER('%"+autor+"%') AND ed.codigo="+codEditorial+" "
+                + "WHERE ej.estado IN ('D', 'P','R') AND se.codigo="+codSede+"  AND UPPER(au.nombre) LIKE UPPER('%"+autor+"%') AND ed.codigo="+codEditorial+" "
                 + "GROUP BY li.isbn, li.nombre, au.nombre, li.edicion, ed.nombre;";
         try {
             rs = objConetar.consultar(strSQL);
@@ -98,14 +109,15 @@ public class clsEjemplar {
                 + "li.edicion, "
                 + "ed.nombre AS editorial, "
                 + "SUM(CASE WHEN ej.estado = 'D' THEN 1 ELSE 0 END) AS Disponible, "
-                + "SUM(CASE WHEN ej.estado = 'P' THEN 1 ELSE 0 END) AS Prestados "
+                + "SUM(CASE WHEN ej.estado = 'P' THEN 1 ELSE 0 END) AS Prestados, "
+                + "SUM(CASE WHEN ej.estado = 'R' THEN 1 ELSE 0 END) AS Reservas "
                 + "FROM (SELECT * FROM libro WHERE isbn LIKE '%"+isbn+"%' AND UPPER(nombre) LIKE UPPER('%"+libro+"%')) li "
                 + "INNER JOIN ejemplar ej ON ej.isbn = li.isbn "
                 + "INNER JOIN autor_libro auli ON auli.isbn = li.isbn "
                 + "INNER JOIN autor au ON au.codigo = auli.autorcodigo "
                 + "INNER JOIN sede se on se.codigo = ej.cod_sede "
                 + "INNER JOIN editorial ed on ed.codigo = li.cod_editorial "
-                + "WHERE ej.estado IN ('D', 'P') AND se.codigo="+codSede+"  AND UPPER(au.nombre) LIKE UPPER('%"+autor+"%') "
+                + "WHERE ej.estado IN ('D', 'P','R') AND se.codigo="+codSede+"  AND UPPER(au.nombre) LIKE UPPER('%"+autor+"%') "
                 + "GROUP BY li.isbn, li.nombre, au.nombre, li.edicion, ed.nombre;";
         try {
             rs = objConetar.consultar(strSQL);
@@ -123,14 +135,15 @@ public class clsEjemplar {
                 + "li.edicion, "
                 + "ed.nombre AS editorial, "
                 + "SUM(CASE WHEN ej.estado = 'D' THEN 1 ELSE 0 END) AS Disponible, "
-                + "SUM(CASE WHEN ej.estado = 'P' THEN 1 ELSE 0 END) AS Prestados "
+                + "SUM(CASE WHEN ej.estado = 'P' THEN 1 ELSE 0 END) AS Prestados, "
+                + "SUM(CASE WHEN ej.estado = 'R' THEN 1 ELSE 0 END) AS Reservas "
                 + "FROM (SELECT * FROM libro WHERE isbn LIKE '%"+isbn+"%' AND UPPER(nombre) LIKE UPPER('%"+libro+"%') AND cod_tipo_libro="+codTipoL+") li "
                 + "INNER JOIN ejemplar ej ON ej.isbn = li.isbn "
                 + "INNER JOIN autor_libro auli ON auli.isbn = li.isbn "
                 + "INNER JOIN autor au ON au.codigo = auli.autorcodigo "
                 + "INNER JOIN sede se on se.codigo = ej.cod_sede "
                 + "INNER JOIN editorial ed on ed.codigo = li.cod_editorial "
-                + "WHERE ej.estado IN ('D', 'P') AND se.codigo="+codSede+"  AND UPPER(au.nombre) LIKE UPPER('%"+autor+"%') "
+                + "WHERE ej.estado IN ('D', 'P','R') AND se.codigo="+codSede+"  AND UPPER(au.nombre) LIKE UPPER('%"+autor+"%') "
                 + "GROUP BY li.isbn, li.nombre, au.nombre, li.edicion, ed.nombre;";
         try {
             rs = objConetar.consultar(strSQL);
@@ -148,14 +161,15 @@ public class clsEjemplar {
                 + "li.edicion, "
                 + "ed.nombre AS editorial, "
                 + "SUM(CASE WHEN ej.estado = 'D' THEN 1 ELSE 0 END) AS Disponible, "
-                + "SUM(CASE WHEN ej.estado = 'P' THEN 1 ELSE 0 END) AS Prestados "
+                + "SUM(CASE WHEN ej.estado = 'P' THEN 1 ELSE 0 END) AS Prestados,"
+                + "SUM(CASE WHEN ej.estado = 'R' THEN 1 ELSE 0 END) AS Reservas "
                 + "FROM (SELECT * FROM libro WHERE isbn LIKE '%"+isbn+"%' AND UPPER(nombre) LIKE UPPER('%"+libro+"%')) li "
                 + "INNER JOIN ejemplar ej ON ej.isbn = li.isbn "
                 + "INNER JOIN autor_libro auli ON auli.isbn = li.isbn "
                 + "INNER JOIN autor au ON au.codigo = auli.autorcodigo "
                 + "INNER JOIN sede se on se.codigo = ej.cod_sede "
                 + "INNER JOIN editorial ed on ed.codigo = li.cod_editorial "
-                + "WHERE ej.estado IN ('D', 'P') AND se.codigo="+codSede+"  AND UPPER(au.nombre) LIKE UPPER('%"+autor+"%') AND ed.codigo="+codEditorial+" "
+                + "WHERE ej.estado IN ('D', 'P','R') AND se.codigo="+codSede+"  AND UPPER(au.nombre) LIKE UPPER('%"+autor+"%') AND ed.codigo="+codEditorial+" "
                 + "GROUP BY li.isbn, li.nombre, au.nombre, li.edicion, ed.nombre;";
         try {
             rs = objConetar.consultar(strSQL);
@@ -164,4 +178,19 @@ public class clsEjemplar {
             throw new Exception("Error al buscar ejemplares -->"+e.getMessage());
         }
     }
+    
+    public Integer cantidadEjemplares(String isbn, int codSede) throws Exception{
+        strSQL = "select count(isbn) as cantidad from ejemplar where isbn='"+isbn+"' and cod_sede="+codSede+";";
+        try {
+            rs = objConetar.consultar(strSQL);
+            if (rs.next()) {
+                return rs.getInt("cantidad");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al hallar la cantidad de ejemplares en la sede -->"+e.getMessage());
+        }
+        return 0;
+    }
+    
+    
 }

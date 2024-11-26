@@ -34,6 +34,16 @@ public class clsEditorial {
         }
     }
     
+    public ResultSet verificarExistencia(int codEdit) throws Exception{
+        strSQL = "select * from libro where cod_editorial="+codEdit+";";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al verificar la existencia de la editorial -->"+e.getMessage());
+        }
+    }
+    
     public void modficarEditorial(int cod, String nom, boolean vig) throws Exception{
         strSQL = "select pa_update_editorial ("+cod+", '"+nom+"', "+vig+")";
         try {

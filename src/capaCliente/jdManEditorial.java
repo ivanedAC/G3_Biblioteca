@@ -442,9 +442,15 @@ public class jdManEditorial extends javax.swing.JDialog {
                 rp = JOptionPane.showConfirmDialog(this, "Esta seguro de eliminar la editorial " + txtNombre.getText(),
                         "Eliminar", JOptionPane.YES_NO_OPTION);
                 if (rp == 0) {
-                    objEditorial.eliminarEditorial(Integer.parseInt(txtCodigo.getText()));
-                    limpiarControles();
-                    listarEditoriales();
+                    ResultSet rs = objEditorial.verificarExistencia(Integer.parseInt(txtCodigo.getText()));
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(this, "No se puede eliminar la editorial, ya esta asignada a libros");
+                    } else {
+                        objEditorial.eliminarEditorial(Integer.parseInt(txtCodigo.getText()));
+                        limpiarControles();
+                        listarEditoriales();
+                        JOptionPane.showMessageDialog(this, "Eliminacion exitosa");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this, "Eliminación cancelada");
                 }
@@ -467,10 +473,10 @@ public class jdManEditorial extends javax.swing.JDialog {
                         objEditorial.darBajaEditorial(Integer.parseInt(txtCodigo.getText()));
                         limpiarControles();
                         listarEditoriales();
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(this, "Dar de baja cancelado");
-                    } 
-                }else{
+                    }
+                } else {
                     JOptionPane.showMessageDialog(this, "La editorial ya se encuentra dada de baja");
                 }
             }

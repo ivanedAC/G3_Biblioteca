@@ -177,5 +177,15 @@ public class clsDevolucion {
             objConectar.desconectar();
         }
     }
-
+    
+    public ResultSet datosDevolucion(Integer codDevolu) throws Exception{
+        strSQL = "select * from devolucion where codigo="+codDevolu+";";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al consultar datos de la devolución -->" +e.getMessage());
+        }
+    }
+    
 }

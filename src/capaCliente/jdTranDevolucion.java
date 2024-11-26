@@ -28,6 +28,8 @@ public class jdTranDevolucion extends javax.swing.JDialog {
     clsTipoDocumento objTDoc = new clsTipoDocumento();
     clsDevolucion objDev = new clsDevolucion();
     clsSancion objSan = new clsSancion();
+    clsReserva objReserva = new clsReserva();
+    clsSede objSede = new clsSede();
     Integer codPrestamo = -1;
 
     /**
@@ -619,7 +621,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
     private void btnElegirCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirCliActionPerformed
         try {
             // TODO add your handling code here:
-            jdBuscarCliente objJd = new jdBuscarCliente(null, true);
+            jdBuscarClienteConPrestamos objJd = new jdBuscarClienteConPrestamos(null, true);
             objJd.setLocationRelativeTo(null);
             objJd.setVisible(true);
             mostrarDatosCliente(objJd.codCli);
@@ -680,6 +682,49 @@ public class jdTranDevolucion extends javax.swing.JDialog {
     }//GEN-LAST:event_tblEjemplaresPMouseClicked
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+//        try {
+//            if (txtCodDev.getText().isBlank()) {
+//                JOptionPane.showMessageDialog(null, "El código ingresado no es válido");
+//            } else {
+//                if (lblCodCli.getText().isBlank()) {
+//                    JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente");
+//                } else {
+//                    if (tblEjemplaresD.getRowCount() == 0) {
+//                        JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un ejemplar a devolver");
+//                    } else {
+//                        if (JOptionPane.showConfirmDialog(null, "¿Está seguro de finalizar la devolución?", "Mensaje de sistema", JOptionPane.OK_OPTION) == 0) {
+//                            objDev.registrarDevolucion(Integer.valueOf(txtCodDev.getText()), codPrestamo, tblEjemplaresD);
+//                            JOptionPane.showMessageDialog(null, "Devolución registrada exitosamente");
+//                            for (int i = 0; i < tblEjemplaresD.getRowCount(); i++) {
+//                                ResultSet rsEjemplarReser = objReserva.verificarReservaLibro(
+//                                    tblEjemplaresD.getValueAt(i, 3).toString(),
+//                                    objSede.obtenerSede(clsUsuarioSTATIC.sede));
+//                                if (rsEjemplarReser.next()) {                                
+//                                    JOptionPane.showMessageDialog(this, "El ejemplar con isbn: "+rsEjemplarReser.getString("isbn")+" está reservado","Mensaje Sistema",JOptionPane.INFORMATION_MESSAGE);
+//                                    objReserva.insertarDetalleReserva(
+//                                            rsEjemplarReser.getInt("cod_reserva"),
+//                                            Integer.parseInt(txtCodDev.getText()),
+//                                            rsEjemplarReser.getInt("cod_cliente"),
+//                                            Integer.parseInt((String) tblEjemplaresD.getValueAt(i, 0)),
+//                                            tblEjemplaresD.getValueAt(i, 3).toString());
+//                                    System.out.println(rsEjemplarReser.getInt("cod_cliente"));
+//                                }
+//                                
+//                            }
+//                            
+//                            limpiarTodo();
+//                            txtCodDev.setText(String.valueOf(objDev.generarCodDevolucion()));
+//                            mostrarFecha();
+//                            llenarTablaInicial();
+//                            
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(null, ex.getMessage());
+//        }
+        
         try {
             if (txtCodDev.getText().isBlank()) {
                 JOptionPane.showMessageDialog(null, "El código ingresado no es válido");
@@ -693,6 +738,25 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                         if (JOptionPane.showConfirmDialog(null, "¿Está seguro de finalizar la devolución?", "Mensaje de sistema", JOptionPane.OK_OPTION) == 0) {
                             objDev.registrarDevolucion(Integer.valueOf(txtCodDev.getText()), codPrestamo, tblEjemplaresD);
                             JOptionPane.showMessageDialog(null, "Devolución registrada exitosamente");
+
+                            for (int i = 0; i < tblEjemplaresD.getRowCount(); i++) {
+                                String isbn = tblEjemplaresD.getValueAt(i, 2).toString();
+                                int codEjemplar = Integer.parseInt((String) tblEjemplaresD.getValueAt(i, 0));
+
+                                ResultSet rsEjemplarReser = objReserva.verificarReservaLibro(isbn, objSede.obtenerSede(clsUsuarioSTATIC.sede));
+                                if (rsEjemplarReser != null && rsEjemplarReser.next()) { // Validación correcta del ResultSet
+                                    JOptionPane.showMessageDialog(this, "El ejemplar con ISBN: " + isbn + " está reservado", "Mensaje Sistema", JOptionPane.INFORMATION_MESSAGE);
+
+                                    objReserva.insertarDetalleReserva(
+                                        rsEjemplarReser.getInt("cod_reserva"),
+                                        Integer.parseInt(txtCodDev.getText()),
+                                        rsEjemplarReser.getInt("cod_cliente"),
+                                        codEjemplar,
+                                        isbn
+                                    );
+                                }
+                            }
+
                             limpiarTodo();
                             txtCodDev.setText(String.valueOf(objDev.generarCodDevolucion()));
                             mostrarFecha();
@@ -702,8 +766,9 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Mensaje de error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

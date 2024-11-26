@@ -135,6 +135,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnEditorial = new javax.swing.JButton();
         btnCategoria = new javax.swing.JButton();
         btnProveedor = new javax.swing.JButton();
+        btnLibrosBuscar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -159,6 +160,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuOperaciones = new javax.swing.JMenu();
         mnuPrestamo = new javax.swing.JMenuItem();
         mnuDevolucion = new javax.swing.JMenuItem();
+        mnuOpeRegistroReserva = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -290,6 +292,23 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         jToolBar1.add(btnProveedor);
 
+        btnLibrosBuscar.setBackground(new java.awt.Color(230, 182, 139));
+        btnLibrosBuscar.setForeground(new java.awt.Color(113, 49, 18));
+        btnLibrosBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/proveedor(1).png"))); // NOI18N
+        btnLibrosBuscar.setText("Libros");
+        btnLibrosBuscar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
+        btnLibrosBuscar.setFocusable(false);
+        btnLibrosBuscar.setHideActionText(true);
+        btnLibrosBuscar.setMaximumSize(new java.awt.Dimension(190, 50));
+        btnLibrosBuscar.setMinimumSize(new java.awt.Dimension(190, 50));
+        btnLibrosBuscar.setPreferredSize(new java.awt.Dimension(130, 50));
+        btnLibrosBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLibrosBuscarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnLibrosBuscar);
+
         jPanel1.setBackground(new java.awt.Color(113, 49, 18));
 
         jLabel1.setFont(new java.awt.Font("Courier New", 1, 48)); // NOI18N
@@ -331,8 +350,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
                 .addGap(124, 124, 124)
                 .addComponent(jLabel3)
                 .addGap(34, 34, 34)
-                .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -343,16 +362,16 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(19, 19, 19)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19))))
         );
 
         pnlFondo.setBackground(new java.awt.Color(153, 255, 255));
@@ -480,6 +499,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             }
         });
         mnuOperaciones.add(mnuDevolucion);
+
+        mnuOpeRegistroReserva.setText("Registrar Reserva");
+        mnuOpeRegistroReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuOpeRegistroReservaActionPerformed(evt);
+            }
+        });
+        mnuOperaciones.add(mnuOpeRegistroReserva);
 
         jMenuBar1.add(mnuOperaciones);
 
@@ -666,6 +693,20 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         objJd.setVisible(true);
     }//GEN-LAST:event_mnuDevolucionActionPerformed
 
+    private void btnLibrosBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibrosBuscarActionPerformed
+        // TODO add your handling code here:
+        jdMenuLibros objMenuLibros = new jdMenuLibros(this, true);
+        objMenuLibros.setLocationRelativeTo(null);
+        objMenuLibros.setVisible(true);
+    }//GEN-LAST:event_btnLibrosBuscarActionPerformed
+
+    private void mnuOpeRegistroReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpeRegistroReservaActionPerformed
+        // TODO add your handling code here:
+        jdTranReserva objReserva = new jdTranReserva(this, true);
+        objReserva.setLocationRelativeTo(null);
+        objReserva.setVisible(true);
+    }//GEN-LAST:event_mnuOpeRegistroReservaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -685,6 +726,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnEditorial;
     private javax.swing.JButton btnEjemplar;
     private javax.swing.JButton btnLibro;
+    private javax.swing.JButton btnLibrosBuscar;
     private javax.swing.JButton btnProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -699,6 +741,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuCerrarSesion;
     private javax.swing.JMenuItem mnuDevolucion;
     private javax.swing.JMenu mnuMantenimientos;
+    private javax.swing.JMenuItem mnuOpeRegistroReserva;
     private javax.swing.JMenu mnuOperaciones;
     private javax.swing.JMenuItem mnuPrestamo;
     private javax.swing.JMenu mnuReportes;

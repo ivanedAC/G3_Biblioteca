@@ -101,16 +101,16 @@ public class clsCliente {
             throw new Exception("Error al buscar persona-->" + e.getMessage());
         }
     }
-
-    public ResultSet listarClientesN() throws Exception {
+    
+    public ResultSet listarClientesNatural() throws Exception {
         strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, Pe.nombres, (Pe.ape_paterno || ' ' || Pe.ape_materno) as apellidos,\n"
                 + "	Pe.sexo, Pe.f_nacimiento, Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n"
                 + "	from persona Pe    \n"
                 + "	inner join cliente Cl on Pe.codigo=Cl.cod_persona \n"
                 + "	inner join pais Pa on Pa.codigo=Pe.cod_pais\n"
-                + "	inner join tipo_documento TD on Pe.cod_tipo_doc=TD.codigo\n"
-                + "	where Pe.cod_tipo_doc !=2 \n"
-                + "order by 1";
+                + "	inner join tipo_documento TD on Pe.cod_tipo_doc=TD.codigo\n"+
+                "    where Pe.cod_tipo_doc !=2 " +
+                "    order by 1";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
@@ -119,20 +119,102 @@ public class clsCliente {
         }
     }
 
-    public ResultSet listarClientesJ() throws Exception {
+    public ResultSet listarClientesN(String nom, String ape, String num_doc) throws Exception {
+        strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, Pe.nombres, (Pe.ape_paterno || ' ' || Pe.ape_materno) as apellidos,\n"
+                + "	Pe.sexo, Pe.f_nacimiento, Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n"
+                + "	from persona Pe    \n"
+                + "	inner join cliente Cl on Pe.codigo=Cl.cod_persona \n"
+                + "	inner join pais Pa on Pa.codigo=Pe.cod_pais\n"
+                + "	inner join tipo_documento TD on Pe.cod_tipo_doc=TD.codigo\n"+
+                "    where Pe.cod_tipo_doc !=2 and upper(pe.nombres) like upper('%"+nom+"%') and "
+                + "upper(Pe.ape_paterno || ' ' || Pe.ape_materno) like upper('%"+ape+"%') and Pe.numero_documento like '%"+num_doc+"%'\n" +
+                "    order by 1";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar cliente Natural-->" + e.getMessage());
+        }
+    }
+    
+    public ResultSet listarClientesNConPrestamo(String nom, String ape, String num_doc) throws Exception {
+        strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, \n" +
+                "	Pe.nombres, (Pe.ape_paterno || ' ' || Pe.ape_materno) as apellidos,\n" +
+                "    Pe.sexo, Pe.f_nacimiento, Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n" +
+                "    from persona Pe\n" +
+                "    inner join cliente Cl on Pe.codigo=Cl.cod_persona\n" +
+                "    inner join pais Pa on Pa.codigo=Pe.cod_pais\n" +
+                "    inner join tipo_documento TD on Pe.cod_tipo_doc=TD.codigo\n" +
+                "	inner join prestamo pr on pr.cod_cliente = Cl.codigo\n" +
+                "    where Pe.cod_tipo_doc !=2 and upper(pe.nombres) like upper('%"+nom+"%') and "
+                + "upper(Pe.ape_paterno || ' ' || Pe.ape_materno) like upper('%"+ape+"%') and "
+                + "Pe.numero_documento like '%"+num_doc+"%' and pr.estado='P'\n" +
+                "    order by 1";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar cliente Natural-->" + e.getMessage());
+        }
+    }
+    
+    public ResultSet listarClientesJuridicos() throws Exception {
         strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, Pe.nombres, Pe.razon_social,\n"
                 + "	Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n"
                 + "	from persona Pe    \n"
                 + "	inner join cliente Cl on Pe.codigo=Cl.cod_persona \n"
                 + "	inner join pais Pa on Pa.codigo=Pe.cod_pais\n"
-                + "	inner join tipo_documento TD on Pe.cod_tipo_doc=TD.codigo\n"
-                + "	where Pe.cod_tipo_doc =2 \n"
-                + "order by 1";
+                + "	inner join tipo_documento TD on Pe.cod_tipo_doc=TD.codigo\n"+
+                "    where Pe.cod_tipo_doc =2 " +
+                "    order by 1";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
         } catch (Exception e) {
             throw new Exception("Error al buscar cliente Juridico-->" + e.getMessage());
+        }
+    }
+
+    public ResultSet listarClientesJ(String nom, String ape, String num_doc) throws Exception {
+        strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, \n" +
+                "       Pe.nombres, Pe.razon_social,\n" +
+                "       Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n" +
+                "from persona Pe  \n" +
+                "inner join cliente Cl on Pe.codigo = Cl.cod_persona\n" +
+                "inner join pais Pa on Pa.codigo = Pe.cod_pais\n" +
+                "inner join tipo_documento TD on Pe.cod_tipo_doc = TD.codigo\n" +
+                "where Pe.cod_tipo_doc = 2 \n" +
+                "  and upper(coalesce(pe.nombres, '')) like upper('%"+nom+"%') \n" +
+                "  and upper(coalesce(Pe.razon_social, '')) like upper('%"+ape+"%') \n" +
+                "  and coalesce(Pe.numero_documento, '') like '%"+num_doc+"%'\n" +
+                "order by 1;";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar cliente Juridico-->" + e.getMessage());
+        }
+    }    
+    
+    public ResultSet listarClientesJConPrestamo(String nom, String ape, String num_doc) throws Exception {
+        strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, \n" +
+                "       Pe.nombres, Pe.razon_social,\n" +
+                "       Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n" +
+                "from persona Pe  \n" +
+                "inner join cliente Cl on Pe.codigo = Cl.cod_persona\n" +
+                "inner join pais Pa on Pa.codigo = Pe.cod_pais\n" +
+                "inner join tipo_documento TD on Pe.cod_tipo_doc = TD.codigo\n" +
+                "inner join prestamo pr on pr.cod_cliente = Cl.codigo\n" +
+                "where Pe.cod_tipo_doc = 2 \n" +
+                "  and upper(coalesce(pe.nombres, '')) like upper('%"+nom+"%') \n" +
+                "  and upper(coalesce(Pe.razon_social, '')) like upper('%"+ape+"%') \n" +
+                "  and coalesce(Pe.numero_documento, '') like '%"+num_doc+"%' and pr.estado='P'\n" +
+                "order by 1;";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar cliente Natural-->" + e.getMessage());
         }
     }
 

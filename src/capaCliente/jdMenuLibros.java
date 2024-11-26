@@ -9,7 +9,6 @@ import capaLogica.clsEjemplar;
 import capaLogica.clsSede;
 import capaLogica.clsTipoLibro;
 import java.awt.Component;
-import java.awt.Label;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -29,7 +28,8 @@ public class jdMenuLibros extends javax.swing.JDialog {
     clsSede objSede = new clsSede();
     clsTipoLibro objTipoLibro = new clsTipoLibro();
     clsEjemplar objEjemplar = new clsEjemplar();
-
+    
+    private String isbn = "";
     /**
      * Creates new form jdMenuLibros
      */
@@ -37,6 +37,10 @@ public class jdMenuLibros extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarEjemplares();
+    }
+    
+    public String getISBN(){
+        return isbn;
     }
 
     private ImageIcon prestamoIcon = new ImageIcon(getClass().getResource("/recursos/prestamo_icon.png"));
@@ -164,6 +168,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
         modelito.addColumn("Editorial");
         modelito.addColumn("Disponible");
         modelito.addColumn("Prestado");
+        modelito.addColumn("Reservas");
         modelito.addColumn("Prestamo");
         modelito.addColumn("Reserva");
 
@@ -212,6 +217,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
                     rs.getString("editorial"),
                     rs.getInt("disponible"),
                     rs.getInt("prestados"),
+                    rs.getInt("reservas"),
                     "prestamo", // Indicador para el ícono de préstamo
                     "reserva" // Indicador para el ícono de reserva
                 });
@@ -220,8 +226,8 @@ public class jdMenuLibros extends javax.swing.JDialog {
             tblEjemplares.setModel(modelito);
 
             // Asigna el renderer a las columnas correspondientes
-            tblEjemplares.getColumnModel().getColumn(7).setCellRenderer(new IconCellRenderer(prestamoIcon));
-            tblEjemplares.getColumnModel().getColumn(8).setCellRenderer(new IconCellRenderer(reservaIcon));
+            tblEjemplares.getColumnModel().getColumn(8).setCellRenderer(new IconCellRenderer(prestamoIcon));
+            tblEjemplares.getColumnModel().getColumn(9).setCellRenderer(new IconCellRenderer(reservaIcon));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error en la búsqueda de libros --> " + e.getMessage());
@@ -280,6 +286,9 @@ public class jdMenuLibros extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -369,7 +378,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
                     .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(370, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,15 +431,15 @@ public class jdMenuLibros extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -440,8 +449,8 @@ public class jdMenuLibros extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -450,8 +459,8 @@ public class jdMenuLibros extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -496,29 +505,39 @@ public class jdMenuLibros extends javax.swing.JDialog {
 
     private void tblEjemplaresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEjemplaresMouseClicked
         // TODO add your handling code here:
-        String isbn = String.valueOf(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 0));
-        String nombre = String.valueOf(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 1));
-        int dispo = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 5);        
-        
+        isbn = String.valueOf(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 0));
+        int dispo = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 5);
+        int prest = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 6);
+        int reser = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 7); 
         
         if (dispo == 0) {
-            if (JOptionPane.showConfirmDialog(this, "No hay ejemplares disponibles \n ¿Desea realizar una reserva? del libro " + nombre+ "?",
+            if (JOptionPane.showConfirmDialog(this, "No hay ejemplares disponibles \n ¿Desea realizar una reserva?",
                     "Sin ejemplares", JOptionPane.YES_NO_OPTION)==0) {
-                jdTranReserva objReserva = new jdTranReserva(null, true);
-                objReserva.setLocationRelativeTo(null);
-                objReserva.setVisible(true);
+                if (reser > prest) {
+                    JOptionPane.showMessageDialog(this, "Límite de reservas", "No quedan mas ejemplares para reservas", JOptionPane.OK_OPTION);
+                }else{
+                    jdTranReserva objReserva = new jdTranReserva(null, true);
+                    objReserva.setLocationRelativeTo(null);
+                    objReserva.setVisible(true);
+                }
             }
         } else {
-            if (JOptionPane.showConfirmDialog(this, "Hay ejemplares disponibles \n ¿Desea realizar un prestamo del libro " + nombre+ "?",
+            if (JOptionPane.showConfirmDialog(this, "Hay ejemplares disponibles \n ¿Desea realizar un prestamo?",
                     "Ejemplares disponibles", JOptionPane.YES_NO_OPTION)==0) {
                 jdTranPrestamo objPrestamo = new jdTranPrestamo(null, true);
                 objPrestamo.setLocationRelativeTo(null);
                 objPrestamo.setVisible(true);
             }
         }
-        
-        System.out.println(dispo);
     }//GEN-LAST:event_tblEjemplaresMouseClicked
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        comboEditorial();
+        comboSede();
+        comboTipoLibro();
+        listarEjemplares();
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
