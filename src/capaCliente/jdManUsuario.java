@@ -4,6 +4,7 @@
  */
 package capaCliente;
 
+import capaLogica.ValidationManager;
 import capaLogica.clsPais;
 import capaLogica.clsSede;
 import capaLogica.clsTipoDocumento;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -41,6 +43,10 @@ public class jdManUsuario extends javax.swing.JDialog {
     public jdManUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    private void showError(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
     }
 
     private void listarUsuarios() throws SQLException, Exception {
@@ -106,60 +112,113 @@ public class jdManUsuario extends javax.swing.JDialog {
         tblDatos.getTableHeader().setReorderingAllowed(false);
     }
 
-    private void listarPaises() {
-        ResultSet rsPais = null;
-        DefaultComboBoxModel modeloPais = new DefaultComboBoxModel();
-        cboxPais.setModel(modeloPais);
+    //Lógica general para poblar un combo box:
+    private void poblarComboBox(JComboBox<String> comboBox, ResultSet resultSet, String columna) {
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+        comboBox.setModel(modelo);
         try {
-            rsPais = objPais.listarPais();
-            while (rsPais.next()) {
-                modeloPais.addElement(rsPais.getString("nombre"));
+            while (resultSet.next()) {
+                modelo.addElement(resultSet.getString(columna));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (Exception e) {
+                // Manejo de cierre silencioso, si aplica
+            }
+        }
+    }
+
+    private void listarPaises() {
+        try {
+            ResultSet rsPais = objPais.listarPais();
+            poblarComboBox(cboxPais, rsPais, "nombre");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void listarSedes() {
-        ResultSet rsSede = null;
-        DefaultComboBoxModel modeloSede = new DefaultComboBoxModel();
-        cboxSede.setModel(modeloSede);
         try {
-            rsSede = objSede.listarSede();
-            while (rsSede.next()) {
-                modeloSede.addElement(rsSede.getString("nombre"));
-            }
+            ResultSet rsSede = objSede.listarSede();
+            poblarComboBox(cboxSede, rsSede, "nombre");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void listarTipoDocumento() {
-        ResultSet rsTDoc = null;
-        DefaultComboBoxModel modeloSede = new DefaultComboBoxModel();
-        cboxTipoDoc.setModel(modeloSede);
         try {
-            rsTDoc = objTDoc.listarTipoDocumento();
-            while (rsTDoc.next()) {
-                modeloSede.addElement(rsTDoc.getString("nombre"));
-            }
+            ResultSet rsTDoc = objTDoc.listarTipoDocumento();
+            poblarComboBox(cboxTipoDoc, rsTDoc, "nombre");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void listarTipoUsuario() {
-        ResultSet rsTuser = null;
-        DefaultComboBoxModel modeloSede = new DefaultComboBoxModel();
-        cboxTUser.setModel(modeloSede);
         try {
-            rsTuser = objTUsuario.listarTipoUsuario();
-            while (rsTuser.next()) {
-                modeloSede.addElement(rsTuser.getString("nombre"));
-            }
+            ResultSet rsTuser = objTUsuario.listarTipoUsuario();
+            poblarComboBox(cboxTUser, rsTuser, "nombre");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private boolean validarCamposObligatorios() {
+        if (txtCode.getText().isBlank() || txtNroDoc.getText().isBlank() || txtNom.getText().isBlank()
+                || txtApePat.getText().isBlank() || txtApeMat.getText().isBlank() || txtDir.getText().isBlank()
+                || txtCel.getText().isBlank() || txtCor.getText().isBlank() || txtUsu.getText().isBlank()
+                || txtPass.getText().isBlank() || calendarFNac.getCalendar() == null) {
+            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarCamposUnicos(ResultSet rs) throws Exception {
+        while (rs.next()) {
+            if (txtNroDoc.getText().equals(rs.getString("numero_documento"))) {
+                JOptionPane.showMessageDialog(this, "El número de documento ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            if (txtCode.getText().equals(rs.getString("codigo"))) {
+                JOptionPane.showMessageDialog(this, "El código ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            if (txtUsu.getText().equals(rs.getString("usuario"))) {
+                JOptionPane.showMessageDialog(this, "El nombre de usuario ingresado ya se encuentra registrado, por favor cámbielo", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validarContraseñas() {
+        if (!txtPass.getText().equals(txtPass1.getText())) {
+            JOptionPane.showMessageDialog(this, "Las contraseñas deben coincidir", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    private void prepararNuevoUsuario() throws Exception {
+        btnNuevo.setText("Guardar");
+        limpiarControles();
+        txtCode.setText(String.valueOf(objUsu.generarCodigoUsuario()));
+        txtNroDoc.requestFocus();
+        txtCode.setEditable(false);
+    }
+
+    private void finalizarRegistro() throws Exception {
+        txtCode.setEditable(true);
+        btnNuevo.setText("Nuevo");
+        listarUsuarios();
+        limpiarControles();
     }
 
     private void limpiarControles() {
@@ -180,36 +239,6 @@ public class jdManUsuario extends javax.swing.JDialog {
         txtPass.setText("");
         txtPass1.setText("");
         cboxSede.setSelectedItem(0);
-    }
-
-    private boolean esMayorDeEdad(Date fechaNacimiento) {
-        Calendar fechaActual = Calendar.getInstance();
-
-        Calendar fechaNacimientoCal = Calendar.getInstance();
-        fechaNacimientoCal.setTime(fechaNacimiento);
-
-        int añosDiferencia = fechaActual.get(Calendar.YEAR) - fechaNacimientoCal.get(Calendar.YEAR);
-
-        if (fechaActual.get(Calendar.DAY_OF_YEAR) < fechaNacimientoCal.get(Calendar.DAY_OF_YEAR)) {
-            añosDiferencia--;
-        }
-
-        // Retornar verdadero si la diferencia es mayor o igual a 18
-        return añosDiferencia >= 18;
-    }
-
-    private boolean validarEmail(String email) {
-        // Expresión regular para validar el formato de correo electrónico
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
-
-        // Compilar la expresión regular
-        Pattern pattern = Pattern.compile(emailRegex);
-
-        // Comparar el correo con la expresión regular
-        Matcher matcher = pattern.matcher(email);
-
-        // Retornar true si coincide, false si no
-        return matcher.matches();
     }
 
     /**
@@ -865,7 +894,7 @@ public class jdManUsuario extends javax.swing.JDialog {
                             acceso = false;
                             break;
                         }
-                        if (!esMayorDeEdad(calendarFNac.getDate())) {
+                        if (!ValidationManager.esMayorDeEdad(calendarFNac.getDate())) {
                             JOptionPane.showMessageDialog(null, "El usuario ingresado debe ser mayor de edad", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                             acceso = false;
                             break;
@@ -890,7 +919,7 @@ public class jdManUsuario extends javax.swing.JDialog {
                             acceso = false;
                             break;
                         }
-                        if (!validarEmail(txtCor.getText())) {
+                        if (!ValidationManager.validarEmail(txtCor.getText())) {
                             JOptionPane.showMessageDialog(null, "El formato de correo electrónico ingresado no es válido", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                             acceso = false;
                             break;
@@ -955,6 +984,7 @@ public class jdManUsuario extends javax.swing.JDialog {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         limpiarControles();
+
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -1075,7 +1105,7 @@ public class jdManUsuario extends javax.swing.JDialog {
                                 acceso = false;
                                 break;
                             }
-                            if (!esMayorDeEdad(calendarFNac.getDate())) {
+                            if (!ValidationManager.esMayorDeEdad(calendarFNac.getDate())) {
                                 JOptionPane.showMessageDialog(null, "El usuario ingresado debe ser mayor de edad", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                                 acceso = false;
                                 break;
@@ -1100,7 +1130,7 @@ public class jdManUsuario extends javax.swing.JDialog {
                                 acceso = false;
                                 break;
                             }
-                            if (!validarEmail(txtCor.getText())) {
+                            if (!ValidationManager.validarEmail(txtCor.getText())) {
                                 JOptionPane.showMessageDialog(null, "El formato de correo electrónico ingresado no es válido", "Mensaje de sistema", JOptionPane.WARNING_MESSAGE);
                                 acceso = false;
                                 break;

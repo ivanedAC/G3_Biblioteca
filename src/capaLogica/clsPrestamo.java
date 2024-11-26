@@ -191,6 +191,13 @@ public class clsPrestamo {
                 hora = rsPre.getString("h_registro");
                 validar = validarHoraAnularPrestamo(fecha, hora);
                 estado = rsPre.getString("estado");
+                
+                strSQL = "SELECT * FROM DEVOLUCION WHERE cod_prestamo = " + cod + ";";
+                ResultSet rsDevs = sent.executeQuery(strSQL);
+                
+                if (rsDevs.next()){
+                    throw new Exception("No se puede anular el préstamo si ya ha devuelto algún ejemplar, por favor tramite las devoluciones restantes");
+                }
             } else {
                 throw new Exception("El préstamo ingresado no existe");
             }
@@ -199,7 +206,7 @@ public class clsPrestamo {
                 if (estado.equals("P")) {
                     strSQL = "UPDATE PRESTAMO SET ESTADO = 'A' where codigo =" + cod + ";";
                     sent.executeUpdate(strSQL);
-                    strSQL = "update ejemplar set estado = 'D' where codigo in (select cod_ejemplar from detalle_prestamo where cod_prestamo ="
+                    strSQL = "UPDATE EJEMPLAR SET ESTADO = 'D' where codigo in (select cod_ejemplar from detalle_prestamo where cod_prestamo ="
                             + cod + ");";
                     sent.executeUpdate(strSQL);
                     con.commit();

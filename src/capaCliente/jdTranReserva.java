@@ -654,8 +654,8 @@ public class jdTranReserva extends javax.swing.JDialog {
         String isbn = objJd.isbn;
 
         try {
-            lblFechaEstimada.setText(fechaStimada(isbn));
             if (!isbn.equals("")) {
+                lblFechaEstimada.setText(fechaStimada(isbn));
                 if (tblDetalles.getRowCount() == 1) {
                     JOptionPane.showMessageDialog(null, "Solo se puede reservar 1 libro por cliente");
                 } else {
@@ -663,7 +663,7 @@ public class jdTranReserva extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error" +ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error " + ex.getMessage());
         }
     }//GEN-LAST:event_btnAgregarEjemActionPerformed
 
@@ -714,13 +714,13 @@ public class jdTranReserva extends javax.swing.JDialog {
                                     JOptionPane.showMessageDialog(this, "El cliente ya tiene una reserva registrada, no puede registrar otra", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
                                 } else {
                                     if (JOptionPane.showConfirmDialog(null, "¿Está seguro de registrar la reserva?", "Mensaje de sistema", JOptionPane.YES_NO_OPTION) == 0) {
-                                        
+
                                         objReserva.registrarReserva(
                                                 Integer.parseInt(txtCodRes.getText()),
                                                 Integer.parseInt(lblCodCli.getText()),
                                                 tblDetalles,
                                                 objSede.obtenerSede(clsUsuarioSTATIC.sede));
-                                        
+
                                         JOptionPane.showMessageDialog(null, "Reserva registrado exitosamente");
                                         limpiarTodo();
                                         txtCodRes.setText(String.valueOf(objReserva.generarCodReserva()));
@@ -755,7 +755,7 @@ public class jdTranReserva extends javax.swing.JDialog {
             if (rsPre.next()) {
                 if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular la reserva con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
                     if (rsPre.getString("estado").equals("P")) {
-                        
+
                         limpiarTodo();
                         txtCodRes.setText(String.valueOf(objReserva.generarCodReserva()));
                         mostrarFecha();
