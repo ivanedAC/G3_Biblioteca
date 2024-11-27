@@ -22,7 +22,7 @@ public class clsJDBC {
         this.driver = "org.postgresql.Driver";
         this.url = "jdbc:postgresql://localhost:5432/BDDAE_PROYECTO_BIBLIOTECA";
         this.user = "postgres";
-        this.password = "zien1219";
+        this.password = "Us@t2024";
 //        this.url = "jdbc:postgresql://25.59.167.63:5432/BDDAE_PROYECTO_BIBLIOTECA";
 //        this.user = "edgar";
 //        this.password = "1234";

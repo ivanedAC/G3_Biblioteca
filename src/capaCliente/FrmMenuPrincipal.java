@@ -161,6 +161,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuPrestamo = new javax.swing.JMenuItem();
         mnuDevolucion = new javax.swing.JMenuItem();
         mnuOpeRegistroReserva = new javax.swing.JMenuItem();
+        mnuOrdenCompra = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -508,6 +509,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuOperaciones.add(mnuOpeRegistroReserva);
 
+        mnuOrdenCompra.setText("Orden de compra");
+        mnuOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuOrdenCompraActionPerformed(evt);
+            }
+        });
+        mnuOperaciones.add(mnuOrdenCompra);
+
         jMenuBar1.add(mnuOperaciones);
 
         mnuReportes.setText("Reportes");
@@ -708,6 +717,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         objReserva.setVisible(true);
     }//GEN-LAST:event_mnuOpeRegistroReservaActionPerformed
 
+    private void mnuOrdenCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOrdenCompraActionPerformed
+        // TODO add your handling code here:
+        jdTranOrdenDeCompra objOC = new jdTranOrdenDeCompra(this, true);
+        objOC.setLocationRelativeTo(null);
+        objOC.setVisible(true);
+    }//GEN-LAST:event_mnuOrdenCompraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -744,6 +760,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu mnuMantenimientos;
     private javax.swing.JMenuItem mnuOpeRegistroReserva;
     private javax.swing.JMenu mnuOperaciones;
+    private javax.swing.JMenuItem mnuOrdenCompra;
     private javax.swing.JMenuItem mnuPrestamo;
     private javax.swing.JMenu mnuReportes;
     private javax.swing.JMenuItem mnuSalir;

@@ -26,8 +26,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class jdTranOrdenDeCompra extends javax.swing.JDialog {
 
-    clsPrestamo objPrestamo = new clsPrestamo();
-    clsCliente objCliente = new clsCliente();
+    clsOrdenCompra objCompra = new clsOrdenCompra();
+    clsProveedor objProveedor = new clsProveedor();
     clsEjemplar objEjem = new clsEjemplar();
     clsTipoDocumento objTDoc = new clsTipoDocumento();
 
@@ -58,7 +58,8 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
     }
 
     private void mostrarDatosCliente(Integer cod) throws Exception {
-        ResultSet rsCli = objCliente.buscarClientePorCodigo(cod);
+        ResultSet rsCli = null;
+//                objProveedor.buscarClientePorCodigo(cod);
         if (rsCli.next()) {
             String nom = rsCli.getString("nombres");
             String apeP = rsCli.getString("ape_paterno");
@@ -148,23 +149,20 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         }
     }
 
-    private void mostrarFechaLim() {
+    private void mostrarFecha() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, 5); // Sumar 5 días a la fecha actual
         Date datePlusFiveDays = calendar.getTime();
 
-        // Establecer la fecha en el JDateChooser
         calendarFLim.setDate(datePlusFiveDays);
 
-        // Deshabilitar la edición manual del campo de texto
         JTextComponent dateTextField = (JTextComponent) calendarFLim.getDateEditor().getUiComponent();
         dateTextField.setEditable(false);
-        dateTextField.setBackground(Color.WHITE); // Fondo blanco para que se vea igual
+        dateTextField.setBackground(Color.WHITE);
         dateTextField.setForeground(Color.BLACK);
 
         for (Component comp : calendarFLim.getComponents()) {
             if (comp instanceof JButton) {
-                comp.setEnabled(false); // Deshabilitar el botón para evitar abrir el calendario
+                comp.setEnabled(false);
             }
         }
     }
@@ -247,7 +245,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
 
         jLabel6.setText("Número de compra:");
 
-        jLabel7.setText("Fecha Límite:");
+        jLabel7.setText("Fecha");
 
         lblNumCompra.setText(".");
         lblNumCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -383,11 +381,11 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(64, 64, 64)
+                        .addGap(94, 94, 94)
                         .addComponent(btnElegirCli)
-                        .addGap(63, 63, 63)
+                        .addGap(37, 37, 37)
                         .addComponent(btnNuevoCli)
-                        .addGap(126, 126, 126))
+                        .addGap(122, 122, 122))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -482,8 +480,8 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                         .addGap(30, 30, 30))))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -549,7 +547,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(9, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAnular)
@@ -610,7 +608,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17)
                     .addComponent(jLabel20))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -634,9 +632,9 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -645,8 +643,8 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             // TODO add your handling code here:
-            lblNumCompra.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
-            mostrarFechaLim();
+            lblNumCompra.setText(String.valueOf(objCompra.generarCodCompra()));
+            mostrarFecha();
             llenarTablaInicial();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -663,7 +661,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
     private void btnElegirCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirCliActionPerformed
         try {
             // TODO add your handling code here:
-            jdBuscarCliente objJd = new jdBuscarCliente(null, true);
+            jdBuscarProveedor objJd = new jdBuscarProveedor(null, true);
             objJd.setLocationRelativeTo(null);
             objJd.setVisible(true);
             if (objJd.codCli != -1) {
