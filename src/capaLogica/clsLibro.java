@@ -249,7 +249,8 @@ public class clsLibro {
     }
 
     public ResultSet actualizarLibro(String isbn, Integer editorial, String nombre, Integer num_pagina, Integer edicion, Integer cod_form, Integer cod_tipo, Integer idioma, ArrayList autores, ArrayList categorias) throws Exception {
-        strSQL = String.format("SELECT pa_update_libro('%s', %d, '%s', %d, %d, %d, %d, %d,", isbn, editorial, nombre, num_pagina, edicion, cod_form, cod_tipo, idioma);
+        strSQL = String.format("SELECT pa_update_libro('%s', %d, '%s', %d, %d, %d, %d, %d,",
+                isbn, editorial, nombre, num_pagina, edicion, cod_form, cod_tipo, idioma);
         if (autores.isEmpty()) {
             strSQL += "null,";
             if (categorias.isEmpty()) {
@@ -271,7 +272,7 @@ public class clsLibro {
             rs = objConectar.consultar(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al editar categoria -->" + e.getMessage());
+            throw new Exception("Error al editar el libro -->" + e.getMessage());
         }
     }
 }

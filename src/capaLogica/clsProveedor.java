@@ -198,4 +198,16 @@ public class clsProveedor {
         }
     }
 
+    public int buscarProveedor(int codigo) throws Exception {
+        strSQL = "select Pro.codigo as codigo from proveedor Pro inner join persona P on Pro.cod_persona=P.codigo where P.numero_documento = '" + codigo + "'";
+        try {
+            rs = objConectar.consultar(strSQL);
+            while (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al generar codigo de Persona---->" + e.getMessage());
+        }
+        return 0;
+    }
 }

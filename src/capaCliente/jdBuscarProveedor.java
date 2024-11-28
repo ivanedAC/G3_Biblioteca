@@ -30,10 +30,10 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
     public jdBuscarProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listarProveedoresNaturales();
+        listarProveedorJuridicos();
         setTitle("Busqueda de un proveedor");
 
-        rbtnPN.setSelected(true);
+        rbtnPJ.setSelected(true);
     }
 
     public void listarProveedoresNaturales() {
@@ -42,7 +42,7 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
         DefaultTableModel modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return  false;
             }
         };
         modelo.addColumn("Codigo");
@@ -310,29 +310,29 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(lblApeRaz)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNumDocumento)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rbtnPN)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rbtnPJ))
-                            .addComponent(txtNombre)
-                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(79, 79, 79)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addComponent(lblApeRaz)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNumDocumento)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(rbtnPN)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(rbtnPJ))
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -389,7 +389,7 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
         if (tblPersonaNatural.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Debe elegir un cliente!", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
         } else {
-            codCli = Integer.valueOf(tblPersonaNatural.getValueAt(tblPersonaNatural.getSelectedRow(), 0).toString());
+            codCli = Integer.valueOf(tblPersonaNatural.getValueAt(tblPersonaNatural.getSelectedRow(), 3).toString());
             this.dispose();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed

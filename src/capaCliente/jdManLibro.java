@@ -61,7 +61,6 @@ public class jdManLibro extends javax.swing.JDialog {
                 while (rs_autores.next()) {
                     agregarAutor(rs_autores.getInt("autorcodigo"));
                     listaDeIdAutores.add(rs_autores.getInt("autorcodigo"));
-                    
                 }
 
                 while (rs_categorias.next()) {
@@ -935,23 +934,20 @@ public class jdManLibro extends javax.swing.JDialog {
                 rs_tipo = objTipoLibro.buscarTipoLibroPorNombre(cmbTipoLibro.getSelectedItem().toString());
                 rs_idioma = objIdioma.buscarIdiomaPorNombre(cmbIdioma.getSelectedItem().toString());
                 if (rs_edit.next() && rs_idioma.next() && rs_format.next() && rs_tipo.next()) {
+                    for (Object categoria : listaDeIdCategorias) {
+                        System.out.println(categoria);
+                    }
                     rsEditar = objLibro.actualizarLibro(txtISBN.getText(),
                             rs_edit.getInt("codigo"),
                             txtNombre.getText(), (int) spnNumPaginas.getValue(), (int) spnEdicion.getValue(),
-                            rs_format.getInt("codigo"), rs_tipo.getInt("codigo"), rs_idioma.getInt("codigo"), listaDeIdAutores, listaDeIdCategorias);;
+                            rs_format.getInt("codigo"), rs_tipo.getInt("codigo"), rs_idioma.getInt("codigo"), listaDeIdAutores, listaDeIdCategorias);
+                    
                     if (rsEditar.next()) {
                         switch (rsEditar.getInt("resultado")) {
                             case 0:
                                 JOptionPane.showMessageDialog(this, "Libro editado con exito");
                                 limpiar();
                                 listarTabla();
-                                break;
-                            case -1:
-                                JOptionPane.showMessageDialog(this, "Error del servidor al editar el libro");
-                                break;
-                            default:
-                                JOptionPane.showMessageDialog(this, "El libro no se pudo editar");
-                                break;
                         }
                     }
                 } else {
