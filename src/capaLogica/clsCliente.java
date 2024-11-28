@@ -16,6 +16,34 @@ public class clsCliente {
     String strSQL;
     ResultSet rs = null;
 
+    public boolean verificarPrestamoCliente(int ide) throws Exception {
+        strSQL = "select * from cliente cl inner join prestamo pr on pr.cod_cliente=cl.codigo where cl.codigo=" + ide;
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar prestamo->"+e.getMessage());
+        }
+    }
+    
+    public boolean verificarReservaCliente(int ide) throws Exception {
+        strSQL = "select * from cliente cl inner join reserva re on re.cod_cliente=cl.codigo where cl.codigo=" + ide;
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar reserva->"+e.getMessage());
+        }
+    }
+    
     public int generarCodigoCliente() throws Exception {
         strSQL = "select coalesce(max(codigo),0)+1 as codigo from cliente";
         try {
