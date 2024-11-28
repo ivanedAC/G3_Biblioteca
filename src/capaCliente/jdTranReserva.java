@@ -776,6 +776,7 @@ public class jdTranReserva extends javax.swing.JDialog {
         try {
             // TODO add your handling code here:
             txtCodRes.setText(objReserva.generarCodReserva().toString());
+            txtCodRes.setEditable(false);
             llenarTablaInicial();
             mostrarFecha();
         } catch (Exception ex) {
