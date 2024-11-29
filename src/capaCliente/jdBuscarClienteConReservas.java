@@ -17,19 +17,18 @@ import javax.swing.table.TableCellRenderer;
 
 /**
  *
- * @author ander
+ * @author laboratorio_computo
  */
-public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
-
-    /**
-     * Creates new form jdManCliente
-     */
-    public Integer codCli = -1;
+public class jdBuscarClienteConReservas extends javax.swing.JDialog {
+    
+    public Integer codCli;
     clsPais objPais = new clsPais();
     clsTipoDocumento objDocumento = new clsTipoDocumento();
     clsCliente objCliente = new clsCliente();
-
-    public jdBuscarClienteConPrestamos(java.awt.Frame parent, boolean modal) {
+    /**
+     * Creates new form jdBuscarClienteConReservas
+     */
+    public jdBuscarClienteConReservas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         listarClientesNaturales();
@@ -65,7 +64,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         String ape = txtApellido.getText();
         String num_doc = txtNumDocumento.getText();
         try {
-            rsClientesN = objCliente.listarClientesNConPrestamo(nom,ape,num_doc);
+            rsClientesN = objCliente.listarClientesNConReserva(nom,ape,num_doc);
             while (rsClientesN.next()) {
                 Object datos[][] = new Object[1][12];
                 datos[0][0] = rsClientesN.getString("codigo");
@@ -124,7 +123,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         String num_doc = txtNumDocumento.getText();
 
         try {
-            rsClientesJ = objCliente.listarClientesJConPrestamo(nom,ape,num_doc);
+            rsClientesJ = objCliente.listarClientesJConReserva(nom,ape,num_doc);
 
             // Recorrer el ResultSet y llenar el modelo
             while (rsClientesJ.next()) {
@@ -173,7 +172,6 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
             table.getColumnModel().getColumn(column).setPreferredWidth(width);
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -183,7 +181,6 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPersonaNatural = new javax.swing.JTable();
@@ -222,9 +219,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblPersonaNatural);
 
         rbtnPN.setBackground(new java.awt.Color(230, 182, 139));
-        buttonGroup1.add(rbtnPN);
         rbtnPN.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
-        rbtnPN.setForeground(new java.awt.Color(0, 0, 0));
         rbtnPN.setText("Persona Natural");
         rbtnPN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,9 +228,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         });
 
         rbtnPJ.setBackground(new java.awt.Color(230, 182, 139));
-        buttonGroup1.add(rbtnPJ);
         rbtnPJ.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
-        rbtnPJ.setForeground(new java.awt.Color(0, 0, 0));
         rbtnPJ.setText("Persona Juridica");
         rbtnPJ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,11 +258,9 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         });
 
         jLabel1.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Tipo persona:");
 
         jLabel2.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre:");
 
         txtNombre.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
@@ -285,7 +276,6 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         });
 
         lblApeRaz.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
-        lblApeRaz.setForeground(new java.awt.Color(0, 0, 0));
         lblApeRaz.setText("Apellido:");
 
         txtApellido.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
@@ -301,7 +291,6 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         });
 
         jLabel4.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Num. Documento:");
 
         txtNumDocumento.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
@@ -325,7 +314,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(374, Short.MAX_VALUE))
+                .addContainerGap(341, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -381,7 +370,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1043, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,7 +393,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
             lblApeRaz.setText("Razón Social:");
             listarClientesJuridicos();
         }
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtnPJActionPerformed
 
@@ -431,24 +420,6 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
-        // TODO add your handling code here:
-        if (rbtnPN.isSelected()) {
-            listarClientesNaturales();
-        }else{
-            listarClientesJuridicos();
-        }
-    }//GEN-LAST:event_txtApellidoActionPerformed
-
-    private void txtNumDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumDocumentoActionPerformed
-        // TODO add your handling code here:
-        if (rbtnPN.isSelected()) {
-            listarClientesNaturales();
-        }else{
-            listarClientesJuridicos();
-        }
-    }//GEN-LAST:event_txtNumDocumentoActionPerformed
-
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
         // TODO add your handling code here:
         if (rbtnPN.isSelected()) {
@@ -458,6 +429,15 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtNombreKeyReleased
 
+    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
+        // TODO add your handling code here:
+        if (rbtnPN.isSelected()) {
+            listarClientesNaturales();
+        }else{
+            listarClientesJuridicos();
+        }
+    }//GEN-LAST:event_txtApellidoActionPerformed
+
     private void txtApellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyReleased
         // TODO add your handling code here:
         if (rbtnPN.isSelected()) {
@@ -466,6 +446,15 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
             listarClientesJuridicos();
         }
     }//GEN-LAST:event_txtApellidoKeyReleased
+
+    private void txtNumDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumDocumentoActionPerformed
+        // TODO add your handling code here:
+        if (rbtnPN.isSelected()) {
+            listarClientesNaturales();
+        }else{
+            listarClientesJuridicos();
+        }
+    }//GEN-LAST:event_txtNumDocumentoActionPerformed
 
     private void txtNumDocumentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumDocumentoKeyReleased
         // TODO add your handling code here:
@@ -484,7 +473,6 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
