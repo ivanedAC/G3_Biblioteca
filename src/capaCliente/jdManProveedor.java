@@ -994,20 +994,25 @@ public class jdManProveedor extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
             if (!txtDocIdent.getText().isBlank()) {
-                int opc = JOptionPane.showConfirmDialog(this, "¿Desea eliminar al cliente " + txtNombre.getText() + "?", "Confirmacion", JOptionPane.YES_NO_OPTION);
-                if (opc == JOptionPane.YES_OPTION) {
-                    objProveedor.eliminarProveedor(txtDocIdent.getText());
-                    JOptionPane.showMessageDialog(this, "Cliente eliminado");
-                    if (rbtnPJ.isSelected()) {
-                        listarProveedorJuridicos();
+                if (!(objProveedor.verificarProveedorOrden(objProveedor.buscarCodigoProveedor(txtDocIdent.getText())))) {
+                    int opc = JOptionPane.showConfirmDialog(this, "¿Desea eliminar al cliente " + txtNombre.getText() + "?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+                    if (opc == JOptionPane.YES_OPTION) {
+                        objProveedor.eliminarProveedor(txtDocIdent.getText());
+                        JOptionPane.showMessageDialog(this, "Cliente eliminado");
+                        if (rbtnPJ.isSelected()) {
+                            listarProveedorJuridicos();
 
+                        } else {
+                            listarProveedorNaturales();
+                        }
+                        clearfields();
                     } else {
-                        listarProveedorNaturales();
+                        JOptionPane.showMessageDialog(this, "Se cancelo");
                     }
-                    clearfields();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Se cancelo");
+                    JOptionPane.showMessageDialog(this, "Este proveedor tiene una orden de compra registrada");
                 }
+
             } else {
                 JOptionPane.showMessageDialog(this, "Ingrese el documento del cliente a eliminar");
             }

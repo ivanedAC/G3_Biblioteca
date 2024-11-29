@@ -8,6 +8,7 @@ import capaLogica.clsEditorial;
 import capaLogica.clsEjemplar;
 import capaLogica.clsSede;
 import capaLogica.clsTipoLibro;
+import capaLogica.clsUsuarioSTATIC;
 import java.awt.Component;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -29,14 +30,13 @@ public class jdMenuLibros extends javax.swing.JDialog {
     clsTipoLibro objTipoLibro = new clsTipoLibro();
     clsEjemplar objEjemplar = new clsEjemplar();
     
-    private String isbn = "";
+    private static String isbn = "";
     /**
      * Creates new form jdMenuLibros
      */
     public jdMenuLibros(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listarEjemplares();
     }
     
     public String getISBN(){
@@ -71,6 +71,10 @@ public class jdMenuLibros extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+    }
+    
+    private void seleccionSede(){
+        cboSede.setSelectedItem(clsUsuarioSTATIC.sede);
     }
 
     private void comboTipoLibro() {
@@ -471,6 +475,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
         comboSede();
         comboTipoLibro();
         listarEjemplares();
+        seleccionSede();
     }//GEN-LAST:event_formWindowOpened
 
     private void cboEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEditorialActionPerformed

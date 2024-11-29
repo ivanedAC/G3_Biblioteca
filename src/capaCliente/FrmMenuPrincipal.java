@@ -4,10 +4,13 @@
  */
 package capaCliente;
 
+import capaLogica.clsReserva;
 import capaLogica.clsUsuarioSTATIC;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,7 +22,7 @@ import javax.swing.JPanel;
 public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     jdIniciarSesion frmLogin = new jdIniciarSesion(this, true);
-
+    clsReserva objReserva = new clsReserva();
     /**
      * Creates new form MenuPrincipal
      */
@@ -161,6 +164,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuPrestamo = new javax.swing.JMenuItem();
         mnuDevolucion = new javax.swing.JMenuItem();
         mnuOpeRegistroReserva = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuOrdenCompra = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
 
@@ -509,6 +513,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuOperaciones.add(mnuOpeRegistroReserva);
 
+        jMenuItem1.setText("Préstamo de Reserva");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mnuOperaciones.add(jMenuItem1);
+
         mnuOrdenCompra.setText("Orden de compra");
         mnuOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -581,6 +593,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             case "Administrador":
                 botonesMantenimiento();
                 botonesReportes();
+        }
+        
+        try {
+            objReserva.validarEstadoReserva();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -724,6 +742,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         objOC.setVisible(true);
     }//GEN-LAST:event_mnuOrdenCompraActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -750,6 +772,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;

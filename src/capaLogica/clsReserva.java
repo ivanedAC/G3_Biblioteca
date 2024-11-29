@@ -8,6 +8,7 @@ import capaDatos.clsJDBC;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JTable;
 
 /**
@@ -161,8 +162,8 @@ public class clsReserva {
                             throw new Exception("Solo se puede reservar un libro a la vez.");
                         }
 
-                        strSQL = "INSERT INTO reserva (codigo, cod_cliente, f_reserva) "
-                                + "VALUES (" + codReserva + ", " + codCli + ", CURRENT_DATE);";
+                        strSQL = "INSERT INTO reserva (codigo, cod_cliente, f_reserva, correlativo, cod_usuario, cod_sede) "
+                                + "VALUES (" + codReserva + ", " + codCli + ", CURRENT_DATE," + generarCorrelativo() + ", " + clsUsuarioSTATIC.codigo + "," + codSede + ");";
                         sent.executeUpdate(strSQL);
 
                         String isbnLibro = tblDetalles.getValueAt(0, 2).toString();
@@ -215,7 +216,7 @@ public class clsReserva {
                             fFin = LocalDate.parse(fDevolucion).plusDays(1).toString();
                         }
 
-                        String strSQL = "UPDATE detalle_reserva SET cod_ejemplar=" + codEjemplar + ", f_inicio='" + fInicio + "', "
+                        strSQL = "UPDATE detalle_reserva SET cod_ejemplar=" + codEjemplar + ", f_inicio='" + fInicio + "', "
                                 + "f_fin='" + fFin + "' WHERE cod_reserva=" + codRese + " AND isbn='" + isbn + "';";
                         sent.executeUpdate(strSQL);
 
@@ -243,4 +244,31 @@ public class clsReserva {
         }
     }
 
+    public void validarEstadoReserva() throws Exception {
+        strSQL = "SELECT * FROM detalle_reserva where current_date > f_fin ;";
+        try {
+            rs = objConectar.consultar(strSQL);
+
+            while (rs.next()) {
+                strSQL = "UPDATE RESERVA SET ESTADO = 'A' WHERE CODIGO = " + rs.getInt("cod_reserva");
+            }
+
+        } catch (Exception e) {
+            throw new Exception("Error al anular reservas: " + e.getMessage());
+        }
+    }
+    
+    public ResultSet obtenerEjemplarReservado(int codCli) throws Exception{
+        strSQL = "select * from detalle_reserva det"
+                + "inner join reserva re "
+                + "on det.cod_reserva = re.cod_reserva "
+                + "where estado='P' and cod_cliente="+codCli+";";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al encontrar el ejemplar -->"+e.getMessage());
+        }
+    }
+    
 }

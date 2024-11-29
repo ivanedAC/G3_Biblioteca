@@ -17,6 +17,22 @@ public class clsProveedor {
     String strSQL;
     ResultSet rs = null;
 
+
+    public boolean verificarProveedorOrden(int ide) throws Exception {
+        strSQL = "select * from proveedor pr inner join orden_compra oc on oc.cod_proveedor=pr.codigo where pr.codigo=" + ide;
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar Proveedor->"+e.getMessage());
+        }
+    }
+    
+    
     public int generarCodigoProveedor() throws Exception {
         strSQL = "select coalesce(max(codigo),0)+1 as codigo from proveedor";
         try {

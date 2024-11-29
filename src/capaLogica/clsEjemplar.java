@@ -213,5 +213,5 @@ public class clsEjemplar {
         }
         return 0;
     }
-
+    
 }
