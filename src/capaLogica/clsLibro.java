@@ -229,7 +229,7 @@ public class clsLibro {
     }
 
     public ResultSet buscarLibro(String isbn) throws Exception {
-        strSQL = "select * from libro where isbn =" + isbn;
+        strSQL = "select * from libro where isbn ='" + isbn + "'";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;

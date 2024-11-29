@@ -24,7 +24,7 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
     /**
     * Creates new form jdManCliente
     */
-    public Integer codCli = -1;
+    public Integer codProv = -1;
     clsProveedor objProveedor = new clsProveedor();
 
     public jdBuscarProveedor(java.awt.Frame parent, boolean modal) {
@@ -122,7 +122,7 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
                 Object[] datos = new Object[10];
                 datos[0] = rsClientesJ.getString("codigo");
                 datos[1] = rsClientesJ.getString("pais");
-                datos[2] = rsClientesJ.getString("nombres");
+                datos[2] = rsClientesJ.getString("tipo_documento");
                 datos[3] = rsClientesJ.getString("numero_documento");
                 datos[4] = rsClientesJ.getString("nombres");
                 datos[5] = rsClientesJ.getString("razon_social");
@@ -387,9 +387,9 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (tblPersonaNatural.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Debe elegir un cliente!", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe elegir un proveedor!", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
         } else {
-            codCli = Integer.valueOf(tblPersonaNatural.getValueAt(tblPersonaNatural.getSelectedRow(), 3).toString());
+            codProv = Integer.valueOf(tblPersonaNatural.getValueAt(tblPersonaNatural.getSelectedRow(), 0).toString());
             this.dispose();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed

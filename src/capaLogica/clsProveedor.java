@@ -102,6 +102,18 @@ public class clsProveedor {
             throw new Exception("Error al buscar Proveedor-->" + e.getMessage());
         }
     }
+    
+    public ResultSet buscarProveedorPorCodigo(Integer cod) throws Exception {
+        strSQL = "select pro.codigo as cod_proveedor, pro.estado, per.* from \n"
+                + "proveedor pro inner join persona per on per.codigo = pro.cod_persona"
+                + " where pro.codigo =" + cod;
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar cliente: " + e.getMessage());
+        }
+    }
 
     public ResultSet listarProveedorN() throws Exception {
         strSQL = "select PR.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, Pe.nombres, (Pe.ape_paterno || ' ' || Pe.ape_materno) as apellidos,\n" +

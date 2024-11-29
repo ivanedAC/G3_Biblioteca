@@ -215,20 +215,20 @@
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="lblTipoDocCli" min="-2" pref="104" max="-2" attributes="0"/>
+                              <Component id="lblTipoDocPro" min="-2" pref="104" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="lblNroDocCli" min="-2" pref="104" max="-2" attributes="0"/>
+                              <Component id="lblNroDocPro" min="-2" pref="104" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblCodCli" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="lblCodPro" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="lblTipoPerCli" max="32767" attributes="0"/>
+                              <Component id="lblTipoPerPro" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="lblNomCli" alignment="0" min="-2" pref="273" max="-2" attributes="0"/>
+                          <Component id="lblNomPro" alignment="0" min="-2" pref="273" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -240,23 +240,23 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblCodCli" max="32767" attributes="0"/>
+                              <Component id="lblCodPro" max="32767" attributes="0"/>
                               <Component id="jLabel4" max="32767" attributes="0"/>
                               <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lblTipoPerCli" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblTipoPerPro" min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblNomCli" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblNomPro" min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNroDocCli" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblNroDocPro" min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTipoDocCli" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblTipoDocPro" min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -274,7 +274,7 @@
                 <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNroDocCli">
+            <Component class="javax.swing.JLabel" name="lblNroDocPro">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -283,7 +283,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNomCli">
+            <Component class="javax.swing.JLabel" name="lblNomPro">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -297,7 +297,7 @@
                 <Property name="text" type="java.lang.String" value="Nro Doc:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTipoDocCli">
+            <Component class="javax.swing.JLabel" name="lblTipoDocPro">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -311,7 +311,7 @@
                 <Property name="text" type="java.lang.String" value="Nombre:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTipoPerCli">
+            <Component class="javax.swing.JLabel" name="lblTipoPerPro">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -320,7 +320,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblCodCli">
+            <Component class="javax.swing.JLabel" name="lblCodPro">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -361,18 +361,19 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="lblISBNEjem" min="-2" pref="95" max="-2" attributes="0"/>
+                                  <Component id="lblISBNLib" min="-2" pref="95" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                                   <Component id="jLabel16" min="-2" pref="60" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="lblEditorialEjem" min="-2" pref="171" max="-2" attributes="0"/>
+                                  <Component id="lblEditorialLib" min="-2" pref="171" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="lblNomEjem" max="32767" attributes="0"/>
+                              <Component id="lblNomLib" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnAgregarEjem" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="btnEliminarEjem" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnEliminarLib" pref="91" max="32767" attributes="0"/>
+                              <Component id="btnAgregarLib" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -390,20 +391,22 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel15" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="lblEditorialEjem" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblEditorialLib" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel16" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblISBNEjem" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblISBNLib" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblNomEjem" max="32767" attributes="0"/>
+                              <Component id="lblNomLib" max="32767" attributes="0"/>
                               <Component id="jLabel13" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                          <Component id="btnEliminarEjem" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnAgregarEjem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="btnAgregarLib" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnEliminarLib" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -443,7 +446,7 @@
             <Property name="text" type="java.lang.String" value="Nombre:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblNomEjem">
+        <Component class="javax.swing.JLabel" name="lblNomLib">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -452,20 +455,20 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnAgregarEjem">
+        <Component class="javax.swing.JButton" name="btnAgregarLib">
           <Properties>
             <Property name="text" type="java.lang.String" value="Agregar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarEjemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarLibActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnEliminarEjem">
+        <Component class="javax.swing.JButton" name="btnEliminarLib">
           <Properties>
             <Property name="text" type="java.lang.String" value="Eliminar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarEjemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarLibActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel15">
@@ -473,7 +476,7 @@
             <Property name="text" type="java.lang.String" value="ISBN:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblISBNEjem">
+        <Component class="javax.swing.JLabel" name="lblISBNLib">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -487,7 +490,7 @@
             <Property name="text" type="java.lang.String" value="Editorial:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblEditorialEjem">
+        <Component class="javax.swing.JLabel" name="lblEditorialLib">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -579,9 +582,9 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel18" max="32767" attributes="0"/>
-                      <Component id="jLabel19" max="32767" attributes="0"/>
-                      <Component id="jLabel20" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="lblSubtotal" max="32767" attributes="0"/>
+                      <Component id="lblIGV" max="32767" attributes="0"/>
+                      <Component id="lblTotal" min="-2" pref="130" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
               </Group>
@@ -597,18 +600,18 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSubtotal" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel19" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblIGV" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel20" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblTotal" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -631,7 +634,7 @@
             <Property name="text" type="java.lang.String" value="Total:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel18">
+        <Component class="javax.swing.JLabel" name="lblSubtotal">
           <Properties>
             <Property name="text" type="java.lang.String" value="."/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -641,7 +644,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel19">
+        <Component class="javax.swing.JLabel" name="lblIGV">
           <Properties>
             <Property name="text" type="java.lang.String" value="."/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -651,7 +654,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel20">
+        <Component class="javax.swing.JLabel" name="lblTotal">
           <Properties>
             <Property name="text" type="java.lang.String" value="."/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

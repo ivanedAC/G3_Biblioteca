@@ -60,21 +60,25 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private void mostrarDatosCliente(Integer cod) throws Exception {
         ResultSet rsCli = objCliente.buscarClientePorCodigo(cod);
         if (rsCli.next()) {
-            String nom = rsCli.getString("nombres");
-            String apeP = rsCli.getString("ape_paterno");
-            String apeM = rsCli.getString("ape_materno");
+            if (rsCli.getString("estado").equals("A")) {
+                String nom = rsCli.getString("nombres");
+                String apeP = rsCli.getString("ape_paterno");
+                String apeM = rsCli.getString("ape_materno");
 
-            lblCodCli.setText(rsCli.getString("cod_cliente"));
-            if (rsCli.getString("razon_social") == null) {
-                lblTipoPerCli.setText("P. Natural");
-                lblNomCli.setText(nom + " " + apeP + " " + apeM);
-            } else {
-                lblTipoPerCli.setText("P. Jurídica");
-                lblNomCli.setText(nom);
+                lblCodCli.setText(rsCli.getString("cod_cliente"));
+                if (rsCli.getString("razon_social") == null) {
+                    lblTipoPerCli.setText("P. Natural");
+                    lblNomCli.setText(nom + " " + apeP + " " + apeM);
+                } else {
+                    lblTipoPerCli.setText("P. Jurídica");
+                    lblNomCli.setText(nom);
+                }
+
+                lblTipoDocCli.setText(objTDoc.nombreTipoDocumento(rsCli.getInt("cod_tipo_doc")));
+                lblNroDocCli.setText(rsCli.getString("numero_documento"));
+            } else{
+                JOptionPane.showMessageDialog(null, "El estado del cliente no le permite tramitar préstamos");
             }
-
-            lblTipoDocCli.setText(objTDoc.nombreTipoDocumento(rsCli.getInt("cod_tipo_doc")));
-            lblNroDocCli.setText(rsCli.getString("numero_documento"));
         }
     }
 
@@ -618,6 +622,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             // TODO add your handling code here:
+            txtCodPre.setEditable(false);
             txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
             mostrarFechaLim();
             llenarTablaInicial();
@@ -765,7 +770,11 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
         try {
             // TODO add your handling code here:
-            ResultSet rsPre = objPrestamo.buscarPrestamo(Integer.valueOf(txtCodPre.getText()));
+            jdBuscarClienteConPrestamos objJd = new jdBuscarClienteConPrestamos(null, true);
+            objJd.setLocationRelativeTo(null);
+            objJd.setVisible(true);
+
+            ResultSet rsPre = objPrestamo.buscarPrestamoVigentes(objJd.codCli);
             if (rsPre.next()) {
                 if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular el préstamo con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
                     if (rsPre.getString("estado").equals("P")) {
@@ -780,7 +789,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "El código ingresado no existe");
+                JOptionPane.showMessageDialog(null, "El cliente ingresado no tiene préstamos vigentes");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -806,7 +815,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            
+
         } catch (Exception ex) {
             Logger.getLogger(jdTranReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
