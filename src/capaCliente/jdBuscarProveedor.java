@@ -24,15 +24,16 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
     /**
     * Creates new form jdManCliente
     */
-    public Integer codCli = -1;
+    public Integer codProv = -1;
     clsProveedor objProveedor = new clsProveedor();
 
     public jdBuscarProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listarProveedoresNaturales();
+        listarProveedorJuridicos();
+        setTitle("Busqueda de un proveedor");
 
-        rbtnPN.setSelected(true);
+        rbtnPJ.setSelected(true);
     }
 
     public void listarProveedoresNaturales() {
@@ -41,7 +42,7 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
         DefaultTableModel modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return  false;
             }
         };
         modelo.addColumn("Codigo");
@@ -121,7 +122,7 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
                 Object[] datos = new Object[10];
                 datos[0] = rsClientesJ.getString("codigo");
                 datos[1] = rsClientesJ.getString("pais");
-                datos[2] = rsClientesJ.getString("nombres");
+                datos[2] = rsClientesJ.getString("tipo_documento");
                 datos[3] = rsClientesJ.getString("numero_documento");
                 datos[4] = rsClientesJ.getString("nombres");
                 datos[5] = rsClientesJ.getString("razon_social");
@@ -309,12 +310,15 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
+                        .addGap(79, 79, 79)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel1)
@@ -328,14 +332,8 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(rbtnPJ))
                                     .addComponent(txtNombre)
-                                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(351, 351, 351)
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 357, Short.MAX_VALUE)))
-                .addContainerGap())
+                                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,7 +368,9 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1069, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,9 +387,9 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (tblPersonaNatural.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Debe elegir un cliente!", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe elegir un proveedor!", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
         } else {
-            codCli = Integer.valueOf(tblPersonaNatural.getValueAt(tblPersonaNatural.getSelectedRow(), 0).toString());
+            codProv = Integer.valueOf(tblPersonaNatural.getValueAt(tblPersonaNatural.getSelectedRow(), 0).toString());
             this.dispose();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed

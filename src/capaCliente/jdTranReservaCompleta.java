@@ -22,23 +22,23 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ACER
+ * @author laboratorio_computo
  */
-public class jdTranPrestamo extends javax.swing.JDialog {
-
+public class jdTranReservaCompleta extends javax.swing.JDialog {
+    
     clsPrestamo objPrestamo = new clsPrestamo();
     clsCliente objCliente = new clsCliente();
     clsEjemplar objEjem = new clsEjemplar();
     clsTipoDocumento objTDoc = new clsTipoDocumento();
-
+    clsReserva objReserva = new clsReserva();
     /**
-     * Creates new form jdTranPrestamo
+     * Creates new form jdTranReservaCompleta
      */
-    public jdTranPrestamo(java.awt.Frame parent, boolean modal) {
+    public jdTranReservaCompleta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-
+    
     private void llenarTablaInicial() {
         DefaultTableModel modelo = new DefaultTableModel() {
             @Override
@@ -60,25 +60,21 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private void mostrarDatosCliente(Integer cod) throws Exception {
         ResultSet rsCli = objCliente.buscarClientePorCodigo(cod);
         if (rsCli.next()) {
-            if (rsCli.getString("estado").equals("A")) {
-                String nom = rsCli.getString("nombres");
-                String apeP = rsCli.getString("ape_paterno");
-                String apeM = rsCli.getString("ape_materno");
+            String nom = rsCli.getString("nombres");
+            String apeP = rsCli.getString("ape_paterno");
+            String apeM = rsCli.getString("ape_materno");
 
-                lblCodCli.setText(rsCli.getString("cod_cliente"));
-                if (rsCli.getString("razon_social") == null) {
-                    lblTipoPerCli.setText("P. Natural");
-                    lblNomCli.setText(nom + " " + apeP + " " + apeM);
-                } else {
-                    lblTipoPerCli.setText("P. Jurídica");
-                    lblNomCli.setText(nom);
-                }
-
-                lblTipoDocCli.setText(objTDoc.nombreTipoDocumento(rsCli.getInt("cod_tipo_doc")));
-                lblNroDocCli.setText(rsCli.getString("numero_documento"));
-            } else{
-                JOptionPane.showMessageDialog(null, "El estado del cliente no le permite tramitar préstamos");
+            lblCodCli.setText(rsCli.getString("cod_cliente"));
+            if (rsCli.getString("razon_social") == null) {
+                lblTipoPerCli.setText("P. Natural");
+                lblNomCli.setText(nom + " " + apeP + " " + apeM);
+            } else {
+                lblTipoPerCli.setText("P. Jurídica");
+                lblNomCli.setText(nom);
             }
+
+            lblTipoDocCli.setText(objTDoc.nombreTipoDocumento(rsCli.getInt("cod_tipo_doc")));
+            lblNroDocCli.setText(rsCli.getString("numero_documento"));
         }
     }
 
@@ -138,12 +134,23 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         }
     }
 
-    private void eliminarEjemplar(int cod) {
+    private void eliminarEjemplar(int cod, int codCli) {
+        int codEjem=0;
         try {
+            ResultSet rs = objReserva.obtenerEjemplarReservado(codCli);
+            if (rs.next()) {                
+                codEjem = rs.getInt("cod_ejemplar");
+            }
+            
             DefaultTableModel modelo = (DefaultTableModel) tblDetalles.getModel();
             for (int i = 0; i < tblDetalles.getRowCount(); i++) {
                 if (Integer.parseInt(String.valueOf(tblDetalles.getValueAt(i, 0))) == cod) {
-                    modelo.removeRow(i);
+                    if (cod != codEjem) {
+                        modelo.removeRow(i);
+                    }else{
+                        JOptionPane.showMessageDialog(this, "No se puede eliminar el ejemplar reservado",
+                                "Mensaje de sistema", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
             }
             tblDetalles.setModel(modelo);
@@ -183,8 +190,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         lblEditorialEjem.setText("");
         lblISBNEjem.setText("");
         lblNomEjem.setText("");
-        spnHora.setValue(7);
-        spnMin.setValue(0);
     }
 
     /**
@@ -196,15 +201,10 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        calendarFLim = new com.toedter.calendar.JDateChooser();
-        jLabel7 = new javax.swing.JLabel();
-        txtCodPre = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        spnHora = new javax.swing.JSpinner();
-        spnMin = new javax.swing.JSpinner();
+        jPanel7 = new javax.swing.JPanel();
+        btnGuardar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        btnAnular = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -219,107 +219,77 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         lblTipoPerCli = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         lblTipoDocCli = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblDetalles = new javax.swing.JTable();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        lblNomEjem = new javax.swing.JLabel();
-        btnAgregarEjem = new javax.swing.JButton();
-        btnEliminarEjem = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
-        lblISBNEjem = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        lblEditorialEjem = new javax.swing.JLabel();
-        lblCodEjem = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        btnGuardar = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
-        btnAnular = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        calendarFLim = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        txtCodPre = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        spnHora = new javax.swing.JSpinner();
+        spnMin = new javax.swing.JSpinner();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel31 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblDetalles5 = new javax.swing.JTable();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        lblNomEjem4 = new javax.swing.JLabel();
+        btnAgregarEjem4 = new javax.swing.JButton();
+        btnEliminarEjem4 = new javax.swing.JButton();
+        jLabel34 = new javax.swing.JLabel();
+        lblISBNEjem4 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        lblEditorialEjem4 = new javax.swing.JLabel();
+        lblCodEjem4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setText("PRÉSTAMO");
-
-        jLabel6.setText("Código:");
-
-        jLabel7.setText("Fecha Límite:");
-
-        txtCodPre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCodPreKeyTyped(evt);
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
             }
         });
 
-        jLabel8.setText("Hora Límite:");
-
-        spnHora.setModel(new javax.swing.SpinnerNumberModel(7, 7, 18, 1));
-        JFormattedTextField txtField = ((JSpinner.DefaultEditor) spnHora.getEditor()).getTextField();
-        txtField.setEditable(false);
-        spnHora.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                spnHoraStateChanged(evt);
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
             }
         });
 
-        spnMin.setModel(new javax.swing.SpinnerNumberModel(0, 0, 30, 30));
-        JFormattedTextField txtField2 = ((JSpinner.DefaultEditor) spnMin.getEditor()).getTextField();
-        txtField2.setEditable(false);
+        btnAnular.setText("Anular");
+        btnAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodPre, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                        .addGap(96, 96, 96)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(calendarFLim, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(spnHora, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spnMin, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addComponent(btnAnular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(49, 49, 49))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(calendarFLim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(spnHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(spnMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(jLabel6)
-                        .addComponent(txtCodPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(btnGuardar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAnular)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSalir)
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -429,11 +399,85 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel11.setText("EJEMPLARES");
+        jLabel2.setText("PRÉSTAMO DE RESERVAS");
 
-        tblDetalles.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel6.setText("Código:");
+
+        jLabel7.setText("Fecha Límite:");
+
+        txtCodPre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodPreKeyTyped(evt);
+            }
+        });
+
+        jLabel8.setText("Hora Límite:");
+
+        spnHora.setModel(new javax.swing.SpinnerNumberModel(7, 7, 18, 1));
+        JFormattedTextField txtField = ((JSpinner.DefaultEditor) spnHora.getEditor()).getTextField();
+        txtField.setEditable(false);
+        spnHora.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnHoraStateChanged(evt);
+            }
+        });
+
+        spnMin.setModel(new javax.swing.SpinnerNumberModel(0, 0, 30, 30));
+        JFormattedTextField txtField2 = ((JSpinner.DefaultEditor) spnMin.getEditor()).getTextField();
+        txtField2.setEditable(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodPre)
+                        .addGap(96, 96, 96)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(calendarFLim, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(spnHora, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spnMin, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(calendarFLim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(spnHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(spnMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel6)
+                        .addComponent(txtCodPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel31.setText("EJEMPLARES");
+
+        tblDetalles5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -441,152 +485,105 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
             }
         ));
-        tblDetalles.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblDetalles5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDetallesMouseClicked(evt);
+                tblDetalles5MouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblDetalles);
+        jScrollPane5.setViewportView(tblDetalles5);
 
-        jLabel12.setText("Código:");
+        jLabel32.setText("Código:");
 
-        jLabel13.setText("Nombre:");
+        jLabel33.setText("Nombre:");
 
-        lblNomEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblNomEjem4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnAgregarEjem.setText("Agregar");
-        btnAgregarEjem.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarEjem4.setText("Agregar");
+        btnAgregarEjem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarEjemActionPerformed(evt);
+                btnAgregarEjem4ActionPerformed(evt);
             }
         });
 
-        btnEliminarEjem.setText("Eliminar");
-        btnEliminarEjem.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarEjem4.setText("Eliminar");
+        btnEliminarEjem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarEjemActionPerformed(evt);
+                btnEliminarEjem4ActionPerformed(evt);
             }
         });
 
-        jLabel15.setText("ISBN:");
+        jLabel34.setText("ISBN:");
 
-        lblISBNEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblISBNEjem4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel16.setText("Editorial:");
+        jLabel35.setText("Editorial:");
 
-        lblEditorialEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblEditorialEjem4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lblCodEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblCodEjem4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel31)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel13))
-                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel33))
+                    .addComponent(jLabel32, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblCodEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(lblCodEjem4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblISBNEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblISBNEjem4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                        .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblEditorialEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblNomEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblEditorialEjem4, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNomEjem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregarEjem)
-                    .addComponent(btnEliminarEjem))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarEjem4)
+                    .addComponent(btnEliminarEjem4))
                 .addGap(41, 41, 41))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane5)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel31)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblCodEjem, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                                .addComponent(jLabel15)
-                                .addComponent(lblEditorialEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblISBNEjem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel12))
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblCodEjem4, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                                .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                                .addComponent(jLabel34)
+                                .addComponent(lblEditorialEjem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblISBNEjem4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel32))
                         .addGap(13, 13, 13)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNomEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnAgregarEjem)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNomEjem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(btnAgregarEjem4)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminarEjem)))
+                        .addComponent(btnEliminarEjem4)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
-        btnSalir.setText("Salir");
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
-            }
-        });
-
-        btnAnular.setText("Anular");
-        btnAnular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnularActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addComponent(btnAnular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(49, 49, 49))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAnular)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalir)
-                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -596,10 +593,10 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -610,110 +607,14 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            // TODO add your handling code here:
-            txtCodPre.setEditable(false);
-            txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
-            mostrarFechaLim();
-            llenarTablaInicial();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-    }//GEN-LAST:event_formWindowOpened
-
-    private void spnHoraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnHoraStateChanged
-        // TODO add your handling code here:
-        int hour = (int) spnHora.getValue();
-        if (hour == 18) {
-            spnMin.setValue(0); // Se asegura de que el valor de minutos sea 0
-            spnMin.setEnabled(false); // Deshabilita el spinner de minutos
-        } else {
-            spnMin.setEnabled(true); // Habilita el spinner de minutos para otras horas
-        }
-    }//GEN-LAST:event_spnHoraStateChanged
-
-    private void btnNuevoCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoCliActionPerformed
-        // TODO add your handling code here:
-        jdManCliente objJd = new jdManCliente(null, true);
-        objJd.setLocationRelativeTo(null);
-        objJd.setVisible(true);
-    }//GEN-LAST:event_btnNuevoCliActionPerformed
-
-    private void btnElegirCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirCliActionPerformed
-        try {
-            // TODO add your handling code here:
-            jdBuscarCliente objJd = new jdBuscarCliente(null, true);
-            objJd.setLocationRelativeTo(null);
-            objJd.setVisible(true);
-            if (objJd.codCli != -1) {
-                mostrarDatosCliente(objJd.codCli);
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-    }//GEN-LAST:event_btnElegirCliActionPerformed
-
-    private void btnAgregarEjemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEjemActionPerformed
-        // TODO add your handling code here:
-        jdAgregarEjemplar objJd = new jdAgregarEjemplar(null, true);
-        objJd.setLocationRelativeTo(null);
-        objJd.setVisible(true);
-        String isbn = objJd.isbn;
-        try {
-            if (!isbn.equals("")) {
-                if (tblDetalles.getRowCount() == 3) {
-                    JOptionPane.showMessageDialog(null, "Solo se puede llevar 3 ejemplares en un préstamo");
-                } else {
-                    agregarEjemplar(isbn);
-                }
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-
-    }//GEN-LAST:event_btnAgregarEjemActionPerformed
-
-    private void btnEliminarEjemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEjemActionPerformed
-        // TODO add your handling code here:
-        if (tblDetalles.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un libro a eliminar del préstamo!");
-        } else {
-            if (JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este libro del préstamo?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
-                lblCodEjem.setText("");
-                lblNomEjem.setText("");
-                lblEditorialEjem.setText("");
-                lblISBNEjem.setText("");
-                eliminarEjemplar(Integer.parseInt(tblDetalles.getValueAt(tblDetalles.getSelectedRow(), 0).toString()));
-            }
-        }
-
-
-    }//GEN-LAST:event_btnEliminarEjemActionPerformed
-
-    private void tblDetallesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetallesMouseClicked
-        try {
-            // TODO add your handling code here:
-            ResultSet rsEjem = objEjem.buscarPorCodigo(Integer.parseInt(tblDetalles.getValueAt(tblDetalles.getSelectedRow(), 0).toString()));
-            if (rsEjem.next()) {
-                lblCodEjem.setText(rsEjem.getString("codigo"));
-                lblNomEjem.setText(rsEjem.getString("libro"));
-                lblISBNEjem.setText(rsEjem.getString("isbn"));
-                lblEditorialEjem.setText(rsEjem.getString("editorial"));
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-    }//GEN-LAST:event_tblDetallesMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
@@ -746,7 +647,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                     String fechita = sdf.format(calendarFLim.getCalendar().getTime());
                                     objPrestamo.registrarPrestamo(Integer.valueOf(txtCodPre.getText()),
-                                            Integer.valueOf(lblCodCli.getText()), fechita, spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles);
+                                        Integer.valueOf(lblCodCli.getText()), fechita, spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles);
                                     JOptionPane.showMessageDialog(null, "Préstamo registrado exitosamente");
                                     limpiarTodo();
                                     txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
@@ -767,14 +668,17 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(null, "¿Está seguro de salir?, Perderá todos los datos que haya ingresado.", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
         try {
             // TODO add your handling code here:
-            jdBuscarClienteConPrestamos objJd = new jdBuscarClienteConPrestamos(null, true);
-            objJd.setLocationRelativeTo(null);
-            objJd.setVisible(true);
-
-            ResultSet rsPre = objPrestamo.buscarPrestamoVigentes(objJd.codCli);
+            ResultSet rsPre = objPrestamo.buscarPrestamo(Integer.valueOf(txtCodPre.getText()));
             if (rsPre.next()) {
                 if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular el préstamo con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
                     if (rsPre.getString("estado").equals("P")) {
@@ -789,19 +693,40 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "El cliente ingresado no tiene préstamos vigentes");
+                JOptionPane.showMessageDialog(null, "El código ingresado no existe");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnAnularActionPerformed
 
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+    private void btnNuevoCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoCliActionPerformed
         // TODO add your handling code here:
-        if (JOptionPane.showConfirmDialog(null, "¿Está seguro de salir?, Perderá todos los datos que haya ingresado.", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
-            this.dispose();
+        jdManCliente objJd = new jdManCliente(null, true);
+        objJd.setLocationRelativeTo(null);
+        objJd.setVisible(true);
+    }//GEN-LAST:event_btnNuevoCliActionPerformed
+
+    private void btnElegirCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirCliActionPerformed
+        String isbnReser="";
+        try {
+            // TODO add your handling code here:
+            jdBuscarClienteConReservas objJd = new jdBuscarClienteConReservas(null, true);
+            objJd.setLocationRelativeTo(null);
+            objJd.setVisible(true);
+            if (objJd.codCli != -1) {
+                mostrarDatosCliente(objJd.codCli);
+                ResultSet rs = objReserva.obtenerEjemplarReservado(objJd.codCli);
+                if (rs.next()) {                
+                    isbnReser = rs.getString("isbn");
+                }
+                agregarEjemplar(isbnReser);
+            }
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-    }//GEN-LAST:event_btnSalirActionPerformed
+    }//GEN-LAST:event_btnElegirCliActionPerformed
 
     private void txtCodPreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodPreKeyTyped
         // TODO add your handling code here:
@@ -811,25 +736,85 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtCodPreKeyTyped
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    private void spnHoraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnHoraStateChanged
         // TODO add your handling code here:
+        int hour = (int) spnHora.getValue();
+        if (hour == 18) {
+            spnMin.setValue(0); // Se asegura de que el valor de minutos sea 0
+            spnMin.setEnabled(false); // Deshabilita el spinner de minutos
+        } else {
+            spnMin.setEnabled(true); // Habilita el spinner de minutos para otras horas
+        }
+    }//GEN-LAST:event_spnHoraStateChanged
+
+    private void tblDetalles5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalles5MouseClicked
         try {
             // TODO add your handling code here:
-
+            ResultSet rsEjem = objEjem.buscarPorCodigo(Integer.parseInt(tblDetalles.getValueAt(tblDetalles.getSelectedRow(), 0).toString()));
+            if (rsEjem.next()) {
+                lblCodEjem.setText(rsEjem.getString("codigo"));
+                lblNomEjem.setText(rsEjem.getString("libro"));
+                lblISBNEjem.setText(rsEjem.getString("isbn"));
+                lblEditorialEjem.setText(rsEjem.getString("editorial"));
+            }
         } catch (Exception ex) {
-            Logger.getLogger(jdTranReserva.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-    }//GEN-LAST:event_formWindowClosed
+    }//GEN-LAST:event_tblDetalles5MouseClicked
+
+    private void btnAgregarEjem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEjem4ActionPerformed
+        // TODO add your handling code here:
+        jdAgregarEjemplar objJd = new jdAgregarEjemplar(null, true);
+        objJd.setLocationRelativeTo(null);
+        objJd.setVisible(true);
+        String isbn = objJd.isbn;
+        try {
+            if (!isbn.equals("")) {
+                if (tblDetalles.getRowCount() == 3) {
+                    JOptionPane.showMessageDialog(null, "Solo se puede llevar 3 ejemplares en un préstamo");
+                } else {
+                    agregarEjemplar(isbn);
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnAgregarEjem4ActionPerformed
+
+    private void btnEliminarEjem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEjem4ActionPerformed
+        // TODO add your handling code here:
+        if (tblDetalles.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un libro a eliminar del préstamo!");
+        } else {
+            if (JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este libro del préstamo?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+                lblCodEjem.setText("");
+                lblNomEjem.setText("");
+                lblEditorialEjem.setText("");
+                lblISBNEjem.setText("");
+                eliminarEjemplar(Integer.parseInt(tblDetalles.getValueAt(tblDetalles.getSelectedRow(), 0).toString()), Integer.parseInt(lblCodCli.getText()));
+            }
+        }
+
+    }//GEN-LAST:event_btnEliminarEjem4ActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarEjem;
+    private javax.swing.JButton btnAgregarEjem1;
+    private javax.swing.JButton btnAgregarEjem2;
+    private javax.swing.JButton btnAgregarEjem3;
+    private javax.swing.JButton btnAgregarEjem4;
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnElegirCli;
     private javax.swing.JButton btnEliminarEjem;
+    private javax.swing.JButton btnEliminarEjem1;
+    private javax.swing.JButton btnEliminarEjem2;
+    private javax.swing.JButton btnEliminarEjem3;
+    private javax.swing.JButton btnEliminarEjem4;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevoCli;
     private javax.swing.JButton btnSalir;
@@ -839,10 +824,30 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -853,19 +858,47 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblCodCli;
     private javax.swing.JLabel lblCodEjem;
+    private javax.swing.JLabel lblCodEjem1;
+    private javax.swing.JLabel lblCodEjem2;
+    private javax.swing.JLabel lblCodEjem3;
+    private javax.swing.JLabel lblCodEjem4;
     private javax.swing.JLabel lblEditorialEjem;
+    private javax.swing.JLabel lblEditorialEjem1;
+    private javax.swing.JLabel lblEditorialEjem2;
+    private javax.swing.JLabel lblEditorialEjem3;
+    private javax.swing.JLabel lblEditorialEjem4;
     private javax.swing.JLabel lblISBNEjem;
+    private javax.swing.JLabel lblISBNEjem1;
+    private javax.swing.JLabel lblISBNEjem2;
+    private javax.swing.JLabel lblISBNEjem3;
+    private javax.swing.JLabel lblISBNEjem4;
     private javax.swing.JLabel lblNomCli;
     private javax.swing.JLabel lblNomEjem;
+    private javax.swing.JLabel lblNomEjem1;
+    private javax.swing.JLabel lblNomEjem2;
+    private javax.swing.JLabel lblNomEjem3;
+    private javax.swing.JLabel lblNomEjem4;
     private javax.swing.JLabel lblNroDocCli;
     private javax.swing.JLabel lblTipoDocCli;
     private javax.swing.JLabel lblTipoPerCli;
     private javax.swing.JSpinner spnHora;
     private javax.swing.JSpinner spnMin;
     private javax.swing.JTable tblDetalles;
+    private javax.swing.JTable tblDetalles1;
+    private javax.swing.JTable tblDetalles2;
+    private javax.swing.JTable tblDetalles3;
+    private javax.swing.JTable tblDetalles5;
     private javax.swing.JTextField txtCodPre;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,6 +17,22 @@ public class clsProveedor {
     String strSQL;
     ResultSet rs = null;
 
+
+    public boolean verificarProveedorOrden(int ide) throws Exception {
+        strSQL = "select * from proveedor pr inner join orden_compra oc on oc.cod_proveedor=pr.codigo where pr.codigo=" + ide;
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar Proveedor->"+e.getMessage());
+        }
+    }
+    
+    
     public int generarCodigoProveedor() throws Exception {
         strSQL = "select coalesce(max(codigo),0)+1 as codigo from proveedor";
         try {
@@ -100,6 +116,18 @@ public class clsProveedor {
 
         } catch (Exception e) {
             throw new Exception("Error al buscar Proveedor-->" + e.getMessage());
+        }
+    }
+    
+    public ResultSet buscarProveedorPorCodigo(Integer cod) throws Exception {
+        strSQL = "select pro.codigo as cod_proveedor, pro.estado, per.* from \n"
+                + "proveedor pro inner join persona per on per.codigo = pro.cod_persona"
+                + " where pro.codigo =" + cod;
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar cliente: " + e.getMessage());
         }
     }
 
@@ -198,4 +226,16 @@ public class clsProveedor {
         }
     }
 
+    public int buscarProveedor(int codigo) throws Exception {
+        strSQL = "select Pro.codigo as codigo from proveedor Pro inner join persona P on Pro.cod_persona=P.codigo where P.numero_documento = '" + codigo + "'";
+        try {
+            rs = objConectar.consultar(strSQL);
+            while (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al generar codigo de Persona---->" + e.getMessage());
+        }
+        return 0;
+    }
 }
