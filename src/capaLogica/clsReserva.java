@@ -199,7 +199,7 @@ public class clsReserva {
                         String fInicio, fFin;
                         if (LocalTime.parse(hDevolucion).isAfter(LocalTime.of(14, 0))) { 
                             fInicio = LocalDate.parse(fDevolucion).plusDays(1).toString();
-                            fFin = LocalDate.parse(fDevolucion).plusDays(3).toString();
+                            fFin = LocalDate.parse(fDevolucion).plusDays(2).toString();
                         } else {
                             fInicio = fDevolucion;
                             fFin = LocalDate.parse(fDevolucion).plusDays(1).toString();

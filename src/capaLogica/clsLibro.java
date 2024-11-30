@@ -128,7 +128,7 @@ public class clsLibro {
             "    FROM ejemplar ejem\n" +
             "	where ejem.cod_sede="+codSede+"\n" +
             "    GROUP BY ejem.isbn\n" +
-            "    HAVING SUM(CASE WHEN ejem.estado != 'P' THEN 1 ELSE 0 END) = 0)\n" +
+            "    HAVING SUM(CASE WHEN ejem.estado = 'D' THEN 1 ELSE 0 END) = 0)\n" +
             "	and upper(ll.libro_nombre) LIKE upper('%"+nombre+"%')\n" +
             "ORDER BY 3;";
         try {

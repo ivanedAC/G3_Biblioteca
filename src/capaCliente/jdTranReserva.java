@@ -778,6 +778,10 @@ public class jdTranReserva extends javax.swing.JDialog {
             txtCodRes.setText(objReserva.generarCodReserva().toString());
             llenarTablaInicial();
             mostrarFecha();
+            
+            String isbn = jdMenuLibros.ISBN;
+            agregarEjemplar(isbn);
+            System.out.println(isbn);
         } catch (Exception ex) {
             Logger.getLogger(jdTranReserva.class.getName()).log(Level.SEVERE, null, ex);
         }

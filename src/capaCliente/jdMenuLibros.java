@@ -29,7 +29,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
     clsTipoLibro objTipoLibro = new clsTipoLibro();
     clsEjemplar objEjemplar = new clsEjemplar();
     
-    private String isbn = "";
+    public static String ISBN = "";
     /**
      * Creates new form jdMenuLibros
      */
@@ -37,10 +37,6 @@ public class jdMenuLibros extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarEjemplares();
-    }
-    
-    public String getISBN(){
-        return isbn;
     }
 
     private ImageIcon prestamoIcon = new ImageIcon(getClass().getResource("/recursos/prestamo_icon.png"));
@@ -505,7 +501,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
 
     private void tblEjemplaresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEjemplaresMouseClicked
         // TODO add your handling code here:
-        isbn = String.valueOf(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 0));
+        ISBN = String.valueOf(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 0));
         int dispo = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 5);
         int prest = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 6);
         int reser = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 7); 
@@ -519,6 +515,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
                     jdTranReserva objReserva = new jdTranReserva(null, true);
                     objReserva.setLocationRelativeTo(null);
                     objReserva.setVisible(true);
+                    
                 }
             }
         } else {
@@ -527,8 +524,10 @@ public class jdMenuLibros extends javax.swing.JDialog {
                 jdTranPrestamo objPrestamo = new jdTranPrestamo(null, true);
                 objPrestamo.setLocationRelativeTo(null);
                 objPrestamo.setVisible(true);
+                
             }
         }
+        System.out.println(ISBN);
     }//GEN-LAST:event_tblEjemplaresMouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
