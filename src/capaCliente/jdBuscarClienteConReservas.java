@@ -21,7 +21,7 @@ import javax.swing.table.TableCellRenderer;
  */
 public class jdBuscarClienteConReservas extends javax.swing.JDialog {
     
-    public Integer codCli;
+    public static Integer codCli;
     clsPais objPais = new clsPais();
     clsTipoDocumento objDocumento = new clsTipoDocumento();
     clsCliente objCliente = new clsCliente();
@@ -58,8 +58,6 @@ public class jdBuscarClienteConReservas extends javax.swing.JDialog {
         modelo.addColumn("Correo");
         modelo.addColumn("Estado");
 
-        String nombrepais = "";
-        String nombreTipoDoc = "";
         String nom = txtNombre.getText();
         String ape = txtApellido.getText();
         String num_doc = txtNumDocumento.getText();
@@ -116,8 +114,6 @@ public class jdBuscarClienteConReservas extends javax.swing.JDialog {
         modelo.addColumn("Correo");
         modelo.addColumn("Estado");
 
-        String nombrepais;
-        String nombreTipoDoc;
         String nom = txtNombre.getText();
         String ape = txtApellido.getText();
         String num_doc = txtNumDocumento.getText();

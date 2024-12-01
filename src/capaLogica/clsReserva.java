@@ -79,7 +79,7 @@ public class clsReserva {
                 + "inner join persona pe on pe.codigo = cl.cod_persona\n"
                 + "inner join libro li on li.isbn=det.isbn\n"
                 + "inner join ejemplar ej on ej.isbn=li.isbn\n"
-                + "where re.estado='P' and det.isbn='" + isbn + "' and ej.estado='P' and ej.cod_sede=" + codSede + "\n"
+                + "where re.estado='P' and det.isbn='" + isbn + "' and ej.estado='P' and ej.cod_sede=" + codSede + " and det.cod_ejemplar is null "
                 + "order by re.codigo asc\n"
                 + "limit 1;";
         try {
@@ -259,10 +259,11 @@ public class clsReserva {
     }
     
     public ResultSet obtenerEjemplarReservado(int codCli) throws Exception{
-        strSQL = "select * from detalle_reserva det"
-                + "inner join reserva re "
-                + "on det.cod_reserva = re.cod_reserva "
-                + "where estado='P' and cod_cliente="+codCli+";";
+        strSQL = "select * from detalle_reserva det "
+            + "inner join reserva re "
+            + "on det.cod_reserva = re.codigo "
+            + "where estado='P' and re.cod_cliente=" + codCli + " and det.cod_ejemplar is not null;";
+
         try {
             rs = objConectar.consultar(strSQL);
             return rs;

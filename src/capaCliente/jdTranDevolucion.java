@@ -796,10 +796,12 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                             for (int i = 0; i < tblEjemplaresD.getRowCount(); i++) {
                                 String isbn = tblEjemplaresD.getValueAt(i, 2).toString();
                                 int codEjemplar = Integer.parseInt((String) tblEjemplaresD.getValueAt(i, 0));
-
+                                
                                 ResultSet rsEjemplarReser = objReserva.verificarReservaLibro(isbn, objSede.obtenerSede(clsUsuarioSTATIC.sede));
-                                if (rsEjemplarReser != null && rsEjemplarReser.next()) { // Validación correcta del ResultSet
-                                    JOptionPane.showMessageDialog(this, "El ejemplar con ISBN: " + isbn + " está reservado", "Mensaje Sistema", JOptionPane.INFORMATION_MESSAGE);
+                                if (rsEjemplarReser != null && rsEjemplarReser.next()) {
+                                    JOptionPane.showMessageDialog(this, "El ejemplar con ISBN: " + isbn + " se encuentra en una reserva pendiente\n"
+                                            + "Datos del cliente que realizó la reserva:\n"
+                                            + "Nombre: "+rsEjemplarReser.getString("nombres"), "Mensaje Sistema", JOptionPane.INFORMATION_MESSAGE);
 
                                     objReserva.insertarDetalleReserva(
                                         rsEjemplarReser.getInt("cod_reserva"),

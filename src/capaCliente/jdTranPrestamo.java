@@ -626,6 +626,11 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
             mostrarFechaLim();
             llenarTablaInicial();
+            String isbn = jdMenuLibros.ISBN;
+            if (!isbn.equals("")) {
+                agregarEjemplar(isbn);
+                System.out.println(isbn);
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -815,7 +820,10 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-
+            String isbn = jdMenuLibros.ISBN;
+            if (!isbn.equals("")) {
+                agregarEjemplar(isbn);
+            }
         } catch (Exception ex) {
             Logger.getLogger(jdTranReserva.class.getName()).log(Level.SEVERE, null, ex);
         }

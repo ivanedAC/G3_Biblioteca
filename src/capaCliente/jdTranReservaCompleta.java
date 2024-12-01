@@ -56,7 +56,13 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
         tblDetalles.setModel(modelo);
         tblDetalles.getTableHeader().setReorderingAllowed(false);
     }
+    
+    private void limpiarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tblDetalles.getModel();
+        modelo.setRowCount(0);
+    }
 
+    
     private void mostrarDatosCliente(Integer cod) throws Exception {
         ResultSet rsCli = objCliente.buscarClientePorCodigo(cod);
         if (rsCli.next()) {
@@ -133,6 +139,87 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
+    
+    private void agregarEjemplarParaClienteReserva(String isbn) throws Exception {
+        try {
+            ResultSet rsReserva = objReserva.obtenerEjemplarReservado(jdBuscarClienteConReservas.codCli);
+            boolean tieneReserva = false;
+            int codigoEjemplarReserv = 0;
+
+            while (rsReserva.next()) {
+                if (rsReserva.getString("isbn").equals(isbn)) {
+                    tieneReserva = true;
+                    codigoEjemplarReserv = rsReserva.getInt("cod_ejemplar");
+                    break;
+                }
+            }
+
+            if (!tieneReserva) {
+                JOptionPane.showMessageDialog(null, "El cliente no tiene una reserva para este libro.", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            ResultSet rsEjems = objEjem.obtenerEjemplares_V2(isbn);
+            DefaultTableModel modelo = (DefaultTableModel) tblDetalles.getModel();
+            boolean reemplazado = false;
+
+            for (int i = 0; i < tblDetalles.getRowCount(); i++) {
+                String isbnTabla = tblDetalles.getValueAt(i, 2).toString();
+                int codigoTabla = Integer.parseInt(tblDetalles.getValueAt(i, 0).toString());
+
+                if (isbnTabla.equals(isbn)) {
+                    if (codigoTabla != codigoEjemplarReserv) {
+                        modelo.removeRow(i);
+                    } else {
+                        reemplazado = true;
+                    }
+                    break;
+                }
+            }
+
+            if (!reemplazado) {
+                while (rsEjems.next()) {
+                    if (rsEjems.getInt("codigo") == codigoEjemplarReserv) {
+                        String estado = "";
+
+                        switch (rsEjems.getString("estado")) {
+                            case "P":
+                                estado = "Prestado";
+                                break;
+                            case "X":
+                                estado = "Dañado";
+                                break;
+                            case "D":
+                                estado = "Disponible";
+                                break;
+                            case "R":
+                                estado = "Reservado";
+                                break;
+                            default:
+                                throw new Exception("Error al obtener estado");
+                        }
+
+                        modelo.addRow(new Object[]{
+                            rsEjems.getString("codigo"), 
+                            rsEjems.getString("libro"), 
+                            rsEjems.getString("isbn"), 
+                            rsEjems.getString("editorial"), 
+                            rsEjems.getString("sede"), 
+                            estado
+                        });
+
+                        JOptionPane.showMessageDialog(null, "Ejemplar reservado agregado correctamente.", 
+                            "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    }
+                }
+            }
+
+            tblDetalles.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void eliminarEjemplar(int cod, int codCli) {
         int codEjem=0;
@@ -191,6 +278,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
         lblISBNEjem.setText("");
         lblNomEjem.setText("");
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -212,7 +300,6 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         lblNomCli = new javax.swing.JLabel();
         lblNroDocCli = new javax.swing.JLabel();
-        btnNuevoCli = new javax.swing.JButton();
         btnElegirCli = new javax.swing.JButton();
         lblCodCli = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -231,19 +318,24 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
         jPanel9 = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tblDetalles5 = new javax.swing.JTable();
+        tblDetalles = new javax.swing.JTable();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        lblNomEjem4 = new javax.swing.JLabel();
+        lblNomEjem = new javax.swing.JLabel();
         btnAgregarEjem4 = new javax.swing.JButton();
         btnEliminarEjem4 = new javax.swing.JButton();
         jLabel34 = new javax.swing.JLabel();
-        lblISBNEjem4 = new javax.swing.JLabel();
+        lblISBNEjem = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        lblEditorialEjem4 = new javax.swing.JLabel();
-        lblCodEjem4 = new javax.swing.JLabel();
+        lblEditorialEjem = new javax.swing.JLabel();
+        lblCodEjem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -306,13 +398,6 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
 
         lblNroDocCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnNuevoCli.setText("Nuevo");
-        btnNuevoCli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoCliActionPerformed(evt);
-            }
-        });
-
         btnElegirCli.setText("Elegir Cliente");
         btnElegirCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -360,9 +445,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
                             .addComponent(lblNomCli, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnElegirCli)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnNuevoCli)
-                        .addGap(35, 35, 35))
+                        .addGap(119, 119, 119))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(53, 53, 53))))
@@ -375,9 +458,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnElegirCli)
-                            .addComponent(btnNuevoCli)))
+                        .addComponent(btnElegirCli))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -477,7 +558,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
 
         jLabel31.setText("EJEMPLARES");
 
-        tblDetalles5.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -485,18 +566,18 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
 
             }
         ));
-        tblDetalles5.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblDetalles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDetalles5MouseClicked(evt);
+                tblDetallesMouseClicked(evt);
             }
         });
-        jScrollPane5.setViewportView(tblDetalles5);
+        jScrollPane5.setViewportView(tblDetalles);
 
         jLabel32.setText("Código:");
 
         jLabel33.setText("Nombre:");
 
-        lblNomEjem4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblNomEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnAgregarEjem4.setText("Agregar");
         btnAgregarEjem4.addActionListener(new java.awt.event.ActionListener() {
@@ -514,13 +595,13 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
 
         jLabel34.setText("ISBN:");
 
-        lblISBNEjem4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblISBNEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel35.setText("Editorial:");
 
-        lblEditorialEjem4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblEditorialEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lblCodEjem4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblCodEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -537,16 +618,16 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(lblCodEjem4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCodEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblISBNEjem4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblISBNEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
                         .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblEditorialEjem4, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblNomEjem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblEditorialEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNomEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregarEjem4)
@@ -567,15 +648,15 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblCodEjem4, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                                .addComponent(lblCodEjem, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                                 .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                                 .addComponent(jLabel34)
-                                .addComponent(lblEditorialEjem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblISBNEjem4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(lblEditorialEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblISBNEjem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel32))
                         .addGap(13, 13, 13)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNomEjem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNomEjem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(btnAgregarEjem4)
@@ -618,6 +699,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
+            int codReserva = 0;
             if (txtCodPre.getText().isBlank()) {
                 JOptionPane.showMessageDialog(null, "El código ingresado no es válido");
             } else {
@@ -641,13 +723,20 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
                                     break;
                                 }
                             }
+                            
+                            ResultSet rsReserva = objReserva.obtenerEjemplarReservado(Integer.parseInt(lblCodCli.getText()));
+                            if (rsReserva.next()) {                                
+                                codReserva = rsReserva.getInt("codigo");
+                            }else{
+                                codReserva = 0;
+                            }
 
                             if (permitir) {
                                 if (JOptionPane.showConfirmDialog(null, "¿Está seguro de registrar el préstamo?", "Mensaje de sistema", JOptionPane.OK_OPTION) == 0) {
                                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                     String fechita = sdf.format(calendarFLim.getCalendar().getTime());
-                                    objPrestamo.registrarPrestamo(Integer.valueOf(txtCodPre.getText()),
-                                        Integer.valueOf(lblCodCli.getText()), fechita, spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles);
+                                    objPrestamo.registrarPrestamo_V2(Integer.valueOf(txtCodPre.getText()),
+                                        Integer.valueOf(lblCodCli.getText()), fechita, spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles, codReserva);
                                     JOptionPane.showMessageDialog(null, "Préstamo registrado exitosamente");
                                     limpiarTodo();
                                     txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
@@ -700,31 +789,28 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAnularActionPerformed
 
-    private void btnNuevoCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoCliActionPerformed
-        // TODO add your handling code here:
-        jdManCliente objJd = new jdManCliente(null, true);
-        objJd.setLocationRelativeTo(null);
-        objJd.setVisible(true);
-    }//GEN-LAST:event_btnNuevoCliActionPerformed
-
     private void btnElegirCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirCliActionPerformed
-        String isbnReser="";
+        String isbnReser = "";
         try {
-            // TODO add your handling code here:
             jdBuscarClienteConReservas objJd = new jdBuscarClienteConReservas(null, true);
             objJd.setLocationRelativeTo(null);
             objJd.setVisible(true);
+
             if (objJd.codCli != -1) {
                 mostrarDatosCliente(objJd.codCli);
                 ResultSet rs = objReserva.obtenerEjemplarReservado(objJd.codCli);
+
                 if (rs.next()) {                
                     isbnReser = rs.getString("isbn");
+                    agregarEjemplarParaClienteReserva(isbnReser);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Aún no esta disponible el libro reservado por el cliente", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                    limpiarTodo();
+                    limpiarTabla();
                 }
-                agregarEjemplar(isbnReser);
             }
-            
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnElegirCliActionPerformed
 
@@ -747,7 +833,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_spnHoraStateChanged
 
-    private void tblDetalles5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalles5MouseClicked
+    private void tblDetallesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetallesMouseClicked
         try {
             // TODO add your handling code here:
             ResultSet rsEjem = objEjem.buscarPorCodigo(Integer.parseInt(tblDetalles.getValueAt(tblDetalles.getSelectedRow(), 0).toString()));
@@ -760,7 +846,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-    }//GEN-LAST:event_tblDetalles5MouseClicked
+    }//GEN-LAST:event_tblDetallesMouseClicked
 
     private void btnAgregarEjem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEjem4ActionPerformed
         // TODO add your handling code here:
@@ -797,52 +883,36 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnEliminarEjem4ActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        try {
+            txtCodPre.setEditable(false);
+            txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
+            mostrarFechaLim();
+            llenarTablaInicial();
+            limpiarTabla();
+        } catch (Exception ex) {
+            Logger.getLogger(jdTranReservaCompleta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarEjem;
-    private javax.swing.JButton btnAgregarEjem1;
-    private javax.swing.JButton btnAgregarEjem2;
-    private javax.swing.JButton btnAgregarEjem3;
     private javax.swing.JButton btnAgregarEjem4;
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnElegirCli;
-    private javax.swing.JButton btnEliminarEjem;
-    private javax.swing.JButton btnEliminarEjem1;
-    private javax.swing.JButton btnEliminarEjem2;
-    private javax.swing.JButton btnEliminarEjem3;
     private javax.swing.JButton btnEliminarEjem4;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnNuevoCli;
     private javax.swing.JButton btnSalir;
     private com.toedter.calendar.JDateChooser calendarFLim;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
@@ -856,49 +926,21 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblCodCli;
     private javax.swing.JLabel lblCodEjem;
-    private javax.swing.JLabel lblCodEjem1;
-    private javax.swing.JLabel lblCodEjem2;
-    private javax.swing.JLabel lblCodEjem3;
-    private javax.swing.JLabel lblCodEjem4;
     private javax.swing.JLabel lblEditorialEjem;
-    private javax.swing.JLabel lblEditorialEjem1;
-    private javax.swing.JLabel lblEditorialEjem2;
-    private javax.swing.JLabel lblEditorialEjem3;
-    private javax.swing.JLabel lblEditorialEjem4;
     private javax.swing.JLabel lblISBNEjem;
-    private javax.swing.JLabel lblISBNEjem1;
-    private javax.swing.JLabel lblISBNEjem2;
-    private javax.swing.JLabel lblISBNEjem3;
-    private javax.swing.JLabel lblISBNEjem4;
     private javax.swing.JLabel lblNomCli;
     private javax.swing.JLabel lblNomEjem;
-    private javax.swing.JLabel lblNomEjem1;
-    private javax.swing.JLabel lblNomEjem2;
-    private javax.swing.JLabel lblNomEjem3;
-    private javax.swing.JLabel lblNomEjem4;
     private javax.swing.JLabel lblNroDocCli;
     private javax.swing.JLabel lblTipoDocCli;
     private javax.swing.JLabel lblTipoPerCli;
     private javax.swing.JSpinner spnHora;
     private javax.swing.JSpinner spnMin;
     private javax.swing.JTable tblDetalles;
-    private javax.swing.JTable tblDetalles1;
-    private javax.swing.JTable tblDetalles2;
-    private javax.swing.JTable tblDetalles3;
-    private javax.swing.JTable tblDetalles5;
     private javax.swing.JTextField txtCodPre;
     // End of variables declaration//GEN-END:variables
 }

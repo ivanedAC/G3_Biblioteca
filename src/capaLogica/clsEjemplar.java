@@ -76,9 +76,19 @@ public class clsEjemplar {
             throw new Exception("Error al modificar ---> " + e.getMessage());
         }
     }
-
+    
     public ResultSet obtenerEjemplares(String isbn) throws Exception {
         strSQL = "select * from listadoEjemplares where estado = 'D' and isbn ilike '" + isbn + "';";
+        try {
+            rs = objConetar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al obtener primer ejemplar: " + e.getMessage());
+        }
+    }
+    
+    public ResultSet obtenerEjemplares_V2(String isbn) throws Exception {
+        strSQL = "select * from listadoEjemplares where estado = 'R' and isbn ilike '" + isbn + "';";
         try {
             rs = objConetar.consultar(strSQL);
             return rs;

@@ -37,6 +37,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
     public jdMenuLibros(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
     }
 
     private ImageIcon prestamoIcon = new ImageIcon(getClass().getResource("/recursos/prestamo_icon.png"));
@@ -169,8 +170,8 @@ public class jdMenuLibros extends javax.swing.JDialog {
         modelito.addColumn("Disponible");
         modelito.addColumn("Prestado");
         modelito.addColumn("Reservas");
-        modelito.addColumn("Prestamo");
-        modelito.addColumn("Reserva");
+//        modelito.addColumn("Prestamo");
+//        modelito.addColumn("Reserva");
 
         try {
 
@@ -218,16 +219,16 @@ public class jdMenuLibros extends javax.swing.JDialog {
                     rs.getInt("disponible"),
                     rs.getInt("prestados"),
                     rs.getInt("reservas"),
-                    "prestamo", // Indicador para el ícono de préstamo
-                    "reserva" // Indicador para el ícono de reserva
+//                    "prestamo", // Indicador para el ícono de préstamo
+//                    "reserva" // Indicador para el ícono de reserva
                 });
             }
 
             tblEjemplares.setModel(modelito);
 
             // Asigna el renderer a las columnas correspondientes
-            tblEjemplares.getColumnModel().getColumn(8).setCellRenderer(new IconCellRenderer(prestamoIcon));
-            tblEjemplares.getColumnModel().getColumn(9).setCellRenderer(new IconCellRenderer(reservaIcon));
+//            tblEjemplares.getColumnModel().getColumn(8).setCellRenderer(new IconCellRenderer(prestamoIcon));
+//            tblEjemplares.getColumnModel().getColumn(9).setCellRenderer(new IconCellRenderer(reservaIcon));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error en la búsqueda de libros --> " + e.getMessage());
@@ -235,28 +236,28 @@ public class jdMenuLibros extends javax.swing.JDialog {
     }
 
     // Clase para el renderer de celdas
-    class IconCellRenderer extends DefaultTableCellRenderer {
-
-        private final ImageIcon icon;
-
-        public IconCellRenderer(ImageIcon icon) {
-            this.icon = icon;
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            JLabel label = new JLabel();
-            label.setHorizontalAlignment(JLabel.CENTER); // Centra el ícono
-            label.setIcon(icon);
-            if (isSelected) {
-                label.setBackground(table.getSelectionBackground());
-                label.setOpaque(true);
-            }
-            return label;
-        }
-    }
+//    class IconCellRenderer extends DefaultTableCellRenderer {
+//
+//        private final ImageIcon icon;
+//
+//        public IconCellRenderer(ImageIcon icon) {
+//            this.icon = icon;
+//        }
+//
+//        @Override
+//        public Component getTableCellRendererComponent(JTable table, Object value,
+//                boolean isSelected, boolean hasFocus,
+//                int row, int column) {
+//            JLabel label = new JLabel();
+//            label.setHorizontalAlignment(JLabel.CENTER); // Centra el ícono
+//            label.setIcon(icon);
+//            if (isSelected) {
+//                label.setBackground(table.getSelectionBackground());
+//                label.setOpaque(true);
+//            }
+//            return label;
+//        }
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
