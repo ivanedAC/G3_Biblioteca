@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt3" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5cb28eb4-fe23-4dfb-bf4a-cac46916becc">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select per.ape_paterno || ' ' || per.ape_materno || ', ' || per.nombres as cliente,
+sum(case when pr.estado = 'P' and pr.f_limite < current_date then 1 else 0 end) as prestamosVencido,
+case when pr.estado = 'P' then (current_date - pr.f_limite) else 0 end as diasMorosos
+from prestamo pr inner join cliente cl on pr.cod_cliente = cl.codigo
+inner join persona per on cl.cod_persona = per.codigo
+group by 1,3
+having sum(case when pr.estado = 'P' and pr.f_limite < current_date then 1 else 0 end) != 0
+order by 3 desc]]>
+	</queryString>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="prestamosvencido" class="java.lang.Long"/>
+	<field name="diasmorosos" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="60" y="15" width="434" height="64" uuid="0d1d1fcb-6e06-4e36-8ae9-3447d440e81a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE CLIENTES MOROSOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="11" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="2" width="100" height="20" uuid="fad01d72-3e1a-4f5e-8e3a-68dc28edc11c"/>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="2" width="100" height="20" uuid="9a576947-c6bb-4aaa-a00b-c95927c263c0"/>
+				<text><![CDATA[Prestamos Vencidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="383" y="2" width="100" height="20" uuid="a023ccb2-9791-45db-be35-59ba9cf1b5ad"/>
+				<text><![CDATA[Días morosos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="33" width="528" height="1" uuid="90530b90-3bb2-49d1-ab6f-39d17ea45b02"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="58" splitType="Stretch">
+			<textField>
+				<reportElement x="24" y="15" width="175" height="20" uuid="828bece3-f8eb-4e03-9cab-f4ec6a2b683c"/>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="15" width="100" height="20" uuid="5398d8df-869d-4266-9f94-8c67d6ce60d5"/>
+				<textFieldExpression><![CDATA[$F{prestamosvencido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="405" y="15" width="100" height="20" uuid="9c53d9d0-db90-4ecb-b6a9-958508121db5"/>
+				<textFieldExpression><![CDATA[$F{diasmorosos}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="14" y="57" width="528" height="1" uuid="89bc15e7-874f-4453-b6eb-829f4736ca94"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="37" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="477" y="17" width="40" height="20" uuid="07aa9398-98d1-4022-ac29-9bb220f8e7b3"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="17" width="80" height="20" uuid="62eb7ed7-f325-490e-b213-e471c6219c40"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="14" y="17" width="100" height="20" uuid="9be957a1-a32d-4237-833b-754e7119cd42"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>

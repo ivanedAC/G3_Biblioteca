@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3cc7149d-ab2d-4ed3-8cc5-d75ac7870a37">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parFechaI" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parFechaF" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select lb.isbn, lb.nombre, fm.nombre, count(*) as total_prestamos
+from prestamo pr inner join detalle_prestamo dp on dp.cod_prestamo = pr.codigo
+inner join ejemplar ejp on dp.cod_ejemplar = ejp.codigo
+inner join libro lb on ejp.isbn = lb.isbn
+inner join formato fm on lb.cod_formato = fm.codigo
+WHERE pr.f_registro::text BETWEEN $P{parFechaI} and $P{parFechaF} and pr.estado != 'A'
+group by 1, 3
+order by total_prestamos desc]]>
+	</queryString>
+	<field name="isbn" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="total_prestamos" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="74" y="10" width="434" height="64" uuid="c3578e54-e7d0-45b5-b600-7e0b0f9c608a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE LIBROS MÁS PRESTADOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="9" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="2" width="100" height="20" uuid="98aa2614-34e4-4e77-a340-7e6fd3b9bb54"/>
+				<text><![CDATA[ISBN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="2" width="100" height="20" uuid="74dd27ab-9673-426e-800c-3d7fcdd152c5"/>
+				<text><![CDATA[Libro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="2" width="100" height="20" uuid="c05a9460-8293-4968-ae42-66c48c8e2ce7"/>
+				<text><![CDATA[Total Préstamos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="38" width="528" height="1" uuid="2db55a6a-43b8-4da1-aa6e-e4ac727f3475"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="20" width="100" height="20" uuid="e4749cbb-9da3-4205-b616-e54c7f8c39f7"/>
+				<textFieldExpression><![CDATA[$F{isbn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="154" y="20" width="217" height="20" uuid="dfcbae84-fde2-4a60-8417-0eba724b146f"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="20" width="100" height="20" uuid="178c81b0-235e-4dbc-9114-1339a3329da2"/>
+				<textFieldExpression><![CDATA[$F{total_prestamos}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="4" y="50" width="528" height="1" uuid="3212f3d3-69b3-4d09-8110-d58bce18584a"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="486" y="10" width="40" height="20" uuid="d4465f69-ef86-433a-a586-df2968b74c5a"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="10" width="80" height="20" uuid="6bfac015-373e-40ae-94aa-a046e5f595cc"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="10" y="10" width="100" height="20" uuid="da9df5dd-e841-4b03-86b9-757e2b309b42"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="11" splitType="Stretch"/>
+	</summary>
+</jasperReport>

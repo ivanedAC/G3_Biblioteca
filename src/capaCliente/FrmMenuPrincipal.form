@@ -152,6 +152,45 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mnuReportesMouseClicked"/>
           </Events>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="Rpt1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pr&#xe9;stamo y devoluciones de clientes"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Rpt1ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="Rpt2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Libros m&#xe1;s prestados"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Rpt2ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="Rpt3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Clientes con pr&#xe9;stamos vencidos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Rpt3ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="Rpt4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Libros (ejemplares) da&#xf1;ados o perdidos."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Rpt4ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="Rpt5">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sanciones aplicadas a los clientes"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

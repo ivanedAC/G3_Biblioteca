@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt4" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8a69d8e2-8edb-407c-9b9a-f3606e0d3cb7">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select ejp.isbn, per.ape_paterno || ' ' || per.ape_materno || ', ' || per.nombres as cliente,lb.nombre as ejemplar, sc.descripcion
+from detalle_devolucion dd inner join ejemplar ejp on dd.cod_ejemplar = ejp.codigo
+inner join sancion sc on dd.cod_sancion = sc.codigo
+inner join libro lb on ejp.isbn = lb.isbn
+inner join devolucion dv on dd.cod_devolucion = dv.codigo
+inner join prestamo pr on dv.cod_prestamo = pr.codigo
+inner join cliente cl on pr.cod_cliente = cl.codigo
+inner join persona per on cl.cod_persona = per.codigo]]>
+	</queryString>
+	<field name="isbn" class="java.lang.String"/>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="ejemplar" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="62" y="0" width="434" height="64" uuid="3ee68555-4f30-4bf8-9845-4c358061ffd0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE SANCIONES A CLIENTES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="18" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="0" width="118" height="20" uuid="f6b1a881-e441-486f-aae8-64aa0fdab288"/>
+				<text><![CDATA[ISBN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="0" width="138" height="20" uuid="d8bfc31a-78ed-49a1-a671-e81e5a3f30f0"/>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="0" width="138" height="20" uuid="ebdf1e85-9b9a-4ed2-ba8a-4def8ac0a7b1"/>
+				<text><![CDATA[Ejemplar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="0" width="138" height="20" uuid="ee809557-e896-4309-a6a6-c32667ed2164"/>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="20" width="528" height="1" uuid="ec3e0f5f-3fa5-477a-8784-bdd30b468357"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<textField>
+				<reportElement x="14" y="0" width="118" height="20" uuid="e4e0fcda-f89b-4dd5-948f-87d8f6b29785"/>
+				<textFieldExpression><![CDATA[$F{isbn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="0" width="138" height="20" uuid="b2e96bfd-2ea2-45ad-8936-4bc43607a07d"/>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="138" height="37" uuid="75453bd7-a322-4128-ac52-0fc29e05e374"/>
+				<textFieldExpression><![CDATA[$F{ejemplar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="138" height="49" uuid="ce959ded-f1e6-44f2-8d82-fb53335311e0"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="14" y="49" width="528" height="1" uuid="8d76fe07-cf71-459f-82c5-a0704a952214"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="18" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="481" y="19" width="40" height="20" uuid="2473566f-da9b-450f-a804-3829c1b353ad"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="401" y="19" width="80" height="20" uuid="dc382d74-65b2-4d84-a52d-3489f5b5e426"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="18" y="19" width="100" height="20" uuid="ec67cc6b-d99a-4982-89b4-b5ce2f1fadc9"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>

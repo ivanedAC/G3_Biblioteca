@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt5" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="465b3d21-300e-4d2b-b77f-2bcd393f9ae9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select per.nombres as proveedor, ejp.isbn, lb.nombre as libro, dp.precio, op.sub_total
+from orden_compra op inner join detalle_compra dp on op.num_orden = dp.num_orden
+inner join proveedor prv on op.cod_proveedor = prv.codigo
+inner join persona per on prv.cod_persona = per.codigo
+inner join ejemplar ejp on dp.ejemplarcodigo = ejp.codigo
+inner join libro lb on ejp.isbn = lb.isbn]]>
+	</queryString>
+	<field name="proveedor" class="java.lang.String"/>
+	<field name="isbn" class="java.lang.String"/>
+	<field name="libro" class="java.lang.String"/>
+	<field name="precio" class="java.math.BigDecimal"/>
+	<field name="sub_total" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="53" y="7" width="434" height="64" uuid="14ecde8d-2b44-419f-9cb9-e0e67e434f28"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE COMPRAS DE EJEMPLARES A PROVEEDOR]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="2" width="100" height="20" uuid="a6fc766e-c55b-4d38-9599-4d92b133b307"/>
+				<text><![CDATA[Proveedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="2" width="82" height="20" uuid="9f34d6c9-2f17-44f0-8f98-3f2185a71656"/>
+				<text><![CDATA[ISBN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="2" width="100" height="20" uuid="cca135b9-cab7-4993-8f78-9637c1e6c06b"/>
+				<text><![CDATA[Libro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="2" width="54" height="20" uuid="0a016f94-cc31-4f33-a84d-c9d61c982619"/>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="488" y="2" width="52" height="20" uuid="e8b3dfc8-b87a-45a8-9b09-88109b69b82e"/>
+				<text><![CDATA[Sub Total]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="22" width="528" height="1" uuid="7ddb3043-17a5-4e4a-924c-a60db602dc40"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<textField>
+				<reportElement x="15" y="13" width="133" height="20" uuid="757850dc-f148-4d15-82fe-c7b619b6b985"/>
+				<textFieldExpression><![CDATA[$F{proveedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="13" width="82" height="20" uuid="42577cd9-322f-4e88-92e6-6656a74afc67"/>
+				<textFieldExpression><![CDATA[$F{isbn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="13" width="100" height="20" uuid="429b424e-f436-4b2a-bfbf-7ee94b6ffb4a"/>
+				<textFieldExpression><![CDATA[$F{libro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="13" width="54" height="20" uuid="ed4341c9-8ea0-4003-b91d-d13e6541f7a5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="13" width="69" height="20" uuid="d11c791c-98f8-406b-b5b9-049a489ec99b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{sub_total}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="15" y="43" width="528" height="1" uuid="25eb1254-c8a0-4234-a457-ef1edaf57b00"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="408" y="16" width="80" height="20" uuid="4fb77251-c869-42b9-83b9-a624f647925b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="25" y="16" width="100" height="20" uuid="b8524454-d071-4458-bc3e-f6951a253c64"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="488" y="16" width="40" height="20" uuid="684d6c06-809d-4d2f-a8bf-b1024b24a35c"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>
