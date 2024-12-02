@@ -351,6 +351,7 @@ public class jdManCliente extends javax.swing.JDialog {
         btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPersonaNatural = new javax.swing.JTable();
@@ -664,19 +665,34 @@ public class jdManCliente extends javax.swing.JDialog {
             }
         });
 
+        btnModificar.setBackground(new java.awt.Color(113, 49, 18));
+        btnModificar.setForeground(new java.awt.Color(245, 224, 206));
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/editar_32px.png"))); // NOI18N
+        btnModificar.setText("MODIFICAR");
+        btnModificar.setPreferredSize(new java.awt.Dimension(115, 41));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDarBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDarBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -684,14 +700,16 @@ public class jdManCliente extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
-                .addComponent(btnLimpiar)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDarBaja)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpiar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(btnSalir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(243, 226, 210));
@@ -730,7 +748,7 @@ public class jdManCliente extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -790,14 +808,13 @@ public class jdManCliente extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -1048,6 +1065,105 @@ public class jdManCliente extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_rbtnPJActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (comprobarCamposLlenos()) {
+                boolean sexo;
+                int codPais = objPais.buscarCodigoPorNombre(cbxPais.getSelectedItem().toString());
+                String fechaR = currentdate();
+                String estado = chkVigencia.isSelected() ? "A" : "I";
+                ResultSet rs = objCliente.obtenerPersonaPorDoc(txtDocIdent.getText());
+
+                if (rs.next()) { // Cliente ya existe
+                    if (cbxtTipoDoc.getSelectedIndex() == 1) { // Cliente Jurídico
+                        objCliente.modificarClienteJuridico(
+                                codPais,
+                                cbxtTipoDoc.getSelectedIndex() + 1,
+                                txtDocIdent.getText(),
+                                txtNombre.getText(),
+                                txtApePaRS.getText(),
+                                txtDireccion.getText(),
+                                txtTelefono.getText(),
+                                fechaR,
+                                txtCorreo.getText(),
+                                estado
+                        );
+                        JOptionPane.showMessageDialog(this, "Cliente jurídico modificado correctamente.");
+                        listarClientesJuridicos();
+                    } else { // Cliente Natural
+                        sexo = cbxSexo.getSelectedItem().toString().equals("Masculino");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String fechita = sdf.format(calendarFNac.getCalendar().getTime());
+
+                        objCliente.modificarClienteNatural(
+                                codPais,
+                                cbxtTipoDoc.getSelectedIndex() + 1,
+                                txtDocIdent.getText(),
+                                txtNombre.getText(),
+                                txtApePaRS.getText(),
+                                txtApeMa.getText(),
+                                fechita,
+                                txtDireccion.getText(),
+                                txtTelefono.getText(),
+                                fechaR,
+                                txtCorreo.getText(),
+                                estado,
+                                sexo
+                        );
+                        JOptionPane.showMessageDialog(this, "Cliente natural modificado correctamente.");
+                        listarClientesNaturales();
+                    }
+                } else { // Cliente no existe, insertar nuevo
+                    if (cbxtTipoDoc.getSelectedIndex() == 1) { // Cliente Jurídico
+                        objCliente.insertarClienteJuridico(
+                                codPais,
+                                cbxtTipoDoc.getSelectedIndex() + 1,
+                                txtDocIdent.getText(),
+                                txtNombre.getText(),
+                                txtApePaRS.getText(),
+                                txtDireccion.getText(),
+                                txtTelefono.getText(),
+                                fechaR,
+                                txtCorreo.getText(),
+                                "A"
+                        );
+                        JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente jurídico.");
+                        clearfields();
+                        listarClientesJuridicos();
+                    } else { // Cliente Natural
+                        sexo = cbxSexo.getSelectedItem().toString().equals("Masculino");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String fechita = sdf.format(calendarFNac.getCalendar().getTime());
+
+                        objCliente.insertarClienteNatural(
+                                codPais,
+                                cbxtTipoDoc.getSelectedIndex() + 1,
+                                txtDocIdent.getText(),
+                                txtNombre.getText(),
+                                txtApePaRS.getText(),
+                                txtApeMa.getText(),
+                                sexo,
+                                fechita,
+                                txtDireccion.getText(),
+                                txtTelefono.getText(),
+                                fechaR,
+                                txtCorreo.getText(),
+                                estado
+                        );
+                        JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente natural.");
+                        clearfields();
+                        listarClientesNaturales();
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Rellene todos los campos.");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1058,6 +1174,7 @@ public class jdManCliente extends javax.swing.JDialog {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup btngpPersona;
     private com.toedter.calendar.JDateChooser calendarFNac;
