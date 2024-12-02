@@ -1,121 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt5" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="465b3d21-300e-4d2b-b77f-2bcd393f9ae9">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt5" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="af67dba1-513c-4499-916e-078cd331566b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="parRazonSocial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\reque\\OneDrive\\Escritorio\\AplicacionFinal\\G3_Biblioteca\\src\\reportes\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select per.nombres as proveedor, ejp.isbn, lb.nombre as libro, dp.precio, op.sub_total
-from orden_compra op inner join detalle_compra dp on op.num_orden = dp.num_orden
-inner join proveedor prv on op.cod_proveedor = prv.codigo
-inner join persona per on prv.cod_persona = per.codigo
-inner join ejemplar ejp on dp.ejemplarcodigo = ejp.codigo
-inner join libro lb on ejp.isbn = lb.isbn]]>
+		<![CDATA[select oc.num_orden, pr.razon_social, (oc.sub_total + oc.igv) as total, oc.f_orden as fechaOrden
+from orden_compra oc inner join proveedor pv on oc.cod_proveedor = pv.codigo
+inner join detalle_compra dc on oc.num_orden = dc.num_orden
+inner join persona pr on pv.cod_persona = pr.codigo
+where pr.razon_social = $P{parRazonSocial}]]>
 	</queryString>
-	<field name="proveedor" class="java.lang.String"/>
-	<field name="isbn" class="java.lang.String"/>
-	<field name="libro" class="java.lang.String"/>
-	<field name="precio" class="java.math.BigDecimal"/>
-	<field name="sub_total" class="java.math.BigDecimal"/>
+	<field name="num_orden" class="java.lang.Integer"/>
+	<field name="razon_social" class="java.lang.String"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="fechaorden" class="java.sql.Date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="53" y="7" width="434" height="64" uuid="14ecde8d-2b44-419f-9cb9-e0e67e434f28"/>
+				<reportElement x="113" y="28" width="336" height="33" uuid="0f8b9060-b399-415e-992e-240a978e182e"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="26" isBold="true"/>
 				</textElement>
-				<text><![CDATA[REPORTE DE COMPRAS DE EJEMPLARES A PROVEEDOR]]></text>
+				<text><![CDATA[Reporte Orden de Compra]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="15" splitType="Stretch"/>
+		<band height="12" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="23" splitType="Stretch">
+		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="15" y="2" width="100" height="20" uuid="a6fc766e-c55b-4d38-9599-4d92b133b307"/>
-				<text><![CDATA[Proveedor]]></text>
+				<reportElement x="28" y="2" width="100" height="20" uuid="0e26b35f-02ba-43d8-ace7-17a9e6a2f50a"/>
+				<text><![CDATA[Número de Orden]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="160" y="2" width="82" height="20" uuid="9f34d6c9-2f17-44f0-8f98-3f2185a71656"/>
-				<text><![CDATA[ISBN]]></text>
+				<reportElement x="166" y="2" width="100" height="20" uuid="9a7ecb84-ebb4-4795-94f8-ea529ebce433"/>
+				<text><![CDATA[Razón Social]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="280" y="2" width="100" height="20" uuid="cca135b9-cab7-4993-8f78-9637c1e6c06b"/>
-				<text><![CDATA[Libro]]></text>
+				<reportElement x="313" y="2" width="100" height="20" uuid="df2820a1-0020-4464-a2c5-cf1fe22dce45"/>
+				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="415" y="2" width="54" height="20" uuid="0a016f94-cc31-4f33-a84d-c9d61c982619"/>
-				<text><![CDATA[Precio]]></text>
+				<reportElement x="449" y="2" width="100" height="20" uuid="cbdcdb7f-deaf-4ee9-a582-f7ff7467a7ee"/>
+				<text><![CDATA[Fecha Orden]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="488" y="2" width="52" height="20" uuid="e8b3dfc8-b87a-45a8-9b09-88109b69b82e"/>
-				<text><![CDATA[Sub Total]]></text>
-			</staticText>
-			<line>
-				<reportElement x="15" y="22" width="528" height="1" uuid="7ddb3043-17a5-4e4a-924c-a60db602dc40"/>
-				<graphicElement>
-					<pen lineWidth="3.0"/>
-				</graphicElement>
-			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="44" splitType="Stretch">
+		<band height="258" splitType="Stretch">
+			<subreport>
+				<reportElement x="25" y="110" width="200" height="100" uuid="9f34feb2-2b24-4ac6-a411-a8c6ae27a039"/>
+				<subreportParameter name="parRazonSocial">
+					<subreportParameterExpression><![CDATA[$F{razon_social}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt5_subreport1.jasper"]]></subreportExpression>
+			</subreport>
 			<textField>
-				<reportElement x="15" y="13" width="133" height="20" uuid="757850dc-f148-4d15-82fe-c7b619b6b985"/>
-				<textFieldExpression><![CDATA[$F{proveedor}]]></textFieldExpression>
+				<reportElement x="28" y="20" width="100" height="20" uuid="66c683e5-0893-4d85-8acb-834429392a64"/>
+				<textFieldExpression><![CDATA[$F{num_orden}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="13" width="82" height="20" uuid="42577cd9-322f-4e88-92e6-6656a74afc67"/>
-				<textFieldExpression><![CDATA[$F{isbn}]]></textFieldExpression>
+				<reportElement x="166" y="20" width="100" height="20" uuid="a2a4eacb-0e36-43d1-8bf7-83b09c43df0f"/>
+				<textFieldExpression><![CDATA[$F{razon_social}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="13" width="100" height="20" uuid="429b424e-f436-4b2a-bfbf-7ee94b6ffb4a"/>
-				<textFieldExpression><![CDATA[$F{libro}]]></textFieldExpression>
+				<reportElement x="313" y="20" width="100" height="20" uuid="0891363f-f5e7-437e-801a-020b2d5c867f"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="415" y="13" width="54" height="20" uuid="ed4341c9-8ea0-4003-b91d-d13e6541f7a5"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+				<reportElement x="449" y="20" width="100" height="20" uuid="7595d48b-400e-4269-910b-e5132a62b3a2"/>
+				<textFieldExpression><![CDATA[$F{fechaorden}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="486" y="13" width="69" height="20" uuid="d11c791c-98f8-406b-b5b9-049a489ec99b"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{sub_total}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="15" y="43" width="528" height="1" uuid="25eb1254-c8a0-4234-a457-ef1edaf57b00"/>
-				<graphicElement>
-					<pen lineWidth="3.0"/>
-				</graphicElement>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="17" splitType="Stretch"/>
+		<band height="37" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement x="408" y="16" width="80" height="20" uuid="4fb77251-c869-42b9-83b9-a624f647925b"/>
+				<reportElement x="410" y="21" width="80" height="20" uuid="a54746ea-f76f-4ed5-9550-df4407b6cc4c"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="25" y="16" width="100" height="20" uuid="b8524454-d071-4458-bc3e-f6951a253c64"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="488" y="16" width="40" height="20" uuid="684d6c06-809d-4d2f-a8bf-b1024b24a35c"/>
+				<reportElement x="490" y="21" width="40" height="20" uuid="b5f2e2f2-4859-4d82-8f0d-d8e384919be0"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="25" y="21" width="100" height="20" uuid="01dcaa9d-914f-436a-92f2-02cd08001682"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="13" splitType="Stretch"/>
+		<band height="10" splitType="Stretch"/>
 	</summary>
 </jasperReport>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt5_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="305bcd17-825d-4bfa-b16e-c2a3543f282c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parRazonSocial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select lb.isbn, lb.nombre, lb.edicion, ed.nombre as editorial, dc.precio
+from detalle_compra dc inner join orden_compra oc on dc.num_orden = dc.num_orden
+inner join ejemplar ejp on dc.ejemplarcodigo = ejp.codigo
+inner join libro lb on ejp.isbn = lb.isbn
+inner join proveedor pv on oc.cod_proveedor = pv.codigo
+inner join persona pr on pv.cod_persona = pr.codigo
+inner join editorial ed on lb.cod_editorial = ed.codigo
+where pr.razon_social = $P{parRazonSocial}]]>
+	</queryString>
+	<field name="isbn" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="edicion" class="java.lang.Integer"/>
+	<field name="editorial" class="java.lang.String"/>
+	<field name="precio" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="21" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="18" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="2" width="100" height="20" uuid="5f53377e-b415-407b-ad97-db43584c32bb"/>
+				<text><![CDATA[ISBN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="136" y="2" width="100" height="20" uuid="7e3dbccb-a5e5-4831-8715-55e110607378"/>
+				<text><![CDATA[Libro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="2" width="68" height="20" uuid="5df37718-f5f9-4cb8-a1d8-fe6ea5fb3a36"/>
+				<text><![CDATA[Edicion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="2" width="55" height="20" uuid="d0ccf04b-b8e5-4292-81e1-69218db71cf9"/>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="2" width="100" height="20" uuid="06daec6a-7709-4f39-b039-85379a1f702f"/>
+				<text><![CDATA[Editorial]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="13" y="10" width="100" height="20" uuid="057f1a9d-6219-44ff-a615-f23052026ff8"/>
+				<textFieldExpression><![CDATA[$F{isbn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="136" y="10" width="127" height="20" uuid="c9821ccf-1a29-4119-8200-e57ad1b615b0"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="10" width="68" height="20" uuid="17c1a254-a3a5-4242-9ab1-d67ccba4813a"/>
+				<textFieldExpression><![CDATA[$F{edicion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="10" width="55" height="20" uuid="a4a65383-0e7e-4edb-8b18-6b5a097782e0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="10" width="110" height="20" uuid="e757e0d0-f333-4c5e-a6e3-9ff6f0188b63"/>
+				<textFieldExpression><![CDATA[$F{editorial}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="12" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="8" splitType="Stretch"/>
+	</summary>
+</jasperReport>
