@@ -661,7 +661,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "El cliente seleccionado tiene una reserva pendiente, no puede tramitar préstamos");
             } else {
                 if (objJd.codCli != -1) {
-                    ResultSet rsPresCli = objPrestamo.buscarPrestamos(Integer.valueOf(lblCodCli.getText()));
+                    ResultSet rsPresCli = objPrestamo.buscarPrestamos(objJd.codCli);
                     boolean permitir = true;
 
                     while (rsPresCli.next()) {
