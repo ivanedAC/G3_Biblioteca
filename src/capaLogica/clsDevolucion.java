@@ -136,7 +136,7 @@ public class clsDevolucion {
                                 }
                             } else {
                                 if (rsPre.getInt("cod_sede") == (objSede.obtenerSede(clsUsuarioSTATIC.sede))) {
-                                    strSQL = "INSERT INTO DETALLE_DEVOLUCION values (" + codEjem + "," + codDev + "," + tblDetalles.getValueAt(i, 6).toString() + ");";
+                                    strSQL = "INSERT INTO DETALLE_DEVOLUCION values (" + codEjem + "," + codDev + "," + sancion + ");";
                                     sent.executeUpdate(strSQL);
 
                                     strSQL = "UPDATE EJEMPLAR SET ESTADO = 'X' WHERE CODIGO = " + codEjem + ";";
