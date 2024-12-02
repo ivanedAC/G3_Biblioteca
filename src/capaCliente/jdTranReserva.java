@@ -224,7 +224,6 @@ public class jdTranReserva extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        btnAnular = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         lblFechaEstimada = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -526,13 +525,6 @@ public class jdTranReserva extends javax.swing.JDialog {
             }
         });
 
-        btnAnular.setText("Anular");
-        btnAnular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnularActionPerformed(evt);
-            }
-        });
-
         jLabel17.setText("Fecha estimada para recoger libro:");
 
         lblFechaEstimada.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -557,7 +549,6 @@ public class jdTranReserva extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addComponent(btnAnular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(49, 49, 49))
         );
@@ -572,11 +563,9 @@ public class jdTranReserva extends javax.swing.JDialog {
                         .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAnular)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(btnSalir)
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSalir))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -753,30 +742,6 @@ public class jdTranReserva extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
-        try {
-            // TODO add your handling code here:
-            ResultSet rsPre = objPrestamo.buscarPrestamo(Integer.valueOf(txtCodRes.getText()));
-            if (rsPre.next()) {
-                if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular la reserva con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
-                    if (rsPre.getString("estado").equals("P")) {
-
-                        limpiarTodo();
-                        txtCodRes.setText(String.valueOf(objReserva.generarCodReserva()));
-                        mostrarFecha();
-                        llenarTablaInicial();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "El préstamo que intenta anular no se encuentra vigente", "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "El código ingresado no existe");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-    }//GEN-LAST:event_btnAnularActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             // TODO add your handling code here:
@@ -802,7 +767,6 @@ public class jdTranReserva extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarEjem;
-    private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnElegirCli;
     private javax.swing.JButton btnEliminarEjem;
     private javax.swing.JButton btnGuardar;

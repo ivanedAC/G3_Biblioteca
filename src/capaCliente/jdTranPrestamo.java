@@ -30,6 +30,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     clsCliente objCliente = new clsCliente();
     clsEjemplar objEjem = new clsEjemplar();
     clsTipoDocumento objTDoc = new clsTipoDocumento();
+    clsReserva objRes = new clsReserva();
 
     /**
      * Creates new form jdTranPrestamo
@@ -76,7 +77,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
                 lblTipoDocCli.setText(objTDoc.nombreTipoDocumento(rsCli.getInt("cod_tipo_doc")));
                 lblNroDocCli.setText(rsCli.getString("numero_documento"));
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "El estado del cliente no le permite tramitar préstamos");
             }
         }
@@ -656,8 +657,26 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             jdBuscarCliente objJd = new jdBuscarCliente(null, true);
             objJd.setLocationRelativeTo(null);
             objJd.setVisible(true);
-            if (objJd.codCli != -1) {
-                mostrarDatosCliente(objJd.codCli);
+            if (objRes.verificarExistenciaReserva(objJd.codCli)) {
+                JOptionPane.showMessageDialog(null, "El cliente seleccionado tiene una reserva pendiente, no puede tramitar préstamos");
+            } else {
+                if (objJd.codCli != -1) {
+                    ResultSet rsPresCli = objPrestamo.buscarPrestamos(Integer.valueOf(lblCodCli.getText()));
+                    boolean permitir = true;
+
+                    while (rsPresCli.next()) {
+                        if (rsPresCli.getString("estado").equals("P")) {
+                            permitir = false;
+                            break;
+                        }
+                    }
+
+                    if (!permitir) {
+                        JOptionPane.showMessageDialog(null, "Este cliente no puede realizar préstamos porque aún tiene alguno vigente, debe tramitar su devolución/anulación primero", "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        mostrarDatosCliente(objJd.codCli);
+                    }
+                }
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
