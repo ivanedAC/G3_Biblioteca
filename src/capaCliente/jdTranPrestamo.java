@@ -184,7 +184,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         lblEditorialEjem.setText("");
         lblISBNEjem.setText("");
         lblNomEjem.setText("");
-        spnHora.setValue(7);
+        spnHora.setValue(18);
         spnMin.setValue(0);
     }
 
@@ -262,7 +262,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
         jLabel8.setText("Hora Límite:");
 
-        spnHora.setModel(new javax.swing.SpinnerNumberModel(7, 7, 18, 1));
+        spnHora.setModel(new javax.swing.SpinnerNumberModel(18, 7, 18, 1));
         JFormattedTextField txtField = ((JSpinner.DefaultEditor) spnHora.getEditor()).getTextField();
         txtField.setEditable(false);
         spnHora.addChangeListener(new javax.swing.event.ChangeListener() {
