@@ -67,19 +67,4 @@ public class ValidationManager {
         }
     }
     
-    public static boolean validarExistencia(String nombreTabla,String nombrePK, String codigo) throws Exception{
-        clsJDBC objConexion = new clsJDBC();
-        String strSQL = "SELECT COUNT(*) FROM "+nombreTabla+" WHERE "+nombrePK+" = '"+codigo+"'";
-        int cantidad = 0;
-        try {
-            ResultSet rs = objConexion.consultar(strSQL);
-            if(rs.next()){
-                cantidad = rs.getInt(1);
-            }
-            return cantidad > 0;
-        } catch (Exception e) {
-            throw new Exception("Error al validar la existencia: " + e.getMessage());
-        }
-    }
-    
 }
