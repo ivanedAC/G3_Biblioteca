@@ -6,7 +6,9 @@ package capaCliente;
 
 import capaLogica.clsCliente;
 import capaLogica.clsPais;
+import capaLogica.clsSede;
 import capaLogica.clsTipoDocumento;
+import capaLogica.clsUsuarioSTATIC;
 import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +30,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
     clsPais objPais = new clsPais();
     clsTipoDocumento objDocumento = new clsTipoDocumento();
     clsCliente objCliente = new clsCliente();
-
+    clsSede objSede = new clsSede();
     public jdBuscarClienteConPrestamos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -65,7 +67,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         String ape = txtApellido.getText();
         String num_doc = txtNumDocumento.getText();
         try {
-            rsClientesN = objCliente.listarClientesNConPrestamo(nom,ape,num_doc);
+            rsClientesN = objCliente.listarClientesNConPrestamo(nom,ape,num_doc, objSede.obtenerSede(clsUsuarioSTATIC.sede));
             while (rsClientesN.next()) {
                 Object datos[][] = new Object[1][12];
                 datos[0][0] = rsClientesN.getString("codigo");
@@ -124,7 +126,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         String num_doc = txtNumDocumento.getText();
 
         try {
-            rsClientesJ = objCliente.listarClientesJConPrestamo(nom,ape,num_doc);
+            rsClientesJ = objCliente.listarClientesJConPrestamo(nom,ape,num_doc, objSede.obtenerSede(clsUsuarioSTATIC.sede));
 
             // Recorrer el ResultSet y llenar el modelo
             while (rsClientesJ.next()) {
@@ -326,10 +328,6 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(374, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -347,6 +345,10 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
                     .addComponent(txtNombre)
                     .addComponent(txtApellido))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
