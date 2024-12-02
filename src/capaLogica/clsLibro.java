@@ -128,7 +128,7 @@ public class clsLibro {
             "    FROM ejemplar ejem\n" +
             "	where ejem.cod_sede="+codSede+"\n" +
             "    GROUP BY ejem.isbn\n" +
-            "    HAVING SUM(CASE WHEN ejem.estado != 'P' THEN 1 ELSE 0 END) = 0)\n" +
+            "    HAVING SUM(CASE WHEN ejem.estado = 'D' THEN 1 ELSE 0 END) = 0)\n" +
             "	and upper(ll.libro_nombre) LIKE upper('%"+nombre+"%')\n" +
             "ORDER BY 3;";
         try {
@@ -229,7 +229,7 @@ public class clsLibro {
     }
 
     public ResultSet buscarLibro(String isbn) throws Exception {
-        strSQL = "select * from libro where isbn =" + isbn;
+        strSQL = "select * from libro where isbn ='" + isbn + "'";
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
@@ -249,7 +249,8 @@ public class clsLibro {
     }
 
     public ResultSet actualizarLibro(String isbn, Integer editorial, String nombre, Integer num_pagina, Integer edicion, Integer cod_form, Integer cod_tipo, Integer idioma, ArrayList autores, ArrayList categorias) throws Exception {
-        strSQL = String.format("SELECT pa_update_libro('%s', %d, '%s', %d, %d, %d, %d, %d,", isbn, editorial, nombre, num_pagina, edicion, cod_form, cod_tipo, idioma);
+        strSQL = String.format("SELECT pa_update_libro('%s', %d, '%s', %d, %d, %d, %d, %d,",
+                isbn, editorial, nombre, num_pagina, edicion, cod_form, cod_tipo, idioma);
         if (autores.isEmpty()) {
             strSQL += "null,";
             if (categorias.isEmpty()) {
@@ -271,7 +272,7 @@ public class clsLibro {
             rs = objConectar.consultar(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al editar categoria -->" + e.getMessage());
+            throw new Exception("Error al editar el libro -->" + e.getMessage());
         }
     }
 }

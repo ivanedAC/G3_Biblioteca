@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JTable;
 
 /**
@@ -38,7 +40,7 @@ public class clsPrestamo {
             throw new Exception("Error al buscar préstamo: " + e.getMessage());
         }
     }
-    
+
     public ResultSet buscarPrestamos(Integer cli) throws Exception {
         strSQL = "select * from prestamo where cod_cliente = " + cli;
         try {
@@ -48,7 +50,7 @@ public class clsPrestamo {
             throw new Exception("Error al buscar préstamo: " + e.getMessage());
         }
     }
-    
+
     public ResultSet buscarPrestamoVigentes(Integer cli) throws Exception {
         strSQL = "select * from prestamo where estado = 'P' and cod_cliente = " + cli;
         try {
@@ -58,7 +60,7 @@ public class clsPrestamo {
             throw new Exception("Error al buscar préstamo: " + e.getMessage());
         }
     }
-    
+
     public Integer generarCorrelativo() throws Exception {
         strSQL = "select COALESCE(Max(correlativo),0)+1 as codigo from prestamo";
         try {
@@ -95,15 +97,15 @@ public class clsPrestamo {
                 if (!rsCliente.getString("estado").equals("A")) {
                     throw new Exception("Error, el estado del cliente no le permite tramitar préstamos");
                 } else {
-                    
-                    while (rsPresCli.next()){
-                        if (rsPresCli.getString("estado").equals("P")){
+
+                    while (rsPresCli.next()) {
+                        if (rsPresCli.getString("estado").equals("P")) {
                             throw new Exception("El cliente seleccionado tiene algún préstamo pendientes");
                         }
                     }
-                    
+
                     strSQL = "INSERT INTO PRESTAMO values (" + codPre + "," + clsUsuarioSTATIC.codigo + ","
-                            + cli + ", CURRENT_DATE,(SELECT CURRENT_TIME::time(0)),'" + f_limite + "','" + h_limite + "'," + "'P'," + generarCorrelativo() + "," + objSede.obtenerSede(clsUsuarioSTATIC.sede)+");";
+                            + cli + ", CURRENT_DATE,(SELECT CURRENT_TIME::time(0)),'" + f_limite + "','" + h_limite + "'," + "'P'," + generarCorrelativo() + "," + objSede.obtenerSede(clsUsuarioSTATIC.sede) + ");";
                     sent.executeUpdate(strSQL);
                     int c = tblDetalles.getRowCount();
 
@@ -145,6 +147,93 @@ public class clsPrestamo {
             objConectar.desconectar();
         }
     }
+
+    public void registrarPrestamo_V2(Integer codPre, Integer cli, String f_limite, String h_limite, JTable tblDetalles, Integer codReser) throws Exception {
+        try {
+            objConectar.conectar();
+            con = objConectar.getCon();
+            con.setAutoCommit(false);
+            sent = con.createStatement();
+            ResultSet rsCliente = objCli.buscarClientePorCodigo(cli);
+            ResultSet rsPresCli = buscarPrestamos(cli);
+            ResultSet rsEjem;
+
+            if (rsCliente.next()) {
+                if (!rsCliente.getString("estado").equals("A")) {
+                    throw new Exception("Error, el estado del cliente no le permite tramitar préstamos");
+                }
+
+                while (rsPresCli.next()) {
+                    if (rsPresCli.getString("estado").equals("P")) {
+                        throw new Exception("El cliente seleccionado tiene algún préstamo pendiente");
+                    }
+                }
+
+                // Registrar el préstamo
+                strSQL = "INSERT INTO PRESTAMO values (" + codPre + "," + clsUsuarioSTATIC.codigo + ","
+                        + cli + ", CURRENT_DATE, (SELECT CURRENT_TIME::time(0)), '" + f_limite + "','" + h_limite + "'," + "'P',"
+                        + generarCorrelativo() + "," + objSede.obtenerSede(clsUsuarioSTATIC.sede) + ");";
+                sent.executeUpdate(strSQL);
+
+                int c = tblDetalles.getRowCount();
+
+                if (c > 3) {
+                    throw new Exception("No se puede llevar más de 3 ejemplares en un solo préstamo");
+                }
+
+                // Validar y registrar los ejemplares
+                Set<String> isbnSet = new HashSet<>(); // Para validar ISBN únicos
+
+                for (int i = 0; i < c; i++) {
+                    int codEjem = Integer.parseInt(tblDetalles.getValueAt(i, 0).toString());
+                    String isbn = tblDetalles.getValueAt(i, 2).toString(); // Columna 2: ISBN
+
+                    // Validar que no se repita el ISBN
+                    if (isbnSet.contains(isbn)) {
+                        throw new Exception("No se puede prestar ejemplares con el mismo ISBN: " + isbn);
+                    }
+                    isbnSet.add(isbn); // Registrar ISBN como ya procesado
+
+                    rsEjem = objEjem.buscarPorCodigo(codEjem);
+
+                    if (rsEjem.next()) {
+                        if ((rsEjem.getString("estado").equals("D") || rsEjem.getString("estado").equals("R")) 
+                            && rsEjem.getString("sede").equals(clsUsuarioSTATIC.sede)) {
+
+                            strSQL = "INSERT INTO DETALLE_PRESTAMO values (" + codPre + "," + codEjem + ");";
+                            sent.executeUpdate(strSQL);
+
+                            strSQL = "UPDATE EJEMPLAR SET ESTADO = 'P' WHERE CODIGO = " + codEjem + ";";
+                            sent.executeUpdate(strSQL);
+
+                        } else {
+                            throw new Exception("El ejemplar no está disponible para prestar o no pertenece a esta sede");
+                        }
+                    } else {
+                        throw new Exception("Ejemplar ingresado no válido");
+                    }
+                }
+
+                // Actualizar la reserva si aplica
+                if (codReser != 0) {
+                    strSQL = "UPDATE reserva SET estado = 'C' WHERE codigo = " + codReser + ";";
+                    sent.executeUpdate(strSQL);
+                }
+
+                con.commit();
+
+            } else {
+                throw new Exception("Error, el cliente ingresado no existe");
+            }
+        } catch (Exception e) {
+            con.rollback();
+            throw new Exception("Error al registrar préstamo: " + e.getMessage());
+        } finally {
+            objConectar.desconectar();
+        }
+    }
+
+
 
     public boolean validarHoraAnularPrestamo(String fecha, String hora) throws Exception {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -191,11 +280,11 @@ public class clsPrestamo {
                 hora = rsPre.getString("h_registro");
                 validar = validarHoraAnularPrestamo(fecha, hora);
                 estado = rsPre.getString("estado");
-                
+
                 strSQL = "SELECT * FROM DEVOLUCION WHERE cod_prestamo = " + cod + ";";
                 ResultSet rsDevs = sent.executeQuery(strSQL);
-                
-                if (rsDevs.next()){
+
+                if (rsDevs.next()) {
                     throw new Exception("No se puede anular el préstamo si ya ha devuelto algún ejemplar, por favor tramite las devoluciones restantes");
                 }
             } else {

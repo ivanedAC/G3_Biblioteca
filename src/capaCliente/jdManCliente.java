@@ -163,7 +163,6 @@ public class jdManCliente extends javax.swing.JDialog {
 
         String nombrepais;
         String nombreTipoDoc;
-        
 
         try {
             rsClientesJ = objCliente.listarClientesJuridicos();
@@ -990,20 +989,31 @@ public class jdManCliente extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            if (txtDocIdent.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this, "Ingrese el documento del cliente a eliminar");
-            } else {
-                int opc = JOptionPane.showConfirmDialog(this, "¿Desea eliminar al cliente " + txtNombre.getText() + "?", "Confirmacion", JOptionPane.YES_NO_OPTION);
-                if (opc == JOptionPane.YES_OPTION) {
-                    objCliente.eliminarCliente(txtDocIdent.getText());
-                    JOptionPane.showMessageDialog(this, "Cliente eliminado");
-                    listarClientesJuridicos();
-                    listarClientesNaturales();
-                    clearfields();
+            if (!txtDocIdent.getText().isBlank()) {
+                if (!(objCliente.verificarPrestamoCliente(objCliente.buscarCodigoCliente(txtDocIdent.getText())))) {
+                    if (!(objCliente.verificarReservaCliente(objCliente.buscarCodigoCliente(txtDocIdent.getText())))) {
+
+                        int opc = JOptionPane.showConfirmDialog(this, "¿Desea eliminar al cliente " + txtNombre.getText() + "?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+                        if (opc == JOptionPane.YES_OPTION) {
+                            objCliente.eliminarCliente(txtDocIdent.getText());
+                            JOptionPane.showMessageDialog(this, "Cliente eliminado");
+                            listarClientesJuridicos();
+                            listarClientesNaturales();
+                            clearfields();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Se cancelo la eliminacion");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Este cliente se encuentra en una reserva", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Se cancelo la eliminacion");
+                    JOptionPane.showMessageDialog(this, "Este cliente se encuentra en un prestamo", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Ingrese el documento del cliente a eliminar");
             }
+
             // TODO add your handling code here:
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());

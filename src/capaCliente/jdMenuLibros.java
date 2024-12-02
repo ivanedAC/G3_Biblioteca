@@ -8,6 +8,7 @@ import capaLogica.clsEditorial;
 import capaLogica.clsEjemplar;
 import capaLogica.clsSede;
 import capaLogica.clsTipoLibro;
+import capaLogica.clsUsuarioSTATIC;
 import java.awt.Component;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -29,18 +30,14 @@ public class jdMenuLibros extends javax.swing.JDialog {
     clsTipoLibro objTipoLibro = new clsTipoLibro();
     clsEjemplar objEjemplar = new clsEjemplar();
     
-    private String isbn = "";
+    public static String ISBN = "";
     /**
      * Creates new form jdMenuLibros
      */
     public jdMenuLibros(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listarEjemplares();
-    }
-    
-    public String getISBN(){
-        return isbn;
+
     }
 
     private ImageIcon prestamoIcon = new ImageIcon(getClass().getResource("/recursos/prestamo_icon.png"));
@@ -71,6 +68,10 @@ public class jdMenuLibros extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+    }
+    
+    private void seleccionSede(){
+        cboSede.setSelectedItem(clsUsuarioSTATIC.sede);
     }
 
     private void comboTipoLibro() {
@@ -169,8 +170,8 @@ public class jdMenuLibros extends javax.swing.JDialog {
         modelito.addColumn("Disponible");
         modelito.addColumn("Prestado");
         modelito.addColumn("Reservas");
-        modelito.addColumn("Prestamo");
-        modelito.addColumn("Reserva");
+//        modelito.addColumn("Prestamo");
+//        modelito.addColumn("Reserva");
 
         try {
 
@@ -218,16 +219,16 @@ public class jdMenuLibros extends javax.swing.JDialog {
                     rs.getInt("disponible"),
                     rs.getInt("prestados"),
                     rs.getInt("reservas"),
-                    "prestamo", // Indicador para el ícono de préstamo
-                    "reserva" // Indicador para el ícono de reserva
+//                    "prestamo", // Indicador para el ícono de préstamo
+//                    "reserva" // Indicador para el ícono de reserva
                 });
             }
 
             tblEjemplares.setModel(modelito);
 
             // Asigna el renderer a las columnas correspondientes
-            tblEjemplares.getColumnModel().getColumn(8).setCellRenderer(new IconCellRenderer(prestamoIcon));
-            tblEjemplares.getColumnModel().getColumn(9).setCellRenderer(new IconCellRenderer(reservaIcon));
+//            tblEjemplares.getColumnModel().getColumn(8).setCellRenderer(new IconCellRenderer(prestamoIcon));
+//            tblEjemplares.getColumnModel().getColumn(9).setCellRenderer(new IconCellRenderer(reservaIcon));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error en la búsqueda de libros --> " + e.getMessage());
@@ -235,28 +236,28 @@ public class jdMenuLibros extends javax.swing.JDialog {
     }
 
     // Clase para el renderer de celdas
-    class IconCellRenderer extends DefaultTableCellRenderer {
-
-        private final ImageIcon icon;
-
-        public IconCellRenderer(ImageIcon icon) {
-            this.icon = icon;
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            JLabel label = new JLabel();
-            label.setHorizontalAlignment(JLabel.CENTER); // Centra el ícono
-            label.setIcon(icon);
-            if (isSelected) {
-                label.setBackground(table.getSelectionBackground());
-                label.setOpaque(true);
-            }
-            return label;
-        }
-    }
+//    class IconCellRenderer extends DefaultTableCellRenderer {
+//
+//        private final ImageIcon icon;
+//
+//        public IconCellRenderer(ImageIcon icon) {
+//            this.icon = icon;
+//        }
+//
+//        @Override
+//        public Component getTableCellRendererComponent(JTable table, Object value,
+//                boolean isSelected, boolean hasFocus,
+//                int row, int column) {
+//            JLabel label = new JLabel();
+//            label.setHorizontalAlignment(JLabel.CENTER); // Centra el ícono
+//            label.setIcon(icon);
+//            if (isSelected) {
+//                label.setBackground(table.getSelectionBackground());
+//                label.setOpaque(true);
+//            }
+//            return label;
+//        }
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -471,6 +472,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
         comboSede();
         comboTipoLibro();
         listarEjemplares();
+        seleccionSede();
     }//GEN-LAST:event_formWindowOpened
 
     private void cboEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEditorialActionPerformed
@@ -505,7 +507,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
 
     private void tblEjemplaresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEjemplaresMouseClicked
         // TODO add your handling code here:
-        isbn = String.valueOf(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 0));
+        ISBN = String.valueOf(tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 0));
         int dispo = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 5);
         int prest = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 6);
         int reser = (int) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 7); 
@@ -519,6 +521,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
                     jdTranReserva objReserva = new jdTranReserva(null, true);
                     objReserva.setLocationRelativeTo(null);
                     objReserva.setVisible(true);
+                    
                 }
             }
         } else {
@@ -527,8 +530,10 @@ public class jdMenuLibros extends javax.swing.JDialog {
                 jdTranPrestamo objPrestamo = new jdTranPrestamo(null, true);
                 objPrestamo.setLocationRelativeTo(null);
                 objPrestamo.setVisible(true);
+                
             }
         }
+        System.out.println(ISBN);
     }//GEN-LAST:event_tblEjemplaresMouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

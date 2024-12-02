@@ -62,6 +62,11 @@ public class jdTranReserva extends javax.swing.JDialog {
         tblDetalles.setModel(modelo);
         tblDetalles.getTableHeader().setReorderingAllowed(false);
     }
+    
+    private void limpiarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tblDetalles.getModel();
+        modelo.setRowCount(0);
+    }
 
     private void mostrarDatosCliente(Integer cod) throws Exception {
         ResultSet rsCli = objCliente.buscarClientePorCodigo(cod);
@@ -776,8 +781,16 @@ public class jdTranReserva extends javax.swing.JDialog {
         try {
             // TODO add your handling code here:
             txtCodRes.setText(objReserva.generarCodReserva().toString());
+            txtCodRes.setEditable(false);
             llenarTablaInicial();
             mostrarFecha();
+            limpiarTabla();
+            String isbn = jdMenuLibros.ISBN;
+            if (!isbn.equals("")) {
+                agregarEjemplar(isbn);
+                fechaStimada(isbn);
+            }
+            
         } catch (Exception ex) {
             Logger.getLogger(jdTranReserva.class.getName()).log(Level.SEVERE, null, ex);
         }

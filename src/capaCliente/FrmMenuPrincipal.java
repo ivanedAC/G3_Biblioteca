@@ -4,10 +4,13 @@
  */
 package capaCliente;
 
+import capaLogica.clsReserva;
 import capaLogica.clsUsuarioSTATIC;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,7 +22,7 @@ import javax.swing.JPanel;
 public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     jdIniciarSesion frmLogin = new jdIniciarSesion(this, true);
-
+    clsReserva objReserva = new clsReserva();
     /**
      * Creates new form MenuPrincipal
      */
@@ -161,6 +164,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuPrestamo = new javax.swing.JMenuItem();
         mnuDevolucion = new javax.swing.JMenuItem();
         mnuOpeRegistroReserva = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuOrdenCompra = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
         Rpt1 = new javax.swing.JMenuItem();
@@ -514,6 +518,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuOperaciones.add(mnuOpeRegistroReserva);
 
+        jMenuItem1.setText("Préstamo de Reserva");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mnuOperaciones.add(jMenuItem1);
+
         mnuOrdenCompra.setText("Orden de compra");
         mnuOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -528,6 +540,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mnuReportesMouseClicked(evt);
+            }
+        });
+        mnuReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuReportesActionPerformed(evt);
             }
         });
 
@@ -603,7 +620,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEjemplarActionPerformed
 
     private void mnuMantenimientosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuMantenimientosMouseClicked
-
+ 
     }//GEN-LAST:event_mnuMantenimientosMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -623,6 +640,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
                 botonesMantenimiento();
                 botonesReportes();
         }
+        
+        try {
+            objReserva.validarEstadoReserva();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
@@ -637,8 +660,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuSalirActionPerformed
 
     private void mnuReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuReportesMouseClicked
-        sinBotones();
-        botonesReportes();
+        jdMnuReportes objJd = new jdMnuReportes(this, true);
+        objJd.setLocationRelativeTo(null);
+        objJd.setVisible(true);
+        
     }//GEN-LAST:event_mnuReportesMouseClicked
 
     private void MnuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnuUsuarioActionPerformed
@@ -765,6 +790,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         objOC.setVisible(true);
     }//GEN-LAST:event_mnuOrdenCompraActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        jdTranReservaCompleta objReserva = new jdTranReservaCompleta(this, true);
+        objReserva.setLocationRelativeTo(null);
+        objReserva.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     private void Rpt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rpt1ActionPerformed
         jdReportePrestamosDevoluciones objJd = new jdReportePrestamosDevoluciones(this, true);
         objJd.setLocationRelativeTo(null);
@@ -788,6 +819,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         objJd.setLocationRelativeTo(null);
         objJd.setVisible(true);
     }//GEN-LAST:event_Rpt4ActionPerformed
+
+    private void mnuReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuReportesActionPerformed
+                jdReporteSancionesCliente objJd = new jdReporteSancionesCliente(this, true);
+        objJd.setLocationRelativeTo(null);
+        objJd.setVisible(true);
+    }//GEN-LAST:event_mnuReportesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -820,6 +857,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;
