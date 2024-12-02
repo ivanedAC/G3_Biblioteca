@@ -80,7 +80,7 @@ public class ValidationManager {
             return cantidad > 0;
         } catch (Exception e) {
             throw new Exception("Error al validar la existencia: " + e.getMessage());
-        }
-    }
+        }
+    }
     
 }
