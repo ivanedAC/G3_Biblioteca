@@ -78,6 +78,10 @@ public class jdMnuReportes extends javax.swing.JDialog {
     private void validarFechas() {
         Date fechaInicial = jdInicio.getDate();
         Date fechaFinal = jdFinal.getDate();
+                if (format == null && format2 == null) {
+            JOptionPane.showMessageDialog(rootPane, "Debe escoger una fecha para este reporte");
+            return;
+        }
 
         if (fechaFinal != null && fechaInicial == null) {
             jdInicio.setDate(fechaFinal);
@@ -399,9 +403,6 @@ public class jdMnuReportes extends javax.swing.JDialog {
         switch (opcion) {
             case 0:
                 visualizarReporteConFechas("rpt1.jasper");
-                System.out.println(opcion);
-                System.out.println(format);
-                System.out.println(format2);
                 break;
             case 1:
                 visualizarReporteConFechas("rpt2.jasper");
