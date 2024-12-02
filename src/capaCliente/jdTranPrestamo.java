@@ -241,6 +241,9 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -625,7 +628,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             mostrarFechaLim();
             llenarTablaInicial();
             String isbn = jdMenuLibros.ISBN;
-            if (!isbn.equals("")) {
+            if (!isbn.equals("") && jdMenuLibros.bandera) {
                 agregarEjemplar(isbn);
             }
         } catch (Exception ex) {
@@ -795,21 +798,23 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             objJd.setVisible(true);
 
             ResultSet rsPre = objPrestamo.buscarPrestamoVigentes(objJd.codCli);
-            if (rsPre.next()) {
-                if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular el préstamo con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
-                    if (rsPre.getString("estado").equals("P")) {
-                        objPrestamo.anularPrestamo(rsPre.getInt("codigo"));
-                        JOptionPane.showMessageDialog(null, "Préstamo anulado correctamente");
-                        limpiarTodo();
-                        txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
-                        mostrarFechaLim();
-                        llenarTablaInicial();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "El préstamo que intenta anular no se encuentra vigente", "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
+            if (objJd.codCli != -1) {
+                if (rsPre.next()) {
+                    if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular el préstamo con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+                        if (rsPre.getString("estado").equals("P")) {
+                            objPrestamo.anularPrestamo(rsPre.getInt("codigo"));
+                            JOptionPane.showMessageDialog(null, "Préstamo anulado correctamente");
+                            limpiarTodo();
+                            txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
+                            mostrarFechaLim();
+                            llenarTablaInicial();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "El préstamo que intenta anular no se encuentra vigente", "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El cliente ingresado no tiene préstamos vigentes");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "El cliente ingresado no tiene préstamos vigentes");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -830,6 +835,11 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtCodPreKeyTyped
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        jdMenuLibros.bandera = false;
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
