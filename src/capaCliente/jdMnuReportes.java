@@ -429,7 +429,7 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 visualizarReporteConFechas("rpt9.jasper");
                 break;
             case 9:
-                JOptionPane.showMessageDialog(rootPane, "En construcción");
+                JOptionPane.showMessageDialog(rootPane, "En construcción...");
                 break;
             default:
                 throw new AssertionError();
