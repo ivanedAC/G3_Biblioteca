@@ -521,7 +521,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
                     jdTranReserva objReserva = new jdTranReserva(null, true);
                     objReserva.setLocationRelativeTo(null);
                     objReserva.setVisible(true);
-                    
+                    ISBN = "";
                 }
             }
         } else {
@@ -530,10 +530,9 @@ public class jdMenuLibros extends javax.swing.JDialog {
                 jdTranPrestamo objPrestamo = new jdTranPrestamo(null, true);
                 objPrestamo.setLocationRelativeTo(null);
                 objPrestamo.setVisible(true);
-                
+                ISBN = "";
             }
         }
-        System.out.println(ISBN);
     }//GEN-LAST:event_tblEjemplaresMouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

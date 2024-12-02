@@ -109,11 +109,16 @@ public class clsDevolucion {
                     sent.executeUpdate(strSQL);
 
                     for (int i = 0; i < tblDetalles.getRowCount(); i++) {
+                        
+                        String sancion = tblDetalles.getValueAt(i, 6).toString();
+                        int indice = sancion.indexOf("-");
+                        sancion = sancion.substring(indice + 1);
+                        
                         rsEjem = objEjem.buscarPorCodigo(Integer.parseInt(tblDetalles.getValueAt(i, 0).toString()));
                         int codEjem = Integer.parseInt(tblDetalles.getValueAt(i, 0).toString());
                         if (rsEjem.next()) {
-                            if (tblDetalles.getValueAt(i, 6).toString().equals("Ninguna") || tblDetalles.getValueAt(i, 6).toString().equals("1")) {
-                                String sancion = "null";
+                            if (tblDetalles.getValueAt(i, 6).toString().equals("Ninguna") || tblDetalles.getValueAt(i, 6).toString().equals("Codigo-1")) {
+                                sancion = "null";
 
                                 if (validarFLimite(rsPre.getString("f_limite"), rsPre.getString("h_limite"))) {
                                     sancion = "1";

@@ -21,7 +21,7 @@ import javax.swing.table.TableCellRenderer;
  */
 public class jdBuscarClienteConReservas extends javax.swing.JDialog {
     
-    public static Integer codCli;
+    public static Integer codCli = -1;
     clsPais objPais = new clsPais();
     clsTipoDocumento objDocumento = new clsTipoDocumento();
     clsCliente objCliente = new clsCliente();

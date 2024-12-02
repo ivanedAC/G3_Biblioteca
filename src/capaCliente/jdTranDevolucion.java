@@ -123,7 +123,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
         DefaultTableModel modelo = (DefaultTableModel) tblEjemplaresP.getModel();
 
         while (rsEjemV.next()) {
-            String estado ="";
+            String estado = "";
             switch (rsEjemV.getString("estado")) {
                 case "P":
                     estado = "Prestado";
@@ -669,7 +669,6 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                         if (rsEjem.next()) {
                             if (rsEjem.getString("estado").equals("P")) {
                                 String sancion = cboxSanciones.getSelectedItem().toString();
-                                int indice = sancion.indexOf("-");
 
                                 String estado = "";
 
@@ -689,7 +688,6 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                                     default:
                                         throw new Exception("Error al obtener estado");
                                 }
-                                String san = "";
 
                                 ResultSet rsPre = objPrestamo.buscarPrestamo(codPrestamo);
 
@@ -705,7 +703,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                                 }
 
                                 modelo.addRow(new Object[]{rsEjem.getString("codigo"), rsEjem.getString("libro"),
-                                    rsEjem.getString("isbn"), rsEjem.getString("editorial"), rsEjem.getString("sede"), estado, sancion.substring(indice + 1)});
+                                    rsEjem.getString("isbn"), rsEjem.getString("editorial"), rsEjem.getString("sede"), estado, sancion});
                                 eliminarEjemplar(cod);
                                 limpiarEjemplar();
                             } else {
@@ -778,7 +776,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
 //        } catch (Exception ex) {
 //            JOptionPane.showMessageDialog(null, ex.getMessage());
 //        }
-        
+
         try {
             if (txtCodDev.getText().isBlank()) {
                 JOptionPane.showMessageDialog(null, "El código ingresado no es válido");
@@ -796,19 +794,19 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                             for (int i = 0; i < tblEjemplaresD.getRowCount(); i++) {
                                 String isbn = tblEjemplaresD.getValueAt(i, 2).toString();
                                 int codEjemplar = Integer.parseInt((String) tblEjemplaresD.getValueAt(i, 0));
-                                
+
                                 ResultSet rsEjemplarReser = objReserva.verificarReservaLibro(isbn, objSede.obtenerSede(clsUsuarioSTATIC.sede));
                                 if (rsEjemplarReser != null && rsEjemplarReser.next()) {
                                     JOptionPane.showMessageDialog(this, "El ejemplar con ISBN: " + isbn + " se encuentra en una reserva pendiente\n"
                                             + "Datos del cliente que realizó la reserva:\n"
-                                            + "Nombre: "+rsEjemplarReser.getString("nombres"), "Mensaje Sistema", JOptionPane.INFORMATION_MESSAGE);
+                                            + "Nombre: " + rsEjemplarReser.getString("nombres"), "Mensaje Sistema", JOptionPane.INFORMATION_MESSAGE);
 
                                     objReserva.insertarDetalleReserva(
-                                        rsEjemplarReser.getInt("cod_reserva"),
-                                        Integer.parseInt(txtCodDev.getText()),
-                                        rsEjemplarReser.getInt("cod_cliente"),
-                                        codEjemplar,
-                                        isbn
+                                            rsEjemplarReser.getInt("cod_reserva"),
+                                            Integer.parseInt(txtCodDev.getText()),
+                                            rsEjemplarReser.getInt("cod_cliente"),
+                                            codEjemplar,
+                                            isbn
                                     );
                                 }
                             }

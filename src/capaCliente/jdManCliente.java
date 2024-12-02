@@ -373,22 +373,17 @@ public class jdManCliente extends javax.swing.JDialog {
         panelFormulario.setBackground(new java.awt.Color(243, 226, 210));
 
         lblTipoDoc.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblTipoDoc.setForeground(new java.awt.Color(0, 0, 0));
         lblTipoDoc.setText("Tipo documento:");
 
         lblDoc.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblDoc.setForeground(new java.awt.Color(0, 0, 0));
         lblDoc.setText("Doc. identidad:");
 
-        txtDocIdent.setBackground(new java.awt.Color(255, 255, 255));
         txtDocIdent.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         txtDocIdent.setBorder(null);
 
         lblSexo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblSexo.setForeground(new java.awt.Color(0, 0, 0));
         lblSexo.setText("Sexo:");
 
-        cbxSexo.setBackground(new java.awt.Color(255, 255, 255));
         cbxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino", " " }));
         cbxSexo.setBorder(null);
 
@@ -400,7 +395,6 @@ public class jdManCliente extends javax.swing.JDialog {
             }
         });
 
-        cbxtTipoDoc.setBackground(new java.awt.Color(255, 255, 255));
         cbxtTipoDoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxtTipoDoc.setBorder(null);
         cbxtTipoDoc.addActionListener(new java.awt.event.ActionListener() {
@@ -410,26 +404,20 @@ public class jdManCliente extends javax.swing.JDialog {
         });
 
         lblNombre.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblNombre.setForeground(new java.awt.Color(0, 0, 0));
         lblNombre.setText("Nombre:");
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         txtNombre.setBorder(null);
 
         lblApePaRS.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblApePaRS.setForeground(new java.awt.Color(0, 0, 0));
         lblApePaRS.setText("Apellido paterno:");
 
-        txtApePaRS.setBackground(new java.awt.Color(255, 255, 255));
         txtApePaRS.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         txtApePaRS.setBorder(null);
 
         lblapeMa.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblapeMa.setForeground(new java.awt.Color(0, 0, 0));
         lblapeMa.setText("Apellido materno:");
 
-        txtApeMa.setBackground(new java.awt.Color(255, 255, 255));
         txtApeMa.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         txtApeMa.setBorder(null);
 
@@ -502,23 +490,18 @@ public class jdManCliente extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(243, 226, 210));
 
         lblFecha.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblFecha.setForeground(new java.awt.Color(0, 0, 0));
         lblFecha.setText("Nacimiento:");
 
         lblCorreo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblCorreo.setForeground(new java.awt.Color(0, 0, 0));
         lblCorreo.setText("Correo:");
 
         chkVigencia.setBackground(new java.awt.Color(243, 226, 210));
         chkVigencia.setFont(new java.awt.Font("Courier New", 1, 12)); // NOI18N
-        chkVigencia.setForeground(new java.awt.Color(0, 0, 0));
         chkVigencia.setText("Vigencia");
 
         lblDireccion.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblDireccion.setForeground(new java.awt.Color(0, 0, 0));
         lblDireccion.setText("Direccion:");
 
-        txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         txtCorreo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         txtCorreo.setBorder(null);
         txtCorreo.addActionListener(new java.awt.event.ActionListener() {
@@ -528,24 +511,19 @@ public class jdManCliente extends javax.swing.JDialog {
         });
 
         lblPais.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblPais.setForeground(new java.awt.Color(0, 0, 0));
         lblPais.setText("Pais:");
 
-        txtDireccion.setBackground(new java.awt.Color(255, 255, 255));
         txtDireccion.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         txtDireccion.setBorder(null);
 
         calendarFNac.setBackground(new java.awt.Color(255, 255, 255));
 
         lblTelefono.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblTelefono.setForeground(new java.awt.Color(0, 0, 0));
         lblTelefono.setText("Telefono:");
 
-        cbxPais.setBackground(new java.awt.Color(255, 255, 255));
         cbxPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxPais.setBorder(null);
 
-        txtTelefono.setBackground(new java.awt.Color(255, 255, 255));
         txtTelefono.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         txtTelefono.setBorder(null);
 
@@ -718,7 +696,6 @@ public class jdManCliente extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(243, 226, 210));
 
-        tblPersonaNatural.setBackground(new java.awt.Color(255, 255, 255));
         tblPersonaNatural.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
