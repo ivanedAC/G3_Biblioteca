@@ -31,6 +31,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
     clsEjemplar objEjemplar = new clsEjemplar();
     
     public static String ISBN = "";
+    public static Boolean bandera = false;
     /**
      * Creates new form jdMenuLibros
      */
@@ -518,6 +519,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
                 if (reser > prest) {
                     JOptionPane.showMessageDialog(this, "Límite de reservas", "No quedan mas ejemplares para reservas", JOptionPane.OK_OPTION);
                 }else{
+                    bandera = true;
                     jdTranReserva objReserva = new jdTranReserva(null, true);
                     objReserva.setLocationRelativeTo(null);
                     objReserva.setVisible(true);
@@ -527,6 +529,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
         } else {
             if (JOptionPane.showConfirmDialog(this, "Hay ejemplares disponibles \n ¿Desea realizar un prestamo?",
                     "Ejemplares disponibles", JOptionPane.YES_NO_OPTION)==0) {
+                bandera = true;
                 jdTranPrestamo objPrestamo = new jdTranPrestamo(null, true);
                 objPrestamo.setLocationRelativeTo(null);
                 objPrestamo.setVisible(true);

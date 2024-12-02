@@ -230,6 +230,9 @@ public class jdTranReserva extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -751,7 +754,7 @@ public class jdTranReserva extends javax.swing.JDialog {
             mostrarFecha();
             limpiarTabla();
             String isbn = jdMenuLibros.ISBN;
-            if (!isbn.equals("")) {
+            if (!isbn.equals("") && jdMenuLibros.bandera) {
                 agregarEjemplar(isbn);
                 fechaStimada(isbn);
             }
@@ -760,6 +763,11 @@ public class jdTranReserva extends javax.swing.JDialog {
             Logger.getLogger(jdTranReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        jdMenuLibros.bandera = false;
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

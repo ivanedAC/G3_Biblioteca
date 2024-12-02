@@ -241,6 +241,9 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -625,7 +628,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             mostrarFechaLim();
             llenarTablaInicial();
             String isbn = jdMenuLibros.ISBN;
-            if (!isbn.equals("")) {
+            if (!isbn.equals("") && jdMenuLibros.bandera) {
                 agregarEjemplar(isbn);
             }
         } catch (Exception ex) {
@@ -661,7 +664,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "El cliente seleccionado tiene una reserva pendiente, no puede tramitar préstamos");
             } else {
                 if (objJd.codCli != -1) {
-                    ResultSet rsPresCli = objPrestamo.buscarPrestamos(Integer.valueOf(lblCodCli.getText()));
+                    ResultSet rsPresCli = objPrestamo.buscarPrestamos(objJd.codCli);
                     boolean permitir = true;
 
                     while (rsPresCli.next()) {
@@ -830,6 +833,11 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtCodPreKeyTyped
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        jdMenuLibros.bandera = false;
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
