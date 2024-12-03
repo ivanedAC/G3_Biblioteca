@@ -78,7 +78,7 @@ public class jdManCliente extends javax.swing.JDialog {
         lblFecha.setVisible(false);
         lblSexo.setVisible(false);
         lblapeMa.setVisible(false);
-        lblApePaRS.setText("RAZON SOCIAL");
+        lblApePaRS.setText("Razón Social");
         txtApeMa.setVisible(false);
         calendarFNac.setVisible(false);
         cbxSexo.setVisible(false);
@@ -89,7 +89,7 @@ public class jdManCliente extends javax.swing.JDialog {
         lblFecha.setVisible(true);
         lblSexo.setVisible(true);
         lblapeMa.setVisible(true);
-        lblApePaRS.setText("APELLIDO PATERNO");
+        lblApePaRS.setText("Apellido Paterno");
         txtApeMa.setVisible(true);
         calendarFNac.setVisible(true);
         cbxSexo.setVisible(true);
