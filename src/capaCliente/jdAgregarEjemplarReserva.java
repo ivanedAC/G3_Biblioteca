@@ -149,7 +149,7 @@ public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
             }
         });
 
-        jPanel5.setBackground(new java.awt.Color(251, 230, 211));
+        jPanel5.setBackground(new java.awt.Color(243, 226, 210));
 
         btnNuevo.setBackground(new java.awt.Color(113, 49, 18));
         btnNuevo.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
@@ -178,7 +178,7 @@ public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(292, 292, 292)
+                .addGap(306, 306, 306)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,16 +187,16 @@ public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBackground(new java.awt.Color(243, 226, 210));
 
-        tblDatos.setBackground(new java.awt.Color(245, 224, 206));
+        tblDatos.setBackground(new java.awt.Color(255, 255, 255));
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -207,6 +207,7 @@ public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
         ));
         jScrollPane4.setViewportView(tblDatos);
 
+        txtbusquedaAvanzada.setBackground(new java.awt.Color(255, 255, 255));
         txtbusquedaAvanzada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtbusquedaAvanzadaActionPerformed(evt);
@@ -218,33 +219,53 @@ public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
             }
         });
 
+        rbtnNombre.setBackground(new java.awt.Color(243, 226, 210));
         buttonGroup1.add(rbtnNombre);
+        rbtnNombre.setForeground(new java.awt.Color(0, 0, 0));
         rbtnNombre.setText("Nombre");
+        rbtnNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnNombreActionPerformed(evt);
+            }
+        });
 
+        rbtnISBN.setBackground(new java.awt.Color(243, 226, 210));
         buttonGroup1.add(rbtnISBN);
+        rbtnISBN.setForeground(new java.awt.Color(0, 0, 0));
         rbtnISBN.setText("ISBN");
+        rbtnISBN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnISBNActionPerformed(evt);
+            }
+        });
 
+        rbtnEditorial.setBackground(new java.awt.Color(243, 226, 210));
         buttonGroup1.add(rbtnEditorial);
+        rbtnEditorial.setForeground(new java.awt.Color(0, 0, 0));
         rbtnEditorial.setText("Editorial");
+        rbtnEditorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnEditorialActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(25, 25, 25)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1005, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(txtbusquedaAvanzada, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
+                        .addGap(28, 28, 28)
                         .addComponent(rbtnNombre)
                         .addGap(70, 70, 70)
                         .addComponent(rbtnISBN)
                         .addGap(71, 71, 71)
-                        .addComponent(rbtnEditorial)
-                        .addGap(0, 253, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(rbtnEditorial)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,20 +285,15 @@ public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -312,6 +328,30 @@ public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
         // TODO add your handling code here:
         listarTabla();
     }//GEN-LAST:event_formWindowOpened
+
+    private void rbtnNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNombreActionPerformed
+        // TODO add your handling code here:
+        if(rbtnNombre.isSelected()){
+            txtbusquedaAvanzada.setText("");
+            listarTabla();
+        }
+    }//GEN-LAST:event_rbtnNombreActionPerformed
+
+    private void rbtnISBNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnISBNActionPerformed
+        // TODO add your handling code here:
+        if(rbtnISBN.isSelected()){
+            txtbusquedaAvanzada.setText("");
+            listarTabla();
+        }
+    }//GEN-LAST:event_rbtnISBNActionPerformed
+
+    private void rbtnEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEditorialActionPerformed
+        // TODO add your handling code here:
+        if(rbtnEditorial    .isSelected()){
+            txtbusquedaAvanzada.setText("");
+            listarTabla();
+        }
+    }//GEN-LAST:event_rbtnEditorialActionPerformed
 
     /**
      * @param args the command line arguments

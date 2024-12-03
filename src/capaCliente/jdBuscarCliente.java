@@ -192,10 +192,10 @@ public class jdBuscarCliente extends javax.swing.JDialog {
         setTitle("Elegir Cliente");
         setBackground(new java.awt.Color(255, 215, 171));
 
-        jPanel1.setBackground(new java.awt.Color(230, 182, 139));
+        jPanel1.setBackground(new java.awt.Color(243, 226, 210));
         jPanel1.setPreferredSize(new java.awt.Dimension(1332, 725));
 
-        tblPersonaNatural.setBackground(new java.awt.Color(245, 224, 206));
+        tblPersonaNatural.setBackground(new java.awt.Color(255, 255, 255));
         tblPersonaNatural.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -233,10 +233,11 @@ public class jdBuscarCliente extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Num. Documento:");
 
+        txtNumDocumento.setBackground(new java.awt.Color(255, 255, 255));
         txtNumDocumento.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
         txtNumDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,10 +250,11 @@ public class jdBuscarCliente extends javax.swing.JDialog {
             }
         });
 
-        lblApeRaz.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblApeRaz.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblApeRaz.setForeground(new java.awt.Color(0, 0, 0));
         lblApeRaz.setText("Apellido:");
 
+        txtApellido.setBackground(new java.awt.Color(255, 255, 255));
         txtApellido.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
         txtApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,6 +267,7 @@ public class jdBuscarCliente extends javax.swing.JDialog {
             }
         });
 
+        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -277,17 +280,17 @@ public class jdBuscarCliente extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre:");
 
-        jLabel1.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Tipo persona:");
 
-        rbtnPN.setBackground(new java.awt.Color(230, 182, 139));
+        rbtnPN.setBackground(new java.awt.Color(243, 226, 210));
         buttonGroup1.add(rbtnPN);
-        rbtnPN.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        rbtnPN.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         rbtnPN.setForeground(new java.awt.Color(0, 0, 0));
         rbtnPN.setText("Persona Natural");
         rbtnPN.addActionListener(new java.awt.event.ActionListener() {
@@ -296,9 +299,9 @@ public class jdBuscarCliente extends javax.swing.JDialog {
             }
         });
 
-        rbtnPJ.setBackground(new java.awt.Color(230, 182, 139));
+        rbtnPJ.setBackground(new java.awt.Color(243, 226, 210));
         buttonGroup1.add(rbtnPJ);
-        rbtnPJ.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        rbtnPJ.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         rbtnPJ.setForeground(new java.awt.Color(0, 0, 0));
         rbtnPJ.setText("Persona Juridica");
         rbtnPJ.addActionListener(new java.awt.event.ActionListener() {
@@ -368,7 +371,7 @@ public class jdBuscarCliente extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -181,25 +181,25 @@ public class jdAgregarLibro extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(292, 292, 292)
+                .addGap(251, 251, 251)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(57, 57, 57)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                    .addComponent(btnNuevo)
+                    .addComponent(btnSalir))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBackground(new java.awt.Color(245, 224, 206));
 
-        tblDatos.setBackground(new java.awt.Color(245, 224, 206));
+        tblDatos.setBackground(new java.awt.Color(255, 255, 255));
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -210,6 +210,8 @@ public class jdAgregarLibro extends javax.swing.JDialog {
         ));
         jScrollPane4.setViewportView(tblDatos);
 
+        txtbusquedaAvanzada.setBackground(new java.awt.Color(255, 255, 255));
+        txtbusquedaAvanzada.setBorder(null);
         txtbusquedaAvanzada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtbusquedaAvanzadaActionPerformed(evt);
@@ -221,33 +223,53 @@ public class jdAgregarLibro extends javax.swing.JDialog {
             }
         });
 
+        rbtnNombre.setBackground(new java.awt.Color(245, 224, 206));
         buttonGroup1.add(rbtnNombre);
+        rbtnNombre.setForeground(new java.awt.Color(0, 0, 0));
         rbtnNombre.setText("Nombre");
+        rbtnNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnNombreActionPerformed(evt);
+            }
+        });
 
+        rbtnISBN.setBackground(new java.awt.Color(245, 224, 206));
         buttonGroup1.add(rbtnISBN);
+        rbtnISBN.setForeground(new java.awt.Color(0, 0, 0));
         rbtnISBN.setText("ISBN");
+        rbtnISBN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnISBNActionPerformed(evt);
+            }
+        });
 
+        rbtnEditorial.setBackground(new java.awt.Color(245, 224, 206));
         buttonGroup1.add(rbtnEditorial);
+        rbtnEditorial.setForeground(new java.awt.Color(0, 0, 0));
         rbtnEditorial.setText("Editorial");
+        rbtnEditorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnEditorialActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1021, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 985, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(txtbusquedaAvanzada, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtbusquedaAvanzada, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
                         .addComponent(rbtnNombre)
                         .addGap(69, 69, 69)
                         .addComponent(rbtnISBN)
                         .addGap(70, 70, 70)
-                        .addComponent(rbtnEditorial)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(rbtnEditorial)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,20 +289,15 @@ public class jdAgregarLibro extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -310,6 +327,30 @@ public class jdAgregarLibro extends javax.swing.JDialog {
         busquedaAvanzada(txtbusquedaAvanzada.getText());
         // TODO add your handling code here:
     }//GEN-LAST:event_txtbusquedaAvanzadaKeyReleased
+
+    private void rbtnNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNombreActionPerformed
+        // TODO add your handling code here:
+        if(rbtnNombre.isSelected()){
+            txtbusquedaAvanzada.setText("");
+            listarTabla();
+        }
+    }//GEN-LAST:event_rbtnNombreActionPerformed
+
+    private void rbtnISBNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnISBNActionPerformed
+        // TODO add your handling code here:
+        if(rbtnISBN.isSelected()){
+            txtbusquedaAvanzada.setText("");
+            listarTabla();
+        }
+    }//GEN-LAST:event_rbtnISBNActionPerformed
+
+    private void rbtnEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEditorialActionPerformed
+        // TODO add your handling code here:
+        if(rbtnEditorial.isSelected()){
+            txtbusquedaAvanzada.setText("");
+            listarTabla();
+        }
+    }//GEN-LAST:event_rbtnEditorialActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNuevo;

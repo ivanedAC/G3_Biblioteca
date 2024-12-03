@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,7 +41,10 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
+            
         };
+        
+        
         modelo.addColumn("ISBN");
         modelo.addColumn("Editorial");
         modelo.addColumn("Nombre");
@@ -74,6 +78,8 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
                     rsLibro.getString("categorias")});
             }
             tblDatos.setModel(modelo);
+            tblDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            
             tblDatos.getTableHeader().setReorderingAllowed(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "error al listar en tabla" + e.getMessage());
@@ -114,6 +120,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
                     rsLibro.getString("categorias")});
             }
             tblDatos.setModel(modelo);
+            tblDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             tblDatos.getTableHeader().setReorderingAllowed(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "error al listar en tabla" + e.getMessage());
@@ -125,6 +132,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         initComponents();
         listarTabla();
         rbtnNombre.setSelected(true);
+        tblDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     /**
@@ -149,6 +157,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         rbtnEditorial = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consulta de ejemplares");
 
         jPanel5.setBackground(new java.awt.Color(251, 230, 211));
 
@@ -179,25 +188,25 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(292, 292, 292)
+                .addGap(162, 162, 162)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBackground(new java.awt.Color(243, 226, 210));
 
-        tblDatos.setBackground(new java.awt.Color(245, 224, 206));
+        tblDatos.setBackground(new java.awt.Color(255, 255, 255));
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -208,6 +217,8 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         ));
         jScrollPane4.setViewportView(tblDatos);
 
+        txtbusquedaAvanzada.setBackground(new java.awt.Color(255, 255, 255));
+        txtbusquedaAvanzada.setForeground(new java.awt.Color(0, 0, 0));
         txtbusquedaAvanzada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtbusquedaAvanzadaActionPerformed(evt);
@@ -219,14 +230,35 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
             }
         });
 
+        rbtnNombre.setBackground(new java.awt.Color(243, 226, 210));
         buttonGroup1.add(rbtnNombre);
+        rbtnNombre.setForeground(new java.awt.Color(0, 0, 0));
         rbtnNombre.setText("Nombre");
+        rbtnNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnNombreActionPerformed(evt);
+            }
+        });
 
+        rbtnISBN.setBackground(new java.awt.Color(243, 226, 210));
         buttonGroup1.add(rbtnISBN);
+        rbtnISBN.setForeground(new java.awt.Color(0, 0, 0));
         rbtnISBN.setText("ISBN");
+        rbtnISBN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnISBNActionPerformed(evt);
+            }
+        });
 
+        rbtnEditorial.setBackground(new java.awt.Color(243, 226, 210));
         buttonGroup1.add(rbtnEditorial);
+        rbtnEditorial.setForeground(new java.awt.Color(0, 0, 0));
         rbtnEditorial.setText("Editorial");
+        rbtnEditorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnEditorialActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -235,14 +267,14 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1021, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(txtbusquedaAvanzada, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
                         .addComponent(rbtnNombre)
-                        .addGap(69, 69, 69)
+                        .addGap(51, 51, 51)
                         .addComponent(rbtnISBN)
-                        .addGap(70, 70, 70)
+                        .addGap(62, 62, 62)
                         .addComponent(rbtnEditorial)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -277,8 +309,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -308,6 +339,30 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         busquedaAvanzada(txtbusquedaAvanzada.getText());
         // TODO add your handling code here:
     }//GEN-LAST:event_txtbusquedaAvanzadaKeyReleased
+
+    private void rbtnNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNombreActionPerformed
+        // TODO add your handling code here:
+        if(rbtnNombre.isSelected()){
+            txtbusquedaAvanzada.setText("");
+            listarTabla();
+        }
+    }//GEN-LAST:event_rbtnNombreActionPerformed
+
+    private void rbtnISBNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnISBNActionPerformed
+        // TODO add your handling code here:
+        if(rbtnISBN.isSelected()){
+            txtbusquedaAvanzada.setText("");
+            listarTabla();
+        }
+    }//GEN-LAST:event_rbtnISBNActionPerformed
+
+    private void rbtnEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEditorialActionPerformed
+        // TODO add your handling code here:
+        if(rbtnEditorial.isSelected()){
+            txtbusquedaAvanzada.setText("");
+            listarTabla();
+        }
+    }//GEN-LAST:event_rbtnEditorialActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNuevo;
