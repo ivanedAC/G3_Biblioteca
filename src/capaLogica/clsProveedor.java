@@ -238,4 +238,15 @@ public class clsProveedor {
         }
         return 0;
     }
+    
+    public ResultSet listadoProveedores() throws Exception {
+        strSQL = "select pr.razon_social\n"
+                + "from proveedor pv inner join persona pr on pv.cod_persona = pr.codigo";
+        try {
+            rs = objConectar.consultar(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar proveedores -->" + e.getMessage());
+        }
+    }
 }
