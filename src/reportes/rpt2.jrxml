@@ -3,10 +3,10 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="parFechaI" class="java.lang.String">
+	<parameter name="ParFechaInicial" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="parFechaF" class="java.lang.String">
+	<parameter name="ParFechaFinal" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -15,7 +15,7 @@ from prestamo pr inner join detalle_prestamo dp on dp.cod_prestamo = pr.codigo
 inner join ejemplar ejp on dp.cod_ejemplar = ejp.codigo
 inner join libro lb on ejp.isbn = lb.isbn
 inner join formato fm on lb.cod_formato = fm.codigo
-WHERE pr.f_registro::text BETWEEN $P{parFechaI} and $P{parFechaF} and pr.estado != 'A'
+WHERE pr.f_registro::text BETWEEN $P{ParFechaInicial} and $P{ParFechaFinal} and pr.estado != 'A'
 group by 1, 3
 order by total_prestamos desc]]>
 	</queryString>

@@ -7,75 +7,139 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select lb.isbn, lb.nombre, lb.edicion, ed.nombre as editorial, dc.precio
-from detalle_compra dc inner join orden_compra oc on dc.num_orden = dc.num_orden
-inner join ejemplar ejp on dc.ejemplarcodigo = ejp.codigo
-inner join libro lb on ejp.isbn = lb.isbn
-inner join proveedor pv on oc.cod_proveedor = pv.codigo
-inner join persona pr on pv.cod_persona = pr.codigo
-inner join editorial ed on lb.cod_editorial = ed.codigo
-where pr.razon_social = $P{parRazonSocial}]]>
+		<![CDATA[SELECT
+	oc.f_orden,
+    lb.isbn,
+    lb.nombre,
+    lb.edicion,
+    ed.nombre AS editorial,
+    dc.precio,
+    COUNT(lb.isbn) AS cantidad,
+	dc.precio * count(lb.isbn) as total
+FROM
+    detalle_compra dc
+INNER JOIN orden_compra oc ON dc.num_orden = oc.num_orden
+INNER JOIN ejemplar ejp ON dc.cod_ejemplar = ejp.codigo
+INNER JOIN libro lb ON ejp.isbn = lb.isbn
+INNER JOIN proveedor pv ON oc.cod_proveedor = pv.codigo
+INNER JOIN persona pr ON pv.cod_persona = pr.codigo
+INNER JOIN editorial ed ON lb.cod_editorial = ed.codigo
+WHERE
+    pr.razon_social = $P{parRazonSocial}
+GROUP BY
+    lb.isbn, lb.nombre, lb.edicion, ed.nombre, dc.precio, oc.num_orden
+ORDER BY
+    oc.num_orden ASC;]]>
 	</queryString>
+	<field name="f_orden" class="java.sql.Date"/>
 	<field name="isbn" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="edicion" class="java.lang.Integer"/>
 	<field name="editorial" class="java.lang.String"/>
 	<field name="precio" class="java.math.BigDecimal"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<field name="total" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="21" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band height="18" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="13" y="2" width="100" height="20" uuid="5f53377e-b415-407b-ad97-db43584c32bb"/>
+				<reportElement x="80" y="11" width="419" height="39" uuid="03299dd2-d0cc-44c1-8606-c4596a6017c3"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE ORDEN DE COMPRA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="11" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="0" width="74" height="20" uuid="7128d466-018d-4d42-bb22-421235ad4897"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[ISBN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="136" y="2" width="100" height="20" uuid="7e3dbccb-a5e5-4831-8715-55e110607378"/>
+				<reportElement x="108" y="0" width="58" height="20" uuid="59c0e003-5475-409b-863b-5ef39e754bbc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Libro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="399" y="2" width="68" height="20" uuid="5df37718-f5f9-4cb8-a1d8-fe6ea5fb3a36"/>
+				<reportElement x="199" y="0" width="56" height="20" uuid="9b533ef8-8538-4b62-8345-5b77160c8d3e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Edicion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="477" y="2" width="55" height="20" uuid="d0ccf04b-b8e5-4292-81e1-69218db71cf9"/>
+				<reportElement x="276" y="0" width="66" height="20" uuid="d941e188-dae2-44c8-adba-aebd24efa58b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Editorial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="0" width="51" height="20" uuid="a63eb72e-a155-42d3-9b27-b7d9b15afc8a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Precio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="276" y="2" width="100" height="20" uuid="06daec6a-7709-4f39-b039-85379a1f702f"/>
-				<text><![CDATA[Editorial]]></text>
+				<reportElement x="425" y="0" width="62" height="20" uuid="3c9a6026-05da-47e4-957b-88bafa0080e6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="508" y="0" width="32" height="20" uuid="aa2193f3-8959-42f0-a873-77faf1687e8e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="54" splitType="Stretch">
+		<band height="65" splitType="Stretch">
 			<textField>
-				<reportElement x="13" y="10" width="100" height="20" uuid="057f1a9d-6219-44ff-a615-f23052026ff8"/>
+				<reportElement x="18" y="0" width="74" height="20" uuid="93d7e041-8325-4e38-9cae-8e89a1a5c0f7"/>
 				<textFieldExpression><![CDATA[$F{isbn}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="136" y="10" width="127" height="20" uuid="c9821ccf-1a29-4119-8200-e57ad1b615b0"/>
+				<reportElement x="108" y="0" width="76" height="65" uuid="110b0760-10d9-4995-98ef-2d7d7d7e96d4"/>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="399" y="10" width="68" height="20" uuid="17c1a254-a3a5-4242-9ab1-d67ccba4813a"/>
+				<reportElement x="210" y="0" width="56" height="20" uuid="b60d2902-2d62-4492-bbf7-6fb07d09f86e"/>
 				<textFieldExpression><![CDATA[$F{edicion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="477" y="10" width="55" height="20" uuid="a4a65383-0e7e-4edb-8b18-6b5a097782e0"/>
+				<reportElement x="276" y="0" width="66" height="65" uuid="d419a6d0-d597-4a2e-9ed4-94370997e6e9"/>
+				<textFieldExpression><![CDATA[$F{editorial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="0" width="40" height="20" uuid="7dff859e-675d-463d-9c8c-a8d53a0dd05e"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="276" y="10" width="110" height="20" uuid="e757e0d0-f333-4c5e-a6e3-9ff6f0188b63"/>
-				<textFieldExpression><![CDATA[$F{editorial}]]></textFieldExpression>
+				<reportElement x="450" y="0" width="37" height="20" uuid="7f0093f0-2162-4618-8e1b-f9a1957b0663"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="499" y="0" width="42" height="20" uuid="ff84a5c5-45cd-4091-b08e-9671de4d4842"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -83,7 +147,21 @@ where pr.razon_social = $P{parRazonSocial}]]>
 		<band height="9" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="12" splitType="Stretch"/>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="419" y="11" width="80" height="20" uuid="0b36e2ee-83f7-4496-8356-81e42c93981d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="499" y="11" width="40" height="20" uuid="18b3f39c-dfb6-4c4a-be6a-f816687e09d6"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="29" y="11" width="100" height="20" uuid="0e5acfd6-89e5-40c1-a4f7-859eeccd47d0"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="8" splitType="Stretch"/>
