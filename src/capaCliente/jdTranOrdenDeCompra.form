@@ -88,7 +88,7 @@
                       <Component id="calendarFLim" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumCompra" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumCompra" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -100,6 +100,9 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="N&#xfa;mero de compra:"/>
           </Properties>
         </Component>
@@ -107,6 +110,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Fecha"/>
           </Properties>
         </Component>
@@ -137,11 +143,12 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jPanel5" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
-                          <Component id="btnElegirCli" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="btnNuevoCli" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btnElegirCli" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnNuevoCli" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -156,9 +163,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnNuevoCli" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnElegirCli" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="btnElegirCli" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnNuevoCli" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -174,11 +183,17 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="PROVEEDOR"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnNuevoCli">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Nuevo"/>
           </Properties>
           <Events>
@@ -187,6 +202,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnElegirCli">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Elegir"/>
           </Properties>
           <Events>
@@ -240,23 +258,23 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblCodPro" max="32767" attributes="0"/>
+                              <Component id="lblCodPro" pref="22" max="32767" attributes="0"/>
                               <Component id="jLabel4" max="32767" attributes="0"/>
                               <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lblTipoPerPro" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblTipoPerPro" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblNomPro" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblNomPro" min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNroDocPro" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblNroDocPro" min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTipoDocPro" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblTipoDocPro" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -266,11 +284,17 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Tipo Doc:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
               </Properties>
             </Component>
@@ -294,6 +318,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Nro Doc:"/>
               </Properties>
             </Component>
@@ -308,6 +335,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Nombre:"/>
               </Properties>
             </Component>
@@ -331,6 +361,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Tipo Persona:"/>
               </Properties>
             </Component>
@@ -391,14 +424,14 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel15" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="lblEditorialLib" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblEditorialLib" alignment="0" pref="22" max="32767" attributes="0"/>
                                   <Component id="jLabel16" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblISBNLib" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblISBNLib" alignment="0" pref="22" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblNomLib" max="32767" attributes="0"/>
+                              <Component id="lblNomLib" pref="22" max="32767" attributes="0"/>
                               <Component id="jLabel13" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -419,6 +452,9 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel11">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="LIBRO"/>
           </Properties>
         </Component>
@@ -443,6 +479,9 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Nombre:"/>
           </Properties>
         </Component>
@@ -457,6 +496,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnAgregarLib">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Agregar"/>
           </Properties>
           <Events>
@@ -465,6 +507,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnEliminarLib">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Eliminar"/>
           </Properties>
           <Events>
@@ -473,6 +518,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel15">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="ISBN:"/>
           </Properties>
         </Component>
@@ -487,6 +535,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel16">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Editorial:"/>
           </Properties>
         </Component>
@@ -515,7 +566,6 @@
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnSalir" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="btnAnular" min="-2" pref="80" max="-2" attributes="0"/>
                       <Component id="btnGuardar" min="-2" pref="80" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="12" max="32767" attributes="0"/>
@@ -525,13 +575,11 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="8" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnAnular" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnSalir" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -539,6 +587,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btnGuardar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Guardar"/>
           </Properties>
           <Events>
@@ -547,18 +598,13 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnSalir">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Salir"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalirActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnAnular">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Anular"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAnularActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -600,20 +646,20 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblSubtotal" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSubtotal" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblIGV" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblIGV" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblTotal" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblTotal" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -621,16 +667,25 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Subtotal:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="IGV:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel17">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Total:"/>
           </Properties>
         </Component>

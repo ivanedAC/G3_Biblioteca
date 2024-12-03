@@ -24,6 +24,7 @@ public class jdAgregarEjemplarReserva extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         rbtnNombre.setSelected(true);
+        listarTabla();
     }
     
     clsLibro objLibro = new clsLibro();

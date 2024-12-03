@@ -218,7 +218,6 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        btnAnular = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -239,8 +238,10 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("Número de compra:");
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel7.setText("Fecha");
 
         lblNumCompra.setText(".");
@@ -269,15 +270,17 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                     .addComponent(calendarFLim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(lblNumCompra)
+                        .addComponent(lblNumCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setText("PROVEEDOR");
 
+        btnNuevoCli.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         btnNuevoCli.setText("Nuevo");
         btnNuevoCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,6 +288,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
             }
         });
 
+        btnElegirCli.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         btnElegirCli.setText("Elegir");
         btnElegirCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,24 +298,29 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel10.setText("Tipo Doc:");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel4.setText("Código:");
 
         lblNroDocPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblNomPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel5.setText("Nro Doc:");
 
         lblTipoDocPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Nombre:");
 
         lblTipoPerPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblCodPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel9.setText("Tipo Persona:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -348,20 +357,20 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblCodPro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblCodPro, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9))
-                    .addComponent(lblTipoPerPro, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTipoPerPro, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNomPro, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNomPro, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(lblNroDocPro, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNroDocPro, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(lblTipoDocPro, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTipoDocPro, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -374,11 +383,11 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(94, 94, 94)
-                        .addComponent(btnElegirCli)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnNuevoCli)
-                        .addGap(130, 130, 130))
+                        .addGap(132, 132, 132)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnElegirCli)
+                            .addComponent(btnNuevoCli))
+                        .addGap(193, 193, 193))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -388,9 +397,11 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnElegirCli)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnNuevoCli)
-                        .addComponent(btnElegirCli))
+                        .addGap(28, 28, 28))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -400,6 +411,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel11.setText("LIBRO");
 
         tblDetalles.setModel(new javax.swing.table.DefaultTableModel(
@@ -417,10 +429,12 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblDetalles);
 
+        jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel13.setText("Nombre:");
 
         lblNomLib.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnAgregarLib.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         btnAgregarLib.setText("Agregar");
         btnAgregarLib.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -428,6 +442,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
             }
         });
 
+        btnEliminarLib.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         btnEliminarLib.setText("Eliminar");
         btnEliminarLib.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -435,10 +450,12 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
             }
         });
 
+        jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel15.setText("ISBN:");
 
         lblISBNLib.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel16.setText("Editorial:");
 
         lblEditorialLib.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -482,12 +499,12 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lblEditorialLib, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblEditorialLib, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                                 .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblISBNLib, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(lblISBNLib, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)))
                         .addGap(13, 13, 13)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNomLib, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNomLib, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnAgregarLib)
@@ -501,6 +518,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnGuardar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -508,17 +526,11 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
             }
         });
 
+        btnSalir.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
-            }
-        });
-
-        btnAnular.setText("Anular");
-        btnAnular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnularActionPerformed(evt);
             }
         });
 
@@ -530,28 +542,28 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAnular, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
                 .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAnular)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnSalir)
-                .addGap(12, 12, 12))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("Subtotal:");
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel8.setText("IGV:");
 
+        jLabel17.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel17.setText("Total:");
 
         lblSubtotal.setText(".");
@@ -589,16 +601,16 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                         .addComponent(jLabel2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblSubtotal)))
+                        .addComponent(lblSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(lblIGV))
+                    .addComponent(lblIGV, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17)
-                    .addComponent(lblTotal))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -765,31 +777,6 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
-//        try {
-//            // TODO add your handling code here:
-//            ResultSet rsPre = objPrestamo.buscarPrestamo(Integer.valueOf(txtCodPre.getText()));
-//            if (rsPre.next()) {
-//                if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular el préstamo con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
-////                    if (rsPre.getString("estado").equals("P")) {
-////                        objPrestamo.anularPrestamo(rsPre.getInt("codigo"));
-////                        JOptionPane.showMessageDialog(null, "Préstamo anulado correctamente");
-////                        limpiarTodo();
-////                        txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
-////                        mostrarFechaLim();
-////                        llenarTablaInicial();
-////                    } else {
-////                        JOptionPane.showMessageDialog(null, "El préstamo que intenta anular no se encuentra vigente", "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
-////                    }
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "El código ingresado no existe");
-//            }
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage());
-//        }
-    }//GEN-LAST:event_btnAnularActionPerformed
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         if (JOptionPane.showConfirmDialog(null, "¿Está seguro de salir?, Perderá todos los datos que haya ingresado.", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
@@ -815,7 +802,6 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarLib;
-    private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnElegirCli;
     private javax.swing.JButton btnEliminarLib;
     private javax.swing.JButton btnGuardar;

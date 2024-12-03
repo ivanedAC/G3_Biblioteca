@@ -372,6 +372,7 @@ public class jdManProveedor extends javax.swing.JDialog {
         });
 
         tblPersonaNatural.setBackground(new java.awt.Color(245, 224, 206));
+        tblPersonaNatural.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tblPersonaNatural.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -400,12 +401,12 @@ public class jdManProveedor extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(rbtnPN)
                         .addGap(37, 37, 37)
                         .addComponent(rbtnPJ)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 524, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -415,50 +416,52 @@ public class jdManProveedor extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbtnPN)
                     .addComponent(rbtnPJ))
-                .addGap(43, 43, 43)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         panelFormulario.setBackground(new java.awt.Color(230, 182, 139));
 
-        lblTipoDoc.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblTipoDoc.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblTipoDoc.setText("TIPO DOCUMENTO");
 
+        cbxPais.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cbxPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        lblDoc.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblDoc.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblDoc.setText("DOC. IDENTIDAD");
 
-        txtDocIdent.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        txtDocIdent.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        lblNombre.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblNombre.setText("NOMBRE");
 
-        txtNombre.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        txtNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        lblApePaRS.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblApePaRS.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblApePaRS.setText("APELLIDO PATERNO");
 
-        txtApePaRS.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        txtApePaRS.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        lblapeMa.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblapeMa.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblapeMa.setText("APELLIDO MATERNO");
 
-        txtApeMa.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        txtApeMa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        lblSexo.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblSexo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblSexo.setText("SEXO");
 
+        cbxSexo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cbxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino", " " }));
 
-        lblFecha.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblFecha.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblFecha.setText("FECHA NACIMIENTO");
 
-        lblTelefono.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblTelefono.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblTelefono.setText("TELEFONO");
 
-        txtTelefono.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        txtTelefono.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/buscar_24px.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -467,9 +470,10 @@ public class jdManProveedor extends javax.swing.JDialog {
             }
         });
 
-        lblPais.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblPais.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblPais.setText("PAIS");
 
+        cbxtTipoDoc.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cbxtTipoDoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxtTipoDoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -477,18 +481,18 @@ public class jdManProveedor extends javax.swing.JDialog {
             }
         });
 
-        lblDireccion.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblDireccion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblDireccion.setText("DIRECCION");
 
-        txtDireccion.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        txtDireccion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        lblCorreo.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblCorreo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblCorreo.setText("CORREO");
 
-        txtCorreo.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
+        txtCorreo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         chkVigencia.setBackground(new java.awt.Color(230, 182, 139));
-        chkVigencia.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        chkVigencia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         chkVigencia.setText("Vigencia");
 
         javax.swing.GroupLayout panelFormularioLayout = new javax.swing.GroupLayout(panelFormulario);
@@ -580,12 +584,13 @@ public class jdManProveedor extends javax.swing.JDialog {
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(chkVigencia)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(230, 182, 139));
 
         btnGuardar.setBackground(new java.awt.Color(113, 49, 18));
+        btnGuardar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(245, 224, 206));
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/guardar_32px.png"))); // NOI18N
         btnGuardar.setText("GUARDAR");
@@ -597,6 +602,7 @@ public class jdManProveedor extends javax.swing.JDialog {
         });
 
         btnModificar.setBackground(new java.awt.Color(113, 49, 18));
+        btnModificar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(245, 224, 206));
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/editar_32px.png"))); // NOI18N
         btnModificar.setText("MODIFICAR");
@@ -607,6 +613,7 @@ public class jdManProveedor extends javax.swing.JDialog {
         });
 
         btnLimpiar.setBackground(new java.awt.Color(113, 49, 18));
+        btnLimpiar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(245, 224, 206));
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/limpiar_32px.png"))); // NOI18N
         btnLimpiar.setText("LIMPIAR");
@@ -617,6 +624,7 @@ public class jdManProveedor extends javax.swing.JDialog {
         });
 
         btnDarBaja.setBackground(new java.awt.Color(113, 49, 18));
+        btnDarBaja.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnDarBaja.setForeground(new java.awt.Color(245, 224, 206));
         btnDarBaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/darBaja_32px.png"))); // NOI18N
         btnDarBaja.setText("DAR DE BAJA");
@@ -627,6 +635,7 @@ public class jdManProveedor extends javax.swing.JDialog {
         });
 
         btnEliminar.setBackground(new java.awt.Color(113, 49, 18));
+        btnEliminar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(245, 224, 206));
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/eliminar_32px.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
@@ -637,6 +646,7 @@ public class jdManProveedor extends javax.swing.JDialog {
         });
 
         btnSalir.setBackground(new java.awt.Color(113, 49, 18));
+        btnSalir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(245, 224, 206));
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/salir_32px.png"))); // NOI18N
         btnSalir.setText("SALIR");
@@ -651,18 +661,15 @@ public class jdManProveedor extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(31, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(66, 66, 66)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap(41, Short.MAX_VALUE)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(83, 83, 83)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnDarBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDarBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(80, 80, 80)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
@@ -671,17 +678,17 @@ public class jdManProveedor extends javax.swing.JDialog {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDarBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59))
         );
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
@@ -693,45 +700,46 @@ public class jdManProveedor extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addComponent(panelFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(panelFormulario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(panelFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1379, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -881,12 +889,12 @@ public class jdManProveedor extends javax.swing.JDialog {
                 }
                 if (rs.next()) {
                     objProveedor.insertarProveedorExistente(txtDocIdent.getText(), estado);
-                    JOptionPane.showMessageDialog(this, "Cliente registrado");
+                    JOptionPane.showMessageDialog(this, "Proveedor registrado");
                     listarSeguntipo();
                 } else {
                     if (cbxtTipoDoc.getSelectedIndex() == 1) {
                         objProveedor.insertarProveedorJuridico(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), estado);
-                        JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente");
+                        JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo proveedor");
                         clearfields();
                         listarProveedorJuridicos();
                     } else {
@@ -898,7 +906,7 @@ public class jdManProveedor extends javax.swing.JDialog {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         String fechita = sdf.format(calendarFNac.getCalendar().getTime());
                         objProveedor.insertarProveedorNatural(codPais, cbxtTipoDoc.getSelectedIndex() + 1, txtDocIdent.getText(), txtNombre.getText(), txtApePaRS.getText(), txtApeMa.getText(), sexo, fechita, txtDireccion.getText(), txtTelefono.getText(), fechaR, txtCorreo.getText(), estado);
-                        JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo cliente");
+                        JOptionPane.showMessageDialog(this, "Se ha insertado un nuevo proveedor");
                         clearfields();
                         listarProveedorNaturales();
                     }
