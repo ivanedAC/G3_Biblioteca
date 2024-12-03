@@ -517,7 +517,7 @@ public class jdManEjemplar extends javax.swing.JDialog {
                     rp = JOptionPane.showConfirmDialog(this, "Esta seguro de dar de baja el ejemplar:\n " + txtNombreLibro.getText()
                             + " de la editorial " + txtEditorial.getText(), "Dar de baja", JOptionPane.YES_NO_OPTION);
                     if (rp == 0) {
-                        objEjemplar.darBajaEditorial(Integer.parseInt(txtCodigo.getText()));
+                        objEjemplar.darBajaEjemplarr(Integer.parseInt(txtCodigo.getText()));
                         limpiarCampos();
                         camposNoEdit();
                         listarEjemplaresSedeInd();

@@ -50,7 +50,7 @@ public class clsEjemplar {
         }
     }
 
-    public void darBajaEditorial(int cod) throws Exception {
+    public void darBajaEjemplarr(int cod) throws Exception {
         strSQL = "select pa_disabled_ejemplar(" + cod + ")";
         try {
             objConetar.consultar(strSQL);
