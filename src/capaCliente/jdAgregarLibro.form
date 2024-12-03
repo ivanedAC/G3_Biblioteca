@@ -150,7 +150,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtbusquedaAvanzada" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtbusquedaAvanzada" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="rbtnNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rbtnISBN" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rbtnEditorial" alignment="3" min="-2" max="-2" attributes="0"/>

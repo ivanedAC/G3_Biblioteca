@@ -199,7 +199,7 @@ public class jdManAutor extends javax.swing.JDialog {
 
         btnBuscar.setBackground(new java.awt.Color(113, 49, 18));
         btnBuscar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/buscar_24px.png"))); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/buscar_18px.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -231,7 +231,7 @@ public class jdManAutor extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(cmbPais, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -269,7 +269,7 @@ public class jdManAutor extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(243, 226, 210));
 
         btnModificar.setBackground(new java.awt.Color(113, 49, 18));
-        btnModificar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnModificar.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(245, 224, 206));
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/editar_32px.png"))); // NOI18N
         btnModificar.setText("MODIFICAR");
@@ -280,7 +280,7 @@ public class jdManAutor extends javax.swing.JDialog {
         });
 
         btnEliminar.setBackground(new java.awt.Color(113, 49, 18));
-        btnEliminar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnEliminar.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(245, 224, 206));
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/eliminar_32px.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
@@ -291,7 +291,7 @@ public class jdManAutor extends javax.swing.JDialog {
         });
 
         btnSalir.setBackground(new java.awt.Color(113, 49, 18));
-        btnSalir.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnSalir.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(245, 224, 206));
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/salir_32px.png"))); // NOI18N
         btnSalir.setText("SALIR");
@@ -302,7 +302,7 @@ public class jdManAutor extends javax.swing.JDialog {
         });
 
         btnLimpiar.setBackground(new java.awt.Color(113, 49, 18));
-        btnLimpiar.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnLimpiar.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(245, 224, 206));
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/limpiar_32px.png"))); // NOI18N
         btnLimpiar.setText("LIMPIAR");
@@ -313,7 +313,7 @@ public class jdManAutor extends javax.swing.JDialog {
         });
 
         btnNuevo.setBackground(new java.awt.Color(113, 49, 18));
-        btnNuevo.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
+        btnNuevo.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         btnNuevo.setForeground(new java.awt.Color(245, 224, 206));
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/nuevo_32px.png"))); // NOI18N
         btnNuevo.setText("NUEVO");
@@ -367,7 +367,7 @@ public class jdManAutor extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(243, 226, 210));
 
         tblAutor.setBackground(new java.awt.Color(255, 255, 255));
-        tblAutor.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
+        tblAutor.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tblAutor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

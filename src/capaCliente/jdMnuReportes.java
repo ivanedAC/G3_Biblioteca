@@ -295,15 +295,15 @@ public class jdMnuReportes extends javax.swing.JDialog {
 
         jdFinal.setDateFormatString("dd-MM-yyyy");
 
-        lblFinal.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblFinal.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblFinal.setForeground(new java.awt.Color(113, 49, 18));
         lblFinal.setText("Fecha Final:");
 
-        lblInicio.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblInicio.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblInicio.setForeground(new java.awt.Color(113, 49, 18));
         lblInicio.setText("Fecha Inicio:");
 
-        lblCodigo.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lblCodigo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblCodigo.setForeground(new java.awt.Color(113, 49, 18));
         lblCodigo.setText("Codigo:");
 
@@ -326,23 +326,16 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 .addComponent(cmbReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(btnReporte)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(contenedorInformacionLayout.createSequentialGroup()
-                        .addComponent(lblCodigo)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbAuxiliar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(contenedorInformacionLayout.createSequentialGroup()
-                        .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(contenedorInformacionLayout.createSequentialGroup()
-                                .addComponent(lblInicio)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, contenedorInformacionLayout.createSequentialGroup()
-                                .addComponent(lblFinal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jdInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                            .addComponent(jdFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(80, 80, 80)
+                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCodigo)
+                    .addComponent(lblFinal)
+                    .addComponent(lblInicio))
+                .addGap(18, 18, 18)
+                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jdInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                    .addComponent(jdFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbAuxiliar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
         contenedorInformacionLayout.setVerticalGroup(
@@ -352,11 +345,15 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jdInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblInicio, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCodigo)
-                    .addComponent(cmbAuxiliar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(contenedorInformacionLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbAuxiliar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCodigo))))
                 .addGap(5, 5, 5)
                 .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jdFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -438,10 +435,6 @@ public class jdMnuReportes extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnEliminar1;
-    private javax.swing.JButton btnEliminar2;
-    private javax.swing.JButton btnEliminar3;
     private javax.swing.JButton btnReporte;
     private javax.swing.JComboBox<String> cmbAuxiliar;
     private javax.swing.JComboBox<String> cmbReporte;
