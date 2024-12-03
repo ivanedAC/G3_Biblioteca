@@ -764,6 +764,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
             mostrarFechaLim();
             llenarTablaInicial();
+            spnMin.setEnabled(false);
             String isbn = jdMenuLibros.ISBN;
             if (!isbn.equals("") && jdMenuLibros.bandera) {
                 agregarEjemplar(isbn);
@@ -934,22 +935,24 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             objJd.setLocationRelativeTo(null);
             objJd.setVisible(true);
 
-            ResultSet rsPre = objPrestamo.buscarPrestamoVigentes(objJd.codCli);
-            if (rsPre.next()) {
-                if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular el préstamo con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
-                    if (rsPre.getString("estado").equals("P")) {
-                        objPrestamo.anularPrestamo(rsPre.getInt("codigo"));
-                        JOptionPane.showMessageDialog(null, "Préstamo anulado correctamente");
-                        limpiarTodo();
-                        txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
-                        mostrarFechaLim();
-                        llenarTablaInicial();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "El préstamo que intenta anular no se encuentra vigente", "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
+            if (objJd.codCli != -1) {
+                ResultSet rsPre = objPrestamo.buscarPrestamoVigentes(objJd.codCli);
+                if (rsPre.next()) {
+                    if (JOptionPane.showConfirmDialog(null, "¿Está seguro de anular el préstamo con código: " + rsPre.getString("codigo") + "?", "Mensaje de Sistema", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+                        if (rsPre.getString("estado").equals("P")) {
+                            objPrestamo.anularPrestamo(rsPre.getInt("codigo"));
+                            JOptionPane.showMessageDialog(null, "Préstamo anulado correctamente");
+                            limpiarTodo();
+                            txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
+                            mostrarFechaLim();
+                            llenarTablaInicial();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "El préstamo que intenta anular no se encuentra vigente", "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El cliente ingresado no tiene préstamos vigentes");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "El cliente ingresado no tiene préstamos vigentes");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());

@@ -15,7 +15,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -65,7 +67,7 @@ public class jdManLibro extends javax.swing.JDialog {
                 while (rs_categorias.next()) {
                     agregarCategoria(rs_categorias.getInt("cod_categoria"));
                 }
-                spnNumPaginas.setValue(rsLibro.getInt("num_paginas"));
+                txtNumPags.setText(rsLibro.getString("num_paginas"));
                 cmbFormato.setSelectedItem(rsLibro.getString("formato"));
                 cmbTipoLibro.setSelectedItem(rsLibro.getString("tipo"));
             }
@@ -89,12 +91,17 @@ public class jdManLibro extends javax.swing.JDialog {
         listAutores.setModel(new DefaultListModel());
         listCategorias.setModel(new DefaultListModel());
         spnEdicion.setValue(0);
-        spnNumPaginas.setValue(0);
+        txtNumPags.setText("");
     }
 
     public void listarTabla() {
         ResultSet rsLibro = null;
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         modelo.addColumn("ISBN");
         modelo.addColumn("Editorial");
         modelo.addColumn("Nombre");
@@ -121,6 +128,7 @@ public class jdManLibro extends javax.swing.JDialog {
                     rsLibro.getString("categorias")});
             }
             tblDatos.setModel(modelo);
+            tblDatos.getTableHeader().setReorderingAllowed(false);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "error al listar en tabla" + e.getMessage());
@@ -250,10 +258,10 @@ public class jdManLibro extends javax.swing.JDialog {
         btnEliminarAutores = new javax.swing.JButton();
         btnAgregarCategorias = new javax.swing.JButton();
         btnEliminarCategorias = new javax.swing.JButton();
-        spnNumPaginas = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cmbTipoLibro = new javax.swing.JComboBox<>();
+        txtNumPags = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
@@ -291,17 +299,13 @@ public class jdManLibro extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Categorias:");
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Autores:");
 
-        listCategorias.setBackground(new java.awt.Color(255, 255, 255));
         listCategorias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         listCategorias.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        listCategorias.setForeground(new java.awt.Color(0, 0, 0));
         jScrollPane3.setViewportView(listCategorias);
 
         btnAgregarAutores.setBackground(new java.awt.Color(243, 226, 210));
@@ -313,10 +317,8 @@ public class jdManLibro extends javax.swing.JDialog {
             }
         });
 
-        listAutores.setBackground(new java.awt.Color(255, 255, 255));
         listAutores.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         listAutores.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        listAutores.setForeground(new java.awt.Color(0, 0, 0));
         jScrollPane2.setViewportView(listAutores);
 
         btnEliminarAutores.setBackground(new java.awt.Color(243, 226, 210));
@@ -347,18 +349,22 @@ public class jdManLibro extends javax.swing.JDialog {
         });
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Tipo de libro:");
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Numero de paginas");
 
-        cmbTipoLibro.setBackground(new java.awt.Color(255, 255, 255));
         cmbTipoLibro.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        cmbTipoLibro.setForeground(new java.awt.Color(0, 0, 0));
         cmbTipoLibro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbTipoLibro.setBorder(null);
+
+        txtNumPags.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        txtNumPags.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtNumPags.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumPagsKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -396,7 +402,7 @@ public class jdManLibro extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbTipoLibro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(spnNumPaginas))))
+                            .addComponent(txtNumPags))))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
@@ -427,7 +433,7 @@ public class jdManLibro extends javax.swing.JDialog {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(spnNumPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNumPags, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbTipoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -453,20 +459,21 @@ public class jdManLibro extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(243, 226, 210));
 
-        txtISBN.setBackground(new java.awt.Color(255, 255, 255));
         txtISBN.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        txtISBN.setForeground(new java.awt.Color(0, 0, 0));
         txtISBN.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtISBN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtISBNActionPerformed(evt);
             }
         });
+        txtISBN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtISBNKeyTyped(evt);
+            }
+        });
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setColumns(20);
         txtNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
         txtNombre.setLineWrap(true);
         txtNombre.setRows(5);
         txtNombre.setWrapStyleWord(true);
@@ -474,21 +481,16 @@ public class jdManLibro extends javax.swing.JDialog {
         jScrollPane1.setViewportView(txtNombre);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Editorial:");
 
-        cmbEditorial.setBackground(new java.awt.Color(255, 255, 255));
         cmbEditorial.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        cmbEditorial.setForeground(new java.awt.Color(0, 0, 0));
         cmbEditorial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbEditorial.setBorder(null);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Nombre:");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("ISBN:");
 
         btnBuscar.setBackground(new java.awt.Color(113, 49, 18));
@@ -501,28 +503,24 @@ public class jdManLibro extends javax.swing.JDialog {
         });
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Idioma:");
 
-        cmbIdioma.setBackground(new java.awt.Color(255, 255, 255));
         cmbIdioma.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        cmbIdioma.setForeground(new java.awt.Color(0, 0, 0));
         cmbIdioma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbIdioma.setBorder(null);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Edicion:");
 
         spnEdicion.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        spnEdicion.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        JFormattedTextField txtField = ((JSpinner.DefaultEditor) spnEdicion.getEditor()).getTextField();
+        txtField.setEditable(false);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Formato:");
 
-        cmbFormato.setBackground(new java.awt.Color(255, 255, 255));
         cmbFormato.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        cmbFormato.setForeground(new java.awt.Color(0, 0, 0));
         cmbFormato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbFormato.setBorder(null);
         cmbFormato.addActionListener(new java.awt.event.ActionListener() {
@@ -612,7 +610,6 @@ public class jdManLibro extends javax.swing.JDialog {
 
         jLabel1.setBackground(new java.awt.Color(255, 173, 133));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("MANTENIMIENTO DE LIBRO");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -843,7 +840,7 @@ public class jdManLibro extends javax.swing.JDialog {
                 if (rs_edit.next() && rs_idioma.next() && rs_format.next() && rs_tipo.next()) {
                     rsGuardar = objLibro.registrarLibro(txtISBN.getText(),
                             rs_edit.getInt("codigo"),
-                            txtNombre.getText(), (int) spnNumPaginas.getValue(), (int) spnEdicion.getValue(),
+                            txtNombre.getText(), Integer.valueOf(txtNumPags.getText()), (int) spnEdicion.getValue(),
                             rs_format.getInt("codigo"), rs_tipo.getInt("codigo"), rs_idioma.getInt("codigo"), listaDeIdAutores, listaDeIdCategorias);;
                     if (rsGuardar.next()) {
                         switch (rsGuardar.getInt("resultado")) {
@@ -936,7 +933,7 @@ public class jdManLibro extends javax.swing.JDialog {
                     }
                     rsEditar = objLibro.actualizarLibro(txtISBN.getText(),
                             rs_edit.getInt("codigo"),
-                            txtNombre.getText(), (int) spnNumPaginas.getValue(), (int) spnEdicion.getValue(),
+                            txtNombre.getText(), Integer.valueOf(txtNumPags.getText()), (int) spnEdicion.getValue(),
                             rs_format.getInt("codigo"), rs_tipo.getInt("codigo"), rs_idioma.getInt("codigo"), listaDeIdAutores, listaDeIdCategorias);
                     
                     if (rsEditar.next()) {
@@ -999,6 +996,26 @@ public class jdManLibro extends javax.swing.JDialog {
         consultarAutores.setVisible(true);
     }//GEN-LAST:event_btnAgregarAutoresActionPerformed
 
+    private void txtISBNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtISBNKeyTyped
+        // TODO add your handling code here:
+        if (txtISBN.getText().length() > 12) {
+            evt.consume();
+        }
+        
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtISBNKeyTyped
+
+    private void txtNumPagsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumPagsKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNumPagsKeyTyped
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarAutores;
     private javax.swing.JButton btnAgregarCategorias;
@@ -1041,9 +1058,9 @@ public class jdManLibro extends javax.swing.JDialog {
     public static javax.swing.JList<String> listAutores;
     public static javax.swing.JList<String> listCategorias;
     private javax.swing.JSpinner spnEdicion;
-    private javax.swing.JSpinner spnNumPaginas;
     private javax.swing.JTable tblDatos;
     private javax.swing.JTextField txtISBN;
     private javax.swing.JTextArea txtNombre;
+    private javax.swing.JTextField txtNumPags;
     // End of variables declaration//GEN-END:variables
 }

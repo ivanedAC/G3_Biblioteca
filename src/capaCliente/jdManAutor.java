@@ -25,6 +25,9 @@ public class jdManAutor extends javax.swing.JDialog {
     public boolean existe() throws Exception{
         return ValidationManager.validarExistencia("autor", "codigo", txtCodigo.getText());
     }
+    public boolean existeNombre() throws Exception{
+        return ValidationManager.validarExistencia("autor", "nombre", txtNombre.getText());
+    }
     private void listarAutores() {
         ResultSet rsAutores = null;
         String sexo = "";
@@ -465,10 +468,14 @@ public class jdManAutor extends javax.swing.JDialog {
                     return;
                 }
                 if (existe()) {
-                    JOptionPane.showMessageDialog(this, "El código del autor ya ha sido registrado");
+                    JOptionPane.showMessageDialog(this, "El código del autor ya se encuentra registrado");
                     return;
                 }
-
+                
+                if (existeNombre()) {
+                    JOptionPane.showMessageDialog(this, "El nombre del autor ya se encuentra registrado");
+                    return;
+                }
                 objAutor.registrarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex() + 1, txtNombre.getText(), sexo);
                 JOptionPane.showMessageDialog(this, "Registro exitoso del autor:  " + "\n" + txtNombre.getText());
                 modificarBotones(true);
@@ -559,7 +566,7 @@ public class jdManAutor extends javax.swing.JDialog {
             } else if (nombre.isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un nombre de Autor");
             } else if (!existe()) {
-                JOptionPane.showMessageDialog(this, "Este autor no existe en nuestra base de datos");
+                JOptionPane.showMessageDialog(this, "Este autor no se encuentra registrado");
             } else {
                 codigo = objAutor.autorNombre(nombreOriginal);
                 txtCodigo.setText(String.valueOf(codigo));
@@ -574,8 +581,20 @@ public class jdManAutor extends javax.swing.JDialog {
                     } else {
                         sexo = 'F';
                     }
+                    ResultSet rsAut = objAutor.listarAutor();
+                    while (rsAut.next()){
+                        if (rsAut.getInt("codigo") == Integer.parseInt(txtCodigo.getText())) {
+                            continue;
+                        }
+                        
+                        if (rsAut.getString("nombre").equals(nombre)) {
+                            JOptionPane.showMessageDialog(null, "El nombre del autor ingresado ya se encuentra registrado");
+                            return;
+                        }
+                    }
+                    
                     objAutor.actualizarAutor(Integer.parseInt(txtCodigo.getText()), cmbPais.getSelectedIndex() + 1, nombre, sexo);
-                    JOptionPane.showMessageDialog(this, "Se ha actualizado el codigo: " + txtCodigo.getText());
+                    JOptionPane.showMessageDialog(this, "Se ha actualizado el autor con código: " + txtCodigo.getText());
                     limpiarControles();
                     listarAutores();
                 } else {

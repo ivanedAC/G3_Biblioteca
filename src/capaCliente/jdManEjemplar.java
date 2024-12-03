@@ -59,8 +59,12 @@ public class jdManEjemplar extends javax.swing.JDialog {
 
     public void listarEjemplaresSedeInd() {
         ResultSet rsEjem = null;
-        String asignacion = "";
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         modelo.addColumn("Codigo");
         modelo.addColumn("Libro");
         modelo.addColumn("ISBN");
@@ -68,22 +72,36 @@ public class jdManEjemplar extends javax.swing.JDialog {
         modelo.addColumn("Sede");
         modelo.addColumn("Estado");
         tblEjemplaresSede.setModel(modelo);
+        tblEjemplaresSede.getTableHeader().setReorderingAllowed(false);
 
         try {
             rsEjem = objEjemplar.listarEjemplarSedeIndiv();
             while (rsEjem.next()) {
-                if (rsEjem.getString("estado").equals("D")) {
-                    asignacion = "Disponible";
-                } else {
-                    asignacion = "No Disponible";
-                }
+                String estado = "";
+
+                    switch (rsEjem.getString("estado")) {
+                        case "P":
+                            estado = "Prestado";
+                            break;
+                        case "X":
+                            estado = "Dañado";
+                            break;
+                        case "D":
+                            estado = "Disponible";
+                            break;
+                        case "R":
+                            estado = "Reservado";
+                            break;
+                        default:
+                            throw new Exception("Error al obtener estado");
+                    }
                 modelo.addRow(new Object[]{
                     rsEjem.getString("codigo"),
                     rsEjem.getString("libro"),
                     rsEjem.getString("isbn"),
                     rsEjem.getString("editorial"),
                     rsEjem.getString("sede"),
-                    asignacion
+                    estado
                 });
             }
         } catch (Exception e) {
