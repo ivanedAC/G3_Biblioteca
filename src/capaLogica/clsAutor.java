@@ -42,7 +42,7 @@ public class clsAutor {
 
   
     public ResultSet verificar(int cod) throws Exception {
-        strSQL = "select cod_categoria, isbn from libro_categoria where cod_categoria=" + cod;
+        strSQL = "select * from autor_libro where autorcodigo=" + cod;
         try {
             rs = objConectar.consultar(strSQL);
             return rs;
