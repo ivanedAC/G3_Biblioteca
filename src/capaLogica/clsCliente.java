@@ -15,6 +15,7 @@ public class clsCliente {
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
+    clsSede objSede = new clsSede();
 
     public boolean verificarPrestamoCliente(int ide) throws Exception {
         strSQL = "select * from cliente cl inner join prestamo pr on pr.cod_cliente=cl.codigo where cl.codigo=" + ide;
@@ -165,7 +166,7 @@ public class clsCliente {
         }
     }
     
-    public ResultSet listarClientesNConPrestamo(String nom, String ape, String num_doc, int codSedeUsu) throws Exception {
+    public ResultSet listarClientesNConPrestamo(String nom, String ape, String num_doc) throws Exception {
         strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, \n" +
                 "	Pe.nombres, (Pe.ape_paterno || ' ' || Pe.ape_materno) as apellidos,\n" +
                 "    Pe.sexo, Pe.f_nacimiento, Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n" +
@@ -176,7 +177,7 @@ public class clsCliente {
                 "	inner join prestamo pr on pr.cod_cliente = Cl.codigo\n" +
                 "    where Pe.cod_tipo_doc !=2 and upper(pe.nombres) like upper('%"+nom+"%') and "
                 + "upper(Pe.ape_paterno || ' ' || Pe.ape_materno) like upper('%"+ape+"%') and "
-                + "Pe.numero_documento like '%"+num_doc+"%' and pr.estado='P'  and pr.cod_sede="+codSedeUsu+" "
+                + "Pe.numero_documento like '%"+num_doc+"%' and pr.estado='P'  and pr.cod_sede="+objSede.obtenerSede(clsUsuarioSTATIC.sede)+" "
                 + "order by 1";
         try {
             rs = objConectar.consultar(strSQL);
@@ -186,7 +187,7 @@ public class clsCliente {
         }
     }
     
-    public ResultSet listarClientesNConReserva(String nom, String ape, String num_doc, int codSedeUsu) throws Exception {
+    public ResultSet listarClientesNConReserva(String nom, String ape, String num_doc) throws Exception {
         strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, \n" +
                 "	Pe.nombres, (Pe.ape_paterno || ' ' || Pe.ape_materno) as apellidos,\n" +
                 "    Pe.sexo, Pe.f_nacimiento, Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n" +
@@ -197,7 +198,7 @@ public class clsCliente {
                 "	inner join reserva re on re.cod_cliente = Cl.codigo\n" +
                 "    where Pe.cod_tipo_doc !=2 and upper(pe.nombres) like upper('%"+nom+"%') and "
                 + "upper(Pe.ape_paterno || ' ' || Pe.ape_materno) like upper('%"+ape+"%') and "
-                + "Pe.numero_documento like '%"+num_doc+"%' and re.estado='P' and re.cod_sede="+codSedeUsu+" " +
+                + "Pe.numero_documento like '%"+num_doc+"%' and re.estado='P' and re.cod_sede="+objSede.obtenerSede(clsUsuarioSTATIC.sede)+" " +
                 "    order by 1";
         try {
             rs = objConectar.consultar(strSQL);
@@ -245,7 +246,7 @@ public class clsCliente {
         }
     }    
     
-    public ResultSet listarClientesJConPrestamo(String nom, String ape, String num_doc, int codSedeUsu) throws Exception {
+    public ResultSet listarClientesJConPrestamo(String nom, String ape, String num_doc) throws Exception {
         strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, \n" +
                 "       Pe.nombres, Pe.razon_social,\n" +
                 "       Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n" +
@@ -257,7 +258,7 @@ public class clsCliente {
                 "where Pe.cod_tipo_doc = 2 \n" +
                 "  and upper(coalesce(pe.nombres, '')) like upper('%"+nom+"%') \n" +
                 "  and upper(coalesce(Pe.razon_social, '')) like upper('%"+ape+"%') \n" +
-                "  and coalesce(Pe.numero_documento, '') like '%"+num_doc+"%' and pr.estado='P' and pr.cod_sede="+codSedeUsu+" " +
+                "  and coalesce(Pe.numero_documento, '') like '%"+num_doc+"%' and pr.estado='P' and pr.cod_sede="+objSede.obtenerSede(clsUsuarioSTATIC.sede)+" " +
                 "order by 1;";
         try {
             rs = objConectar.consultar(strSQL);
@@ -267,7 +268,7 @@ public class clsCliente {
         }
     }
     
-    public ResultSet listarClientesJConReserva(String nom, String ape, String num_doc, int codSedeUsu) throws Exception {
+    public ResultSet listarClientesJConReserva(String nom, String ape, String num_doc) throws Exception {
         strSQL = "select Cl.codigo, Pa.nombre as pais, TD.nombre as tipo_documento, Pe.numero_documento as numero_documento, \n" +
                 "       Pe.nombres, Pe.razon_social,\n" +
                 "       Pe.direccion, Pe.telefono, Pe.correo, Cl.estado\n" +
@@ -278,7 +279,7 @@ public class clsCliente {
                 "inner join reserva re on re.cod_cliente = Cl.codigo\n" +
                 "    where Pe.cod_tipo_doc !=2 and upper(pe.nombres) like upper('%"+nom+"%') and "
                 + "upper(Pe.ape_paterno || ' ' || Pe.ape_materno) like upper('%"+ape+"%') and "
-                + "Pe.numero_documento like '%"+num_doc+"%' and re.estado='P' and re.cod_sede="+codSedeUsu+" " +
+                + "Pe.numero_documento like '%"+num_doc+"%' and re.estado='P' and re.cod_sede="+objSede.obtenerSede(clsUsuarioSTATIC.sede)+" " +
                 "    order by 1";
         try {
             rs = objConectar.consultar(strSQL);
