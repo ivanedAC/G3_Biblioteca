@@ -42,7 +42,7 @@ public class jdMnuReportes extends javax.swing.JDialog {
         jdFinal.setVisible(false);
         lblCodigo.setVisible(false);
         cmbAuxiliar.setVisible(false);
-        cmbReporte.setSelectedIndex(0);
+        cmbReporte.setSelectedItem(0);
         contenedorInformacion.setPreferredSize(new Dimension(843, 111));
         contenedorInformacion.setMinimumSize(new Dimension(843, 111));
         contenedorInformacion.setMaximumSize(new Dimension(843, 111));
@@ -68,7 +68,7 @@ public class jdMnuReportes extends javax.swing.JDialog {
 
     private void setFechas() {
         Calendar selectedCalendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         selectedCalendar.setTime(jdInicio.getDate());
         format = sdf.format(selectedCalendar.getTime());
         selectedCalendar.setTime(jdFinal.getDate());
@@ -78,6 +78,10 @@ public class jdMnuReportes extends javax.swing.JDialog {
     private void validarFechas() {
         Date fechaInicial = jdInicio.getDate();
         Date fechaFinal = jdFinal.getDate();
+                if (format == null && format2 == null) {
+            JOptionPane.showMessageDialog(rootPane, "Debe escoger una fecha para este reporte");
+            return;
+        }
 
         if (fechaFinal != null && fechaInicial == null) {
             jdInicio.setDate(fechaFinal);
@@ -90,9 +94,17 @@ public class jdMnuReportes extends javax.swing.JDialog {
     }
 
     private void reporte() {
-        int opcion = cmbReporte.getSelectedIndex() + 1;
+        int opcion = cmbReporte.getSelectedIndex();
 
         switch (opcion) {
+            case 0:
+                lblInicio.setVisible(true);
+                lblFinal.setVisible(true);
+                jdInicio.setVisible(true);
+                jdFinal.setVisible(true);
+                lblCodigo.setVisible(false);
+                cmbAuxiliar.setVisible(false);
+                break;
             case 1:
                 lblInicio.setVisible(true);
                 lblFinal.setVisible(true);
@@ -102,10 +114,10 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 cmbAuxiliar.setVisible(false);
                 break;
             case 2:
-                lblInicio.setVisible(true);
-                lblFinal.setVisible(true);
-                jdInicio.setVisible(true);
-                jdFinal.setVisible(true);
+                lblInicio.setVisible(false);
+                lblFinal.setVisible(false);
+                jdInicio.setVisible(false);
+                jdFinal.setVisible(false);
                 lblCodigo.setVisible(false);
                 cmbAuxiliar.setVisible(false);
                 break;
@@ -130,18 +142,18 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 lblFinal.setVisible(false);
                 jdInicio.setVisible(false);
                 jdFinal.setVisible(false);
-                lblCodigo.setVisible(false);
-                cmbAuxiliar.setVisible(false);
+                lblCodigo.setText("Selecciona proveedor");
+                cmbAuxiliar.addItem("Proveedor 1");
+                lblCodigo.setVisible(true);
+                cmbAuxiliar.setVisible(true);
                 break;
             case 6:
                 lblInicio.setVisible(false);
                 lblFinal.setVisible(false);
                 jdInicio.setVisible(false);
                 jdFinal.setVisible(false);
-                lblCodigo.setText("Selecciona proveedor");
-                cmbAuxiliar.addItem("Proveedor 1");
-                lblCodigo.setVisible(true);
-                cmbAuxiliar.setVisible(true);
+                lblCodigo.setVisible(false);
+                cmbAuxiliar.setVisible(false);
                 break;
             case 7:
                 lblInicio.setVisible(false);
@@ -152,14 +164,6 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 cmbAuxiliar.setVisible(false);
                 break;
             case 8:
-                lblInicio.setVisible(false);
-                lblFinal.setVisible(false);
-                jdInicio.setVisible(false);
-                jdFinal.setVisible(false);
-                lblCodigo.setVisible(false);
-                cmbAuxiliar.setVisible(false);
-                break;
-            case 9:
                 lblInicio.setVisible(true);
                 lblFinal.setVisible(true);
                 jdInicio.setVisible(true);
@@ -167,7 +171,7 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 lblCodigo.setVisible(false);
                 cmbAuxiliar.setVisible(false);
                 break;
-            case 10:
+            case 9:
                 break;
             default:
                 throw new AssertionError();
@@ -395,37 +399,37 @@ public class jdMnuReportes extends javax.swing.JDialog {
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         int opcion = cmbReporte.getSelectedIndex();
-
+        setFechas();
         switch (opcion) {
-            case 1:
+            case 0:
                 visualizarReporteConFechas("rpt1.jasper");
                 break;
-            case 2:
+            case 1:
                 visualizarReporteConFechas("rpt2.jasper");
                 break;
-            case 3:
+            case 2:
                 visualizarReporte("rpt3.jasper");
                 break;
-            case 4:
+            case 3:
                 visualizarReporte("rpt4.jasper");
                 break;
-            case 5:
+            case 4:
                 visualizarReporte("rpt5.jasper");
                 break;
-            case 6:
+            case 5:
                 visualizarReporte1("rpt6.jasper");
                 break;
-            case 7:
+            case 6:
                 visualizarReporte("rpt7.jasper");
                 break;
-            case 8:
+            case 7:
                 visualizarReporte("rpt8.jasper");
                 break;
-            case 9:
+            case 8:
                 visualizarReporteConFechas("rpt9.jasper");
                 break;
-            case 10:
-                JOptionPane.showMessageDialog(rootPane, "En construcción");
+            case 9:
+                JOptionPane.showMessageDialog(rootPane, "En construcción...");
                 break;
             default:
                 throw new AssertionError();

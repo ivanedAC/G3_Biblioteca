@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptLibrosDañados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ae96397-d532-422a-986e-4e0bbd48a137">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+    ejp.isbn,
+    lb.nombre AS libro,
+    CASE
+        WHEN dd.cod_sancion = 2 THEN 'Dañado'
+        ELSE ''
+    END AS estado
+FROM
+    detalle_devolucion dd
+INNER JOIN
+    ejemplar ejp ON dd.cod_ejemplar = ejp.codigo
+INNER JOIN
+    libro lb ON ejp.isbn = lb.isbn
+where dd.cod_sancion = 2]]>
+	</queryString>
+	<field name="isbn" class="java.lang.String"/>
+	<field name="libro" class="java.lang.String"/>
+	<field name="estado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="76" y="16" width="400" height="42" uuid="685c85da-391e-4cac-8271-3fb2536dac35"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE LIBROS DAÑADOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="0" width="145" height="20" uuid="4de33d24-eb60-45b3-a636-813bf6602458"/>
+				<text><![CDATA[ISBN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="0" width="148" height="20" uuid="a2a064d0-0c98-4c53-8bf3-04f559b7494d"/>
+				<text><![CDATA[Libro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="424" y="0" width="92" height="20" uuid="36ef0452-7e3f-4e3e-957e-2453216796d1"/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="68" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="0" width="145" height="20" uuid="474745cc-96b2-44ee-ab29-f0d8414837ec"/>
+				<textFieldExpression><![CDATA[$F{isbn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="0" width="148" height="50" uuid="960704db-c39a-4cbc-8165-ada078686e1b"/>
+				<textFieldExpression><![CDATA[$F{libro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="424" y="0" width="92" height="20" uuid="876c5280-cec8-4af3-b2dd-0f71e191f492"/>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="45" y="20" width="100" height="20" uuid="6407805c-796c-4d28-8a72-074a9d61ff08"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="396" y="20" width="80" height="20" uuid="163202c0-7291-42b2-8e6a-016f2796db0f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="476" y="20" width="40" height="20" uuid="3661a12d-f3a4-4fbd-8212-d767c094c8e9"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>

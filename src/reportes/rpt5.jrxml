@@ -14,12 +14,41 @@
 from orden_compra oc inner join proveedor pv on oc.cod_proveedor = pv.codigo
 inner join detalle_compra dc on oc.num_orden = dc.num_orden
 inner join persona pr on pv.cod_persona = pr.codigo
-where pr.razon_social = $P{parRazonSocial}]]>
+where pr.razon_social = $P{parRazonSocial}
+group by 1,2
+order by 1 asc]]>
 	</queryString>
 	<field name="num_orden" class="java.lang.Integer"/>
 	<field name="razon_social" class="java.lang.String"/>
 	<field name="total" class="java.math.BigDecimal"/>
 	<field name="fechaorden" class="java.sql.Date"/>
+	<group name="group_num_orden">
+		<groupExpression><![CDATA[$F{num_orden}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement x="19" y="19" width="100" height="20" uuid="5c4fbdc6-e767-4924-935e-ee64ca4917e8"/>
+					<textFieldExpression><![CDATA[$F{num_orden}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="142" y="19" width="100" height="20" uuid="d5506d3b-3639-4261-82ad-6c00273beafe"/>
+					<textFieldExpression><![CDATA[$F{razon_social}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<group name="group_razon">
+		<groupExpression><![CDATA[$F{razon_social}]]></groupExpression>
+		<groupHeader>
+			<band height="15"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -38,15 +67,7 @@ where pr.razon_social = $P{parRazonSocial}]]>
 		<band height="12" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
-			<staticText>
-				<reportElement x="28" y="2" width="100" height="20" uuid="0e26b35f-02ba-43d8-ace7-17a9e6a2f50a"/>
-				<text><![CDATA[Número de Orden]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="166" y="2" width="100" height="20" uuid="9a7ecb84-ebb4-4795-94f8-ea529ebce433"/>
-				<text><![CDATA[Razón Social]]></text>
-			</staticText>
+		<band height="33" splitType="Stretch">
 			<staticText>
 				<reportElement x="313" y="2" width="100" height="20" uuid="df2820a1-0020-4464-a2c5-cf1fe22dce45"/>
 				<text><![CDATA[Total]]></text>
@@ -58,23 +79,15 @@ where pr.razon_social = $P{parRazonSocial}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="258" splitType="Stretch">
+		<band height="168" splitType="Stretch">
 			<subreport>
-				<reportElement x="25" y="110" width="200" height="100" uuid="9f34feb2-2b24-4ac6-a411-a8c6ae27a039"/>
+				<reportElement x="11" y="56" width="200" height="100" uuid="9f34feb2-2b24-4ac6-a411-a8c6ae27a039"/>
 				<subreportParameter name="parRazonSocial">
 					<subreportParameterExpression><![CDATA[$F{razon_social}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt5_subreport1.jasper"]]></subreportExpression>
 			</subreport>
-			<textField>
-				<reportElement x="28" y="20" width="100" height="20" uuid="66c683e5-0893-4d85-8acb-834429392a64"/>
-				<textFieldExpression><![CDATA[$F{num_orden}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="166" y="20" width="100" height="20" uuid="a2a4eacb-0e36-43d1-8bf7-83b09c43df0f"/>
-				<textFieldExpression><![CDATA[$F{razon_social}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="313" y="20" width="100" height="20" uuid="0891363f-f5e7-437e-801a-020b2d5c867f"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
@@ -86,7 +99,7 @@ where pr.razon_social = $P{parRazonSocial}]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="37" splitType="Stretch"/>
+		<band height="11" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
