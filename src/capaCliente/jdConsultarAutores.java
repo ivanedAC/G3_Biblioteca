@@ -81,6 +81,7 @@ public class jdConsultarAutores extends javax.swing.JDialog {
         model.addColumn("Código");
         model.addColumn("Nombre");
         tblDatos.setModel(model);
+        setTitle("Menú - Consultar Autores");
     }
 
     /**

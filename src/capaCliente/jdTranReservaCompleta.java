@@ -25,20 +25,23 @@ import javax.swing.table.DefaultTableModel;
  * @author laboratorio_computo
  */
 public class jdTranReservaCompleta extends javax.swing.JDialog {
-    
+
     clsPrestamo objPrestamo = new clsPrestamo();
     clsCliente objCliente = new clsCliente();
     clsEjemplar objEjem = new clsEjemplar();
     clsTipoDocumento objTDoc = new clsTipoDocumento();
     clsReserva objReserva = new clsReserva();
+
     /**
      * Creates new form jdTranReservaCompleta
      */
     public jdTranReservaCompleta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Transacción Reserva Completa");
+
     }
-    
+
     private void llenarTablaInicial() {
         DefaultTableModel modelo = new DefaultTableModel() {
             @Override
@@ -56,13 +59,12 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
         tblDetalles.setModel(modelo);
         tblDetalles.getTableHeader().setReorderingAllowed(false);
     }
-    
+
     private void limpiarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) tblDetalles.getModel();
         modelo.setRowCount(0);
     }
 
-    
     private void mostrarDatosCliente(Integer cod) throws Exception {
         ResultSet rsCli = objCliente.buscarClientePorCodigo(cod);
         if (rsCli.next()) {
@@ -139,7 +141,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    
+
     private void agregarEjemplarParaClienteReserva(String isbn) throws Exception {
         try {
             ResultSet rsReserva = objReserva.obtenerEjemplarReservado(jdBuscarClienteConReservas.codCli);
@@ -200,16 +202,16 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
                         }
 
                         modelo.addRow(new Object[]{
-                            rsEjems.getString("codigo"), 
-                            rsEjems.getString("libro"), 
-                            rsEjems.getString("isbn"), 
-                            rsEjems.getString("editorial"), 
-                            rsEjems.getString("sede"), 
+                            rsEjems.getString("codigo"),
+                            rsEjems.getString("libro"),
+                            rsEjems.getString("isbn"),
+                            rsEjems.getString("editorial"),
+                            rsEjems.getString("sede"),
                             estado
                         });
 
-                        JOptionPane.showMessageDialog(null, "Ejemplar reservado agregado correctamente.", 
-                            "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Ejemplar reservado agregado correctamente.",
+                                "Mensaje de Sistema", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     }
                 }
@@ -222,19 +224,19 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
     }
 
     private void eliminarEjemplar(int cod, int codCli) {
-        int codEjem=0;
+        int codEjem = 0;
         try {
             ResultSet rs = objReserva.obtenerEjemplarReservado(codCli);
-            if (rs.next()) {                
+            if (rs.next()) {
                 codEjem = rs.getInt("cod_ejemplar");
             }
-            
+
             DefaultTableModel modelo = (DefaultTableModel) tblDetalles.getModel();
             for (int i = 0; i < tblDetalles.getRowCount(); i++) {
                 if (Integer.parseInt(String.valueOf(tblDetalles.getValueAt(i, 0))) == cod) {
                     if (cod != codEjem) {
                         modelo.removeRow(i);
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(this, "No se puede eliminar el ejemplar reservado",
                                 "Mensaje de sistema", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -278,7 +280,6 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
         lblISBNEjem.setText("");
         lblNomEjem.setText("");
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -855,11 +856,11 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
                                     break;
                                 }
                             }
-                            
+
                             ResultSet rsReserva = objReserva.obtenerEjemplarReservado(Integer.parseInt(lblCodCli.getText()));
-                            if (rsReserva.next()) {                                
+                            if (rsReserva.next()) {
                                 codReserva = rsReserva.getInt("codigo");
-                            }else{
+                            } else {
                                 codReserva = 0;
                             }
 
@@ -868,7 +869,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
                                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                     String fechita = sdf.format(calendarFLim.getCalendar().getTime());
                                     objPrestamo.registrarPrestamo_V2(Integer.valueOf(txtCodPre.getText()),
-                                        Integer.valueOf(lblCodCli.getText()), fechita, spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles, codReserva);
+                                            Integer.valueOf(lblCodCli.getText()), fechita, spnHora.getValue() + ":" + spnMin.getValue(), tblDetalles, codReserva);
                                     JOptionPane.showMessageDialog(null, "Préstamo registrado exitosamente");
                                     limpiarTodo();
                                     txtCodPre.setText(String.valueOf(objPrestamo.generarCodPrestamo()));
@@ -932,7 +933,7 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
                 mostrarDatosCliente(objJd.codCli);
                 ResultSet rs = objReserva.obtenerEjemplarReservado(objJd.codCli);
 
-                if (rs.next()) {                
+                if (rs.next()) {
                     isbnReser = rs.getString("isbn");
                     agregarEjemplarParaClienteReserva(isbnReser);
                 } else {
@@ -1035,7 +1036,6 @@ public class jdTranReservaCompleta extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarEjem4;

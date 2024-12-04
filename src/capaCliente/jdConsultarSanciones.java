@@ -25,6 +25,7 @@ public class jdConsultarSanciones extends javax.swing.JDialog {
     public jdConsultarSanciones(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Consultar Sanciones");
     }
 
     private void listarSanciones() throws Exception {

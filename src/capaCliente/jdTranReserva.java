@@ -43,6 +43,8 @@ public class jdTranReserva extends javax.swing.JDialog {
     public jdTranReserva(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Transacción Reserva");
+
     }
 
     private void llenarTablaInicial() {
@@ -62,7 +64,7 @@ public class jdTranReserva extends javax.swing.JDialog {
         tblDetalles.setModel(modelo);
         tblDetalles.getTableHeader().setReorderingAllowed(false);
     }
-    
+
     private void limpiarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) tblDetalles.getModel();
         modelo.setRowCount(0);
@@ -874,7 +876,7 @@ public class jdTranReserva extends javax.swing.JDialog {
                 agregarEjemplar(isbn);
                 fechaStimada(isbn);
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(jdTranReserva.class.getName()).log(Level.SEVERE, null, ex);
         }

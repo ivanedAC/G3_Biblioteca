@@ -31,7 +31,7 @@ public class jdBuscarProveedor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarProveedorJuridicos();
-        setTitle("Busqueda de un proveedor");
+        setTitle("Menú - Busqueda de un proveedor");
 
         rbtnPJ.setSelected(true);
     }

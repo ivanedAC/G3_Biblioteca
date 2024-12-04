@@ -38,6 +38,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
     public jdTranDevolucion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Transacción Devolución");
     }
 
     private void llenarTablaInicial() {

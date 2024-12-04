@@ -41,6 +41,7 @@ public class jdIniciarSesion extends javax.swing.JDialog {
     public jdIniciarSesion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Inicio de Sesión");
 
     }
 

@@ -33,7 +33,7 @@ public class jdBuscarClienteConPrestamos extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarClientesNaturales();
-
+        setTitle("Menú - Buscar Cliente con Préstamos");
         rbtnPN.setSelected(true);
     }
 

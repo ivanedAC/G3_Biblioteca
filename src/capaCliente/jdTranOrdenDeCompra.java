@@ -38,6 +38,8 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
     public jdTranOrdenDeCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Transacción Orden de Compra");
+
     }
 
     private void llenarTablaInicial() {
@@ -793,7 +795,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         try {
             if (!isbn.equals("")) {
                 cantidad = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese la cantidad a comprar"));
-                
+
                 if (cantidad <= 0) {
                     throw new NumberFormatException();
                 }

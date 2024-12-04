@@ -93,7 +93,7 @@ public class jdManAutor extends javax.swing.JDialog {
     public jdManAutor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setTitle("Mantenimiento Autor");
+        setTitle("Menú - Mantenimiento Autor");
     }
     public void modificarBotones(boolean activar){
         btnBuscar.setEnabled(activar);

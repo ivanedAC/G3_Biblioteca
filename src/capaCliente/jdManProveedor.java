@@ -39,7 +39,7 @@ public class jdManProveedor extends javax.swing.JDialog {
     public jdManProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setTitle("Mantenimiento Proveedor");
+        setTitle("Menú - Mantenimiento Proveedor");
         listarProveedorJuridicos();
         listarPaises();
         listartipoDocumento();

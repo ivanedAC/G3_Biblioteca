@@ -38,6 +38,7 @@ public class jdMenuLibros extends javax.swing.JDialog {
     public jdMenuLibros(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Libros");
 
     }
 

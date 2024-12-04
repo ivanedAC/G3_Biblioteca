@@ -21,7 +21,7 @@ public class jdManEditorial extends javax.swing.JDialog {
 
     public jdManEditorial(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        setTitle("Mantenimiento de editorial");
+        setTitle("Menú - Mantenimiento de editorial");
         initComponents();
     }
 

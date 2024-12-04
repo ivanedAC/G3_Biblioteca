@@ -133,6 +133,7 @@ public class jdAgregarEjemplar extends javax.swing.JDialog {
         listarTabla();
         rbtnNombre.setSelected(true);
         tblDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        setTitle("Menú - Agregar Ejemplar");
     }
 
     /**

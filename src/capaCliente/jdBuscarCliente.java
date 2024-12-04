@@ -30,7 +30,7 @@ public class jdBuscarCliente extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarClientesNaturales();
-
+        setTitle("Menú - Buscar Cliente");
         rbtnPN.setSelected(true);
     }
 

@@ -127,6 +127,7 @@ public class jdAgregarLibro extends javax.swing.JDialog {
         initComponents();
         listarTabla();
         rbtnNombre.setSelected(true);
+        setTitle("Menú - Agregar Libro");
     }
 
     /**

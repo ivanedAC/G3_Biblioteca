@@ -235,6 +235,7 @@ public class jdManLibro extends javax.swing.JDialog {
         listCategorias.setModel(modelo);
         DefaultListModel modelo2 = new DefaultListModel();
         listAutores.setModel(modelo2);
+        setTitle("Menú - Mantenimiento Libro");
     }
 
     /**

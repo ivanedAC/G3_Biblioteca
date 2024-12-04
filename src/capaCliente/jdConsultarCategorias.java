@@ -83,6 +83,7 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
         model.addColumn("Código");
         model.addColumn("Nombre");
         tblDatos.setModel(model);
+        setTitle("Menú - Consultar Categorías");
     }
 
     /**

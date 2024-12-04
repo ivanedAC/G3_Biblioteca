@@ -39,7 +39,7 @@ public class jdManCliente extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        setTitle("Mantenimiento Cliente");
+        setTitle("Menú - Mantenimiento Cliente");
         listarPaises();
         listartipoDocumento();
         listarClientesNaturales();

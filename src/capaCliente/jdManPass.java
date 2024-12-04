@@ -27,6 +27,7 @@ public class jdManPass extends javax.swing.JDialog {
     public jdManPass(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Mantenimiento Contraseña");
     }
 
     private void listarUsuarios() throws SQLException, Exception {

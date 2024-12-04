@@ -32,7 +32,7 @@ public class jdBuscarClienteConReservas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarClientesNaturales();
-
+        setTitle("Menú - Buscar Cliente con Reservas");
         rbtnPN.setSelected(true);
     }
 

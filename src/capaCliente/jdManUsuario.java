@@ -43,6 +43,7 @@ public class jdManUsuario extends javax.swing.JDialog {
     public jdManUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Mantenimiento Usuario");
     }
 
     private void showError(String mensaje) {

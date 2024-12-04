@@ -38,6 +38,8 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     public jdTranPrestamo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Menú - Transacción Préstamo");
+
     }
 
     private void llenarTablaInicial() {
