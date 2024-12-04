@@ -155,6 +155,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lblCargo = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblSede = new javax.swing.JLabel();
         pnlFondo = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -207,7 +209,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         btnLibro.setBackground(new java.awt.Color(230, 182, 139));
         btnLibro.setForeground(new java.awt.Color(113, 49, 18));
-        btnLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/libro(1).png"))); // NOI18N
+        btnLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/libro(2).png"))); // NOI18N
         btnLibro.setText("LIBRO");
         btnLibro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
         btnLibro.setFocusCycleRoot(true);
@@ -293,7 +295,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnProveedor.setBackground(new java.awt.Color(230, 182, 139));
         btnProveedor.setForeground(new java.awt.Color(113, 49, 18));
         btnProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/proveedor(1).png"))); // NOI18N
-        btnProveedor.setText("Proveedor");
+        btnProveedor.setText("PROVEEDOR");
         btnProveedor.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
         btnProveedor.setFocusable(false);
         btnProveedor.setHideActionText(true);
@@ -309,8 +311,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         btnLibrosBuscar.setBackground(new java.awt.Color(230, 182, 139));
         btnLibrosBuscar.setForeground(new java.awt.Color(113, 49, 18));
-        btnLibrosBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/proveedor(1).png"))); // NOI18N
-        btnLibrosBuscar.setText("Libros");
+        btnLibrosBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/libro(2).png"))); // NOI18N
+        btnLibrosBuscar.setText("MENU LIBROS");
         btnLibrosBuscar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(113, 49, 18), 2, true));
         btnLibrosBuscar.setFocusable(false);
         btnLibrosBuscar.setHideActionText(true);
@@ -337,7 +339,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 729, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(355, Short.MAX_VALUE))
+                .addContainerGap(475, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,24 +356,34 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/chambeador.png"))); // NOI18N
         jLabel3.setText("Usuario:");
 
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/rool.png"))); // NOI18N
         jLabel4.setText("Cargo:");
 
         lblCargo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/biblioteca-publica.png"))); // NOI18N
+        jLabel5.setText("Sede");
+
+        lblSede.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(63, 63, 63)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(104, 104, 104)
+                .addGap(90, 90, 90)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(405, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(lblSede, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,14 +391,16 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSede, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(19, 19, 19))))
         );
 
@@ -396,7 +410,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 946, Short.MAX_VALUE)
+            .addGap(0, 1066, Short.MAX_VALUE)
         );
         pnlFondoLayout.setVerticalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -607,6 +621,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         frmLogin.setVisible(true);
         lblUser.setText(clsUsuarioSTATIC.nombre_completo);
         lblCargo.setText(clsUsuarioSTATIC.cargo);
+        lblSede.setText(clsUsuarioSTATIC.sede);
         switch (lblCargo.getText()) {
             case "Recepcionista":
                 accesoRe();
@@ -812,6 +827,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -819,6 +835,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblCargo;
+    private javax.swing.JLabel lblSede;
     private javax.swing.JLabel lblUser;
     private javax.swing.JMenu mnuAcercaDe;
     private javax.swing.JMenuItem mnuCerrarSesion;
