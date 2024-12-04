@@ -10,13 +10,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
  * @author Edgar
  */
 public class ValidationManager {
-
+    public static final String RUTA_IMAGEN = "src//recursos//";
     public static boolean esMayorDeEdad(Date fechaNacimiento) {
         Calendar fechaActual = Calendar.getInstance();
 
@@ -80,6 +82,22 @@ public class ValidationManager {
             return cantidad > 0;
         } catch (Exception e) {
             throw new Exception("Error al validar la existencia: " + e.getMessage());
+        }
+    }
+    public static void setImageInLabel(JLabel label, String imageName) {
+        try {
+            // Carga la imagen desde la ruta especificada
+            ImageIcon imageIcon = new ImageIcon(RUTA_IMAGEN+imageName);
+
+            // Ajusta el tamaño de la imagen al tamaño del JLabel
+            Image image = imageIcon.getImage();
+            Image scaledImage = image.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+
+            // Establece la imagen ajustada como ícono del JLabel
+            label.setIcon(new ImageIcon(scaledImage));
+        } catch (Exception e) {
+            // Manejo de errores en caso de que la imagen no pueda ser cargada
+            System.err.println("Error al cargar la imagen: " + e.getMessage());
         }
     }
     
