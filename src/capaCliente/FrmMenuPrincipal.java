@@ -9,6 +9,7 @@ import capaLogica.clsUsuarioSTATIC;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -35,6 +36,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         pnlFondo.revalidate();  // Refresca el panel
         pnlFondo.repaint();     // Fuerza la actualización del fondo
         setTitle("Sistema Biblioteca - Ricardo Palma");
+        this.setIconImage(getIconImage());
+    }
+    
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos/iconoPrincipal.png"));
+        return retValue;
     }
 
     public class FondoPanel extends JPanel {
