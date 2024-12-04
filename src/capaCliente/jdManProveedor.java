@@ -85,7 +85,12 @@ public class jdManProveedor extends javax.swing.JDialog {
     public void listarProveedorNaturales() {
         ResultSet rsClientesN = null;
         String sexo = "";
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         modelo.addColumn("Codigo");
         modelo.addColumn("Pais");
         modelo.addColumn("Tipo doc");
@@ -126,6 +131,7 @@ public class jdManProveedor extends javax.swing.JDialog {
                 modelo.addRow(datos[0]);
             }
             tblPersonaNatural.setModel(modelo);
+            tblPersonaNatural.getTableHeader().setReorderingAllowed(false);
             adjustColumnSizes(tblPersonaNatural);
 
         } catch (Exception e) {
@@ -135,7 +141,12 @@ public class jdManProveedor extends javax.swing.JDialog {
 
     public void listarProveedorJuridicos() {
         ResultSet rsClientesJ = null;
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
 
         // Definir las columnas del modelo
         modelo.addColumn("Código");
@@ -176,6 +187,7 @@ public class jdManProveedor extends javax.swing.JDialog {
 
             // Establecer el modelo en la tabla
             tblPersonaNatural.setModel(modelo);
+            tblPersonaNatural.getTableHeader().setReorderingAllowed(false);
 
             // Ajustar el tamaño de las columnas al contenido
             adjustColumnSizes(tblPersonaNatural);
