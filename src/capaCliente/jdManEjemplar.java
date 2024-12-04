@@ -5,6 +5,8 @@
 package capaCliente;
 
 import capaLogica.clsEjemplar;
+import capaLogica.clsPrestamo;
+import capaLogica.clsReserva;
 import capaLogica.clsSede;
 import java.sql.ResultSet;
 import java.util.logging.Level;
@@ -21,6 +23,8 @@ public class jdManEjemplar extends javax.swing.JDialog {
 
     clsSede objSede = new clsSede();
     clsEjemplar objEjemplar = new clsEjemplar();
+    clsReserva objReserva = new clsReserva();
+    clsPrestamo objPrestamo = new clsPrestamo();
 
     public jdManEjemplar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -59,9 +63,9 @@ public class jdManEjemplar extends javax.swing.JDialog {
 
     public void listarEjemplaresSedeInd() {
         ResultSet rsEjem = null;
-        DefaultTableModel modelo = new DefaultTableModel(){
+        DefaultTableModel modelo = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
@@ -79,22 +83,22 @@ public class jdManEjemplar extends javax.swing.JDialog {
             while (rsEjem.next()) {
                 String estado = "";
 
-                    switch (rsEjem.getString("estado")) {
-                        case "P":
-                            estado = "Prestado";
-                            break;
-                        case "X":
-                            estado = "Dañado";
-                            break;
-                        case "D":
-                            estado = "Disponible";
-                            break;
-                        case "R":
-                            estado = "Reservado";
-                            break;
-                        default:
-                            throw new Exception("Error al obtener estado");
-                    }
+                switch (rsEjem.getString("estado")) {
+                    case "P":
+                        estado = "Prestado";
+                        break;
+                    case "X":
+                        estado = "Dañado";
+                        break;
+                    case "D":
+                        estado = "Disponible";
+                        break;
+                    case "R":
+                        estado = "Reservado";
+                        break;
+                    default:
+                        throw new Exception("Error al obtener estado");
+                }
                 modelo.addRow(new Object[]{
                     rsEjem.getString("codigo"),
                     rsEjem.getString("libro"),
@@ -528,23 +532,32 @@ public class jdManEjemplar extends javax.swing.JDialog {
     private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
         int rp;
         try {
-            if (txtCodigo.getText().equals("")) {
+            if (txtCodigo.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar el codigo del ejemplar a dar de baja");
             } else {
-                if (chkVigencia.isSelected()) {
-                    rp = JOptionPane.showConfirmDialog(this, "Esta seguro de dar de baja el ejemplar:\n " + txtNombreLibro.getText()
-                            + " de la editorial " + txtEditorial.getText(), "Dar de baja", JOptionPane.YES_NO_OPTION);
-                    if (rp == 0) {
-                        objEjemplar.darBajaEjemplarr(Integer.parseInt(txtCodigo.getText()));
-                        limpiarCampos();
-                        camposNoEdit();
-                        listarEjemplaresSedeInd();
+                if (objReserva.verificarExistenciaReserva(Integer.parseInt(txtCodigo.getText()))) {
+                    JOptionPane.showMessageDialog(this, "El ejemplar se encuentra en una reserva, no se pude modificar su estado");
+                } else {
+                    if (objPrestamo.verirficarExistenciaPrestamo(Integer.parseInt(txtCodigo.getText()))) {
+                        JOptionPane.showMessageDialog(this, "El ejemplar se encuentra en un prestamo, no se pude modificar su estado");
                     } else {
-                        JOptionPane.showMessageDialog(this, "Dar de baja cancelado");
+                        if (chkVigencia.isSelected()) {
+                            rp = JOptionPane.showConfirmDialog(this, "Esta seguro de dar de baja el ejemplar:\n " + txtNombreLibro.getText()
+                                    + " de la editorial " + txtEditorial.getText(), "Dar de baja", JOptionPane.YES_NO_OPTION);
+                            if (rp == 0) {
+                                objEjemplar.darBajaEjemplarr(Integer.parseInt(txtCodigo.getText()));
+                                limpiarCampos();
+                                camposNoEdit();
+                                listarEjemplaresSedeInd();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Dar de baja cancelado");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "El ejemplar ya esta dado de baja (No disponible)");
+                        }
                     }
-                }else{
-                    JOptionPane.showMessageDialog(this, "El ejemplar ya esta dado de baja (No disponible)");
                 }
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -557,22 +570,31 @@ public class jdManEjemplar extends javax.swing.JDialog {
         try {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar el codigo del ejemplar a modificar");
-            }else{
-                rp = JOptionPane.showConfirmDialog(this, "Esta seguro de modificar el ejemplar:\n " + txtNombreLibro.getText()
-                            + " de la editorial " + txtEditorial.getText(), "Modificar", JOptionPane.YES_NO_OPTION);
-                if (rp==0) {
-                    if (chkVigencia.isSelected()) {
-                        modi = "D";
+            } else {
+                if (objReserva.verificarExistenciaReserva(Integer.parseInt(txtCodigo.getText()))) {
+                    JOptionPane.showMessageDialog(this, "El ejemplar se encuentra en una reserva, no se pude modificar su estado");
+                } else {
+                    if (objPrestamo.verirficarExistenciaPrestamo(Integer.parseInt(txtCodigo.getText()))) {
+                        JOptionPane.showMessageDialog(this, "El ejemplar se encuentra en un prestamo, no se pude modificar su estado");
+                    } else {
+
+                        rp = JOptionPane.showConfirmDialog(this, "Esta seguro de modificar el ejemplar:\n " + txtNombreLibro.getText()
+                                + " de la editorial " + txtEditorial.getText(), "Modificar", JOptionPane.YES_NO_OPTION);
+                        if (rp == 0) {
+                            if (chkVigencia.isSelected()) {
+                                modi = "D";
+                            }
+                            objEjemplar.modificarEjemplar(
+                                    Integer.parseInt(txtCodigo.getText()),
+                                    objSede.obtenerSede(cboSede.getSelectedItem().toString()),
+                                    modi);
+                            limpiarCampos();
+                            camposNoEdit();
+                            listarEjemplaresSedeInd();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Modificación cancelada");
+                        }
                     }
-                    objEjemplar.modificarEjemplar(
-                            Integer.parseInt(txtCodigo.getText()),
-                            objSede.obtenerSede(cboSede.getSelectedItem().toString()), 
-                            modi);
-                    limpiarCampos();
-                    camposNoEdit();
-                    listarEjemplaresSedeInd();
-                }else{
-                    JOptionPane.showMessageDialog(this, "Modificación cancelada");
                 }
             }
         } catch (Exception e) {
@@ -583,7 +605,6 @@ public class jdManEjemplar extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDarBaja;
     private javax.swing.JButton btnFindCodigo;

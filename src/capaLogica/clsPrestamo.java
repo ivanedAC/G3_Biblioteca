@@ -333,4 +333,19 @@ public class clsPrestamo {
             throw new Exception("Error al listar detalles: " + e.getMessage());
         }
     }
+    
+    public boolean verirficarExistenciaPrestamo(Integer codEjem) throws Exception{
+        strSQL = "select * from prestamo pr\n" +
+        "	inner join detalle_prestamo det on pr.codigo=det.cod_prestamo\n" +
+        "	where pr.estado='P' and det.cod_ejemplar="+codEjem+";";
+        try {
+            rs = objConectar.consultar(strSQL);
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar existencia del ejemplar en un prestamo -->"+e.getMessage());
+        }
+        return false;
+    }
 }
