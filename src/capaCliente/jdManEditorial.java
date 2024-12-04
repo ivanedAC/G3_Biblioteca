@@ -24,9 +24,13 @@ public class jdManEditorial extends javax.swing.JDialog {
         setTitle("Mantenimiento de editorial");
         initComponents();
     }
-    
-    public boolean existe() throws Exception{
+
+    public boolean existe() throws Exception {
         return ValidationManager.validarExistencia("categoria", "codigo", txtCodigo.getText());
+    }
+
+    public boolean existeNombre() throws Exception {
+        return ValidationManager.validarExistencia("categoria", "nombre", txtNombre.getText());
     }
 
     private void limpiarControles() {
@@ -39,11 +43,17 @@ public class jdManEditorial extends javax.swing.JDialog {
         ResultSet rsEdito = null;
         String vigencia = "";
 
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         modelo.addColumn("Código");
         modelo.addColumn("Nombre");
         modelo.addColumn("Estado");
         tblEditoriales.setModel(modelo);
+        tblEditoriales.getTableHeader().setReorderingAllowed(false);
 
         try {
             rsEdito = objEditorial.listarEditorial();
@@ -108,25 +118,18 @@ public class jdManEditorial extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Código:");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre:");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Estado:");
 
-        txtCodigo.setBackground(new java.awt.Color(255, 255, 255));
         txtCodigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        txtCodigo.setForeground(new java.awt.Color(0, 0, 0));
         txtCodigo.setBorder(null);
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
         txtNombre.setBorder(null);
 
         btnBuscar.setBackground(new java.awt.Color(113, 49, 18));
@@ -139,7 +142,6 @@ public class jdManEditorial extends javax.swing.JDialog {
 
         chkVigente.setBackground(new java.awt.Color(243, 226, 210));
         chkVigente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chkVigente.setForeground(new java.awt.Color(0, 0, 0));
         chkVigente.setText("(Vigente)");
 
         jSeparator1.setBackground(new java.awt.Color(113, 49, 18));
@@ -176,10 +178,11 @@ public class jdManEditorial extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -304,7 +307,6 @@ public class jdManEditorial extends javax.swing.JDialog {
         jSeparator2.setForeground(new java.awt.Color(113, 49, 18));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Imagen Editorial");
         jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -385,6 +387,17 @@ public class jdManEditorial extends javax.swing.JDialog {
             } else {
                 btnNuevo.setText("NUEVO");
                 btnNuevo.setIcon(new ImageIcon("src/recursos/nuevo_32px.png"));
+
+                if (existe()) {
+                    JOptionPane.showMessageDialog(null, "El código ingresado ya existe");
+                    return;
+                }
+
+                if (existeNombre()) {
+                    JOptionPane.showMessageDialog(null, "El nombre ingresado ya existe");
+                    return;
+                }
+
                 objEditorial.insertarEditorial(
                         Integer.parseInt(txtCodigo.getText()),
                         txtNombre.getText(),
@@ -426,12 +439,26 @@ public class jdManEditorial extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         int rp;
         try {
-            if (txtCodigo.getText().equals("")) {
+            if (txtCodigo.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código");
-            } else {
+            } else if (!txtNombre.getText().isBlank()) {
                 rp = JOptionPane.showConfirmDialog(this, "Está seguro de modificar la editorial ",
                         "Modificar", JOptionPane.YES_NO_OPTION);
                 if (rp == 0) {
+
+                    ResultSet rsEdit = objEditorial.listarEditorial();
+                    while (rsEdit.next()) {
+                        if (rsEdit.getInt("codigo") == Integer.parseInt(txtCodigo.getText())) {
+                            continue;
+                        }
+
+                        if (rsEdit.getString("nombre").equals(txtNombre.getText())) {
+                            JOptionPane.showMessageDialog(this, "El nombre ingresado ya se encuentra registrado");
+                            return;
+                        }
+
+                    }
+
                     objEditorial.modficarEditorial(
                             Integer.parseInt(txtCodigo.getText()),
                             txtNombre.getText(),
@@ -441,6 +468,8 @@ public class jdManEditorial extends javax.swing.JDialog {
                 } else {
                     JOptionPane.showMessageDialog(this, "Modificación cancelada");
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un nombre");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());

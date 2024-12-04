@@ -110,7 +110,6 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(243, 226, 210));
 
-        tblDatos.setBackground(new java.awt.Color(255, 255, 255));
         tblDatos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,25 +125,24 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
 
         ckNombre.setBackground(new java.awt.Color(243, 226, 210));
         ckNombre.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        ckNombre.setForeground(new java.awt.Color(0, 0, 0));
         ckNombre.setText("Nombre");
 
         ckCodigo.setBackground(new java.awt.Color(243, 226, 210));
         ckCodigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        ckCodigo.setForeground(new java.awt.Color(0, 0, 0));
         ckCodigo.setText("Código");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Consultar por:");
 
-        txtConsulta.setBackground(new java.awt.Color(255, 255, 255));
         txtConsulta.setFont(new java.awt.Font("Courier New", 0, 20)); // NOI18N
         txtConsulta.setForeground(new java.awt.Color(113, 49, 18));
         txtConsulta.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtConsulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtConsultaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtConsultaKeyTyped(evt);
             }
         });
 
@@ -276,6 +274,16 @@ public class jdConsultarCategorias extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtConsultaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConsultaKeyTyped
+        // TODO add your handling code here:
+        if (ckCodigo.isSelected()) {
+            Character objTecla = evt.getKeyChar();
+            if (!Character.isDigit(objTecla)) {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_txtConsultaKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

@@ -255,6 +255,12 @@ public class jdConsultarAutores extends javax.swing.JDialog {
 
     private void txtConsultaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConsultaKeyTyped
         // TODO add your handling code here:
+        if (cmbFiltro.getSelectedItem().toString().equals("Codigo")) {
+            Character objTecla = evt.getKeyChar();
+            if (!Character.isDigit(objTecla)) {
+                evt.consume();
+            }
+        }
     }//GEN-LAST:event_txtConsultaKeyTyped
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed

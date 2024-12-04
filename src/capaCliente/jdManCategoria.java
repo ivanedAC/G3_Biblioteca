@@ -19,10 +19,15 @@ public class jdManCategoria extends javax.swing.JDialog {
 
     clsCategoria objCategoria = new clsCategoria();
     private String nombreOriginal;
-    public boolean existe() throws Exception{
+
+    public boolean existe() throws Exception {
         return ValidationManager.validarExistencia("categoria", "codigo", txtCodigo.getText());
     }
-    
+
+    public boolean existeNombre() throws Exception {
+        return ValidationManager.validarExistencia("categoria", "nombre", txtNombre.getText());
+    }
+
     private void listarCategorias() {
         ResultSet rsCat = null;
 
@@ -58,7 +63,6 @@ public class jdManCategoria extends javax.swing.JDialog {
         txtCodigo.setEditable(true);
     }
 
-
     /**
      * Creates new form jdManProveedor
      */
@@ -67,8 +71,8 @@ public class jdManCategoria extends javax.swing.JDialog {
         initComponents();
         setTitle("Mantenimiento Categoria");
     }
-    
-    public void modificarBotones(boolean activar){
+
+    public void modificarBotones(boolean activar) {
         btnBuscar.setEnabled(activar);
         btnEliminar.setEnabled(activar);
         btnLimpiar.setEnabled(activar);
@@ -408,7 +412,17 @@ public class jdManCategoria extends javax.swing.JDialog {
                     limpiarControles();
                     return;
                 }
-                
+
+                if (existe()) {
+                    JOptionPane.showMessageDialog(null, "El código ingresado ya existe");
+                    return;
+                }
+
+                if (existeNombre()) {
+                    JOptionPane.showMessageDialog(null, "El nombre ingresado ya existe");
+                    return;
+                }
+
                 btnNuevo.setText("NUEVO");
                 btnNuevo.setIcon(new ImageIcon("src/recursos/nuevo_32px.png"));
                 objCategoria.registrarCategoria(Integer.parseInt(txtCodigo.getText()), txtNombre.getText());
@@ -418,13 +432,12 @@ public class jdManCategoria extends javax.swing.JDialog {
                 listarCategorias();
             }
         } catch (Exception e) {
-
             JOptionPane.showMessageDialog(this, "Error al registrar el Categoria: " + e.getMessage());
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-         ResultSet rsCat = null;
+        ResultSet rsCat = null;
         try {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para realizar la búsqueda");
@@ -443,20 +456,20 @@ public class jdManCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tblAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutorMouseClicked
-        txtCodigo.setText(String.valueOf(tblAutor.getValueAt(tblAutor.getSelectedRow(),0)));
+        txtCodigo.setText(String.valueOf(tblAutor.getValueAt(tblAutor.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
         nombreOriginal = txtNombre.getText();
 
     }//GEN-LAST:event_tblAutorMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       ResultSet rs;
-       try {
+        ResultSet rs;
+        try {
             if (txtCodigo.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código a eliminar");
             } else if (!existe()) {
                 JOptionPane.showMessageDialog(this, "El codigo ingresado no pertenece a ninguna categoria");
-            }else {
+            } else {
                 rs = objCategoria.verificar(Integer.parseInt(txtCodigo.getText()));
                 if (rs.next()) {
                     JOptionPane.showMessageDialog(rootPane, "No se puede eliminar porque está asociado a un proceso");
@@ -486,7 +499,7 @@ public class jdManCategoria extends javax.swing.JDialog {
         int codigo;
         String nombre = txtNombre.getText();
         try {
-            if (txtCodigo.getText().equals("")) {
+            if (txtCodigo.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para actualizar");
             } else if (!existe()) {
                 JOptionPane.showMessageDialog(this, "El codigo ingresado no pertenece a ninguna categoria");
