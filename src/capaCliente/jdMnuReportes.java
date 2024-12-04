@@ -40,8 +40,6 @@ public class jdMnuReportes extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Menú Reportes - Biblioteca Ricardo Palma");
-        lblInicio.setVisible(false);
-        lblFinal.setVisible(false);
         lblCodigo.setVisible(false);
         cmbAuxiliar.setVisible(false);
         cmbReporte.setSelectedItem(0);

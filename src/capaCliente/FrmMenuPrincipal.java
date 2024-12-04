@@ -34,6 +34,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         pnlFondo.add(fondo, BorderLayout.CENTER);  // Agregar el panel de fondo dentro del panel diseñado
         pnlFondo.revalidate();  // Refresca el panel
         pnlFondo.repaint();     // Fuerza la actualización del fondo
+        setTitle("Sistema Biblioteca - Ricardo Palma");
     }
 
     public class FondoPanel extends JPanel {
@@ -167,11 +168,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         mnuOrdenCompra = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
-        Rpt1 = new javax.swing.JMenuItem();
-        Rpt2 = new javax.swing.JMenuItem();
-        Rpt3 = new javax.swing.JMenuItem();
-        Rpt4 = new javax.swing.JMenuItem();
-        Rpt5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -547,42 +543,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
                 mnuReportesActionPerformed(evt);
             }
         });
-
-        Rpt1.setText("Préstamo y devoluciones de clientes");
-        Rpt1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Rpt1ActionPerformed(evt);
-            }
-        });
-        mnuReportes.add(Rpt1);
-
-        Rpt2.setText("Libros más prestados");
-        Rpt2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Rpt2ActionPerformed(evt);
-            }
-        });
-        mnuReportes.add(Rpt2);
-
-        Rpt3.setText("Clientes con préstamos vencidos");
-        Rpt3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Rpt3ActionPerformed(evt);
-            }
-        });
-        mnuReportes.add(Rpt3);
-
-        Rpt4.setText("Libros (ejemplares) dañados o perdidos.");
-        Rpt4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Rpt4ActionPerformed(evt);
-            }
-        });
-        mnuReportes.add(Rpt4);
-
-        Rpt5.setText("Sanciones aplicadas a los clientes");
-        mnuReportes.add(Rpt5);
-
         jMenuBar1.add(mnuReportes);
 
         setJMenuBar(jMenuBar1);
@@ -796,29 +756,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         objReserva.setLocationRelativeTo(null);
         objReserva.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-    private void Rpt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rpt1ActionPerformed
-        jdReportePrestamosDevoluciones objJd = new jdReportePrestamosDevoluciones(this, true);
-        objJd.setLocationRelativeTo(null);
-        objJd.setVisible(true);
-    }//GEN-LAST:event_Rpt1ActionPerformed
-
-    private void Rpt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rpt2ActionPerformed
-        jdReporteLibrosPopulares objJd = new jdReporteLibrosPopulares(this, true);
-        objJd.setLocationRelativeTo(null);
-        objJd.setVisible(true);
-    }//GEN-LAST:event_Rpt2ActionPerformed
-
-    private void Rpt3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rpt3ActionPerformed
-        jdReportePrestamosPendientes objJd = new jdReportePrestamosPendientes(this, true);
-        objJd.setLocationRelativeTo(null);
-        objJd.setVisible(true);
-    }//GEN-LAST:event_Rpt3ActionPerformed
-
-    private void Rpt4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rpt4ActionPerformed
-        jdReporteSancionesCliente objJd = new jdReporteSancionesCliente(this, true);
-        objJd.setLocationRelativeTo(null);
-        objJd.setVisible(true);
-    }//GEN-LAST:event_Rpt4ActionPerformed
 
     private void mnuReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuReportesActionPerformed
                 jdReporteSancionesCliente objJd = new jdReporteSancionesCliente(this, true);
@@ -839,11 +776,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem MnuLibro;
     private javax.swing.JMenuItem MnuProveedor;
     private javax.swing.JMenuItem MnuUsuario;
-    private javax.swing.JMenuItem Rpt1;
-    private javax.swing.JMenuItem Rpt2;
-    private javax.swing.JMenuItem Rpt3;
-    private javax.swing.JMenuItem Rpt4;
-    private javax.swing.JMenuItem Rpt5;
     private javax.swing.JButton btnAutor;
     private javax.swing.JButton btnCategoria;
     private javax.swing.JButton btnCliente;
