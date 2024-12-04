@@ -54,7 +54,19 @@ ORDER BY
 		</band>
 	</title>
 	<pageHeader>
-		<band height="11" splitType="Stretch"/>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="11" width="74" height="20" uuid="f61ce428-0882-498f-a40d-09c8b4aa4e8f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proveedor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="129" y="11" width="100" height="20" uuid="216f7dad-26d1-44aa-8ea1-b42e2b500726"/>
+				<textFieldExpression><![CDATA[$P{parRazonSocial}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="45" splitType="Stretch">

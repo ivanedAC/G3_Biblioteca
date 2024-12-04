@@ -91,15 +91,14 @@ public class jdManLibro extends javax.swing.JDialog {
         cmbTipoLibro.setSelectedIndex(0);
         listAutores.setModel(new DefaultListModel());
         listCategorias.setModel(new DefaultListModel());
-        spnEdicion.setValue(0);
         txtNumPags.setText("");
     }
 
     public void listarTabla() {
         ResultSet rsLibro = null;
-        DefaultTableModel modelo = new DefaultTableModel(){
+        DefaultTableModel modelo = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
@@ -836,35 +835,42 @@ public class jdManLibro extends javax.swing.JDialog {
                 limpiar();
                 btnNuevo.setText(" Guardar");
             } else if (btnNuevo.getText().equalsIgnoreCase(" guardar")) {
-                rs_edit = objEditorial.buscarEditorialPorNombre(cmbEditorial.getSelectedItem().toString());
-                rs_format = objFormato.buscarFormatoPorNombre(cmbFormato.getSelectedItem().toString());
-                rs_tipo = objTipoLibro.buscarTipoLibroPorNombre(cmbTipoLibro.getSelectedItem().toString());
-                rs_idioma = objIdioma.buscarIdiomaPorNombre(cmbIdioma.getSelectedItem().toString());
-                if (rs_edit.next() && rs_idioma.next() && rs_format.next() && rs_tipo.next()) {
-                    rsGuardar = objLibro.registrarLibro(txtISBN.getText(),
-                            rs_edit.getInt("codigo"),
-                            txtNombre.getText(), Integer.valueOf(txtNumPags.getText()), (int) spnEdicion.getValue(),
-                            rs_format.getInt("codigo"), rs_tipo.getInt("codigo"), rs_idioma.getInt("codigo"), listaDeIdAutores, listaDeIdCategorias);;
-                    if (rsGuardar.next()) {
-                        switch (rsGuardar.getInt("resultado")) {
-                            case 0:
-                                JOptionPane.showMessageDialog(this, "Libro registrado con exito");
-                                limpiar();
-                                listarTabla();
-                                break;
-                            case -1:
-                                JOptionPane.showMessageDialog(this, "Error del servidor al registrar el libro");
-                                break;
-                            default:
-                                JOptionPane.showMessageDialog(this, "Libro no registrado");
-                                break;
+                if (txtISBN.getText().isBlank() || txtNombre.getText().isBlank() || txtNumPags.getText().isBlank()
+                        || listCategorias.getModel().getSize() == 0) {
+                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
+                } else if (txtISBN.getText().length() == 10 || txtISBN.getText().length() == 13) {
+                    rs_edit = objEditorial.buscarEditorialPorNombre(cmbEditorial.getSelectedItem().toString());
+                    rs_format = objFormato.buscarFormatoPorNombre(cmbFormato.getSelectedItem().toString());
+                    rs_tipo = objTipoLibro.buscarTipoLibroPorNombre(cmbTipoLibro.getSelectedItem().toString());
+                    rs_idioma = objIdioma.buscarIdiomaPorNombre(cmbIdioma.getSelectedItem().toString());
+                    if (rs_edit.next() && rs_idioma.next() && rs_format.next() && rs_tipo.next()) {
+                        rsGuardar = objLibro.registrarLibro(txtISBN.getText(),
+                                rs_edit.getInt("codigo"),
+                                txtNombre.getText(), Integer.valueOf(txtNumPags.getText()), (int) spnEdicion.getValue(),
+                                rs_format.getInt("codigo"), rs_tipo.getInt("codigo"), rs_idioma.getInt("codigo"), listaDeIdAutores, listaDeIdCategorias);;
+                        if (rsGuardar.next()) {
+                            switch (rsGuardar.getInt("resultado")) {
+                                case 0:
+                                    JOptionPane.showMessageDialog(this, "Libro registrado con exito");
+                                    limpiar();
+                                    listarTabla();
+                                    break;
+                                case -1:
+                                    JOptionPane.showMessageDialog(this, "Error del servidor al registrar el libro");
+                                    break;
+                                default:
+                                    JOptionPane.showMessageDialog(this, "Libro no registrado");
+                                    break;
+                            }
                         }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error al guardar los combos");
                     }
+                    limpiar();
+                    btnNuevo.setText(" Nuevo");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error al guardar los combos");
+                    JOptionPane.showMessageDialog(null, "El ISBN ingresado no es válido", "Mensaje de Sistema", JOptionPane.WARNING_MESSAGE);
                 }
-                limpiar();
-                btnNuevo.setText(" Nuevo");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al registrar el libro el libro: " + e.getMessage());
@@ -938,7 +944,7 @@ public class jdManLibro extends javax.swing.JDialog {
                             rs_edit.getInt("codigo"),
                             txtNombre.getText(), Integer.valueOf(txtNumPags.getText()), (int) spnEdicion.getValue(),
                             rs_format.getInt("codigo"), rs_tipo.getInt("codigo"), rs_idioma.getInt("codigo"), listaDeIdAutores, listaDeIdCategorias);
-                    
+
                     if (rsEditar.next()) {
                         switch (rsEditar.getInt("resultado")) {
                             case 0:
@@ -1004,7 +1010,7 @@ public class jdManLibro extends javax.swing.JDialog {
         if (txtISBN.getText().length() > 12) {
             evt.consume();
         }
-        
+
         Character objTecla = evt.getKeyChar();
         if (!Character.isDigit(objTecla)) {
             evt.consume();

@@ -37,7 +37,23 @@ order by total_prestamos desc]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="9" splitType="Stretch"/>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="267" y="10" width="100" height="20" uuid="68f37440-3bed-451b-9b48-499e33149bc1"/>
+				<textFieldExpression><![CDATA[$P{ParFechaFinal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="10" width="127" height="20" uuid="32a87d34-2cce-415e-9bd6-7c630ccf2038"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha rango de reporte]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="159" y="10" width="100" height="20" uuid="ca1324a4-613e-45e7-b7f2-beb1ee509ed1"/>
+				<textFieldExpression><![CDATA[$P{ParFechaInicial}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="39" splitType="Stretch">
