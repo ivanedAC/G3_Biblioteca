@@ -4,17 +4,20 @@
  */
 package capaCliente;
 
+import capaLogica.clsProveedor;
 import capaLogica.clsReporte;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import net.sf.jasperreports.swing.JRViewer;
@@ -26,8 +29,9 @@ import net.sf.jasperreports.swing.JRViewer;
 public class jdMnuReportes extends javax.swing.JDialog {
 
     clsReporte objReporte = new clsReporte();
-    String format;
-    String format2;
+    clsProveedor objProveedor = new clsProveedor();
+    String format = "";
+    String format2 = "";
 
     /**
      * Creates new form jdMnuReportes
@@ -38,8 +42,6 @@ public class jdMnuReportes extends javax.swing.JDialog {
         setTitle("Menú Reportes - Biblioteca Ricardo Palma");
         lblInicio.setVisible(false);
         lblFinal.setVisible(false);
-        jdInicio.setVisible(false);
-        jdFinal.setVisible(false);
         lblCodigo.setVisible(false);
         cmbAuxiliar.setVisible(false);
         cmbReporte.setSelectedItem(0);
@@ -67,21 +69,36 @@ public class jdMnuReportes extends javax.swing.JDialog {
     }
 
     private void setFechas() {
+
+        if (jdInicio.getDate() == null || jdFinal.getDate() == null) {
+            return;
+        }
         Calendar selectedCalendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         selectedCalendar.setTime(jdInicio.getDate());
         format = sdf.format(selectedCalendar.getTime());
         selectedCalendar.setTime(jdFinal.getDate());
         format2 = sdf.format(selectedCalendar.getTime());
+
+    }
+
+    private void listarProveedor() {
+        ResultSet rsP = null;
+        DefaultComboBoxModel modeloP = new DefaultComboBoxModel();
+        cmbAuxiliar.setModel(modeloP);
+        try {
+            rsP = objProveedor.listadoProveedores();
+            while (rsP.next()) {
+                modeloP.addElement(rsP.getString("razon_social"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }
 
     private void validarFechas() {
         Date fechaInicial = jdInicio.getDate();
         Date fechaFinal = jdFinal.getDate();
-                if (format == null && format2 == null) {
-            JOptionPane.showMessageDialog(rootPane, "Debe escoger una fecha para este reporte");
-            return;
-        }
 
         if (fechaFinal != null && fechaInicial == null) {
             jdInicio.setDate(fechaFinal);
@@ -94,10 +111,9 @@ public class jdMnuReportes extends javax.swing.JDialog {
     }
 
     private void reporte() {
-        int opcion = cmbReporte.getSelectedIndex();
-
+        String opcion = cmbReporte.getSelectedItem().toString();
         switch (opcion) {
-            case 0:
+            case "Préstamos y devoluciones por cliente":
                 lblInicio.setVisible(true);
                 lblFinal.setVisible(true);
                 jdInicio.setVisible(true);
@@ -105,73 +121,93 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 lblCodigo.setVisible(false);
                 cmbAuxiliar.setVisible(false);
                 break;
-            case 1:
+            case "Libros más solicitados":
                 lblInicio.setVisible(true);
                 lblFinal.setVisible(true);
                 jdInicio.setVisible(true);
                 jdFinal.setVisible(true);
                 lblCodigo.setVisible(false);
                 cmbAuxiliar.setVisible(false);
+
                 break;
-            case 2:
+            case "Clientes con préstamos vencidos":
                 lblInicio.setVisible(false);
                 lblFinal.setVisible(false);
                 jdInicio.setVisible(false);
                 jdFinal.setVisible(false);
                 lblCodigo.setVisible(false);
                 cmbAuxiliar.setVisible(false);
+
                 break;
-            case 3:
+            case "Ejemplares dañados":
                 lblInicio.setVisible(false);
                 lblFinal.setVisible(false);
                 jdInicio.setVisible(false);
                 jdFinal.setVisible(false);
                 lblCodigo.setVisible(false);
                 cmbAuxiliar.setVisible(false);
+
                 break;
-            case 4:
+            case "Sanciones a clientes":
                 lblInicio.setVisible(false);
                 lblFinal.setVisible(false);
                 jdInicio.setVisible(false);
                 jdFinal.setVisible(false);
                 lblCodigo.setVisible(false);
                 cmbAuxiliar.setVisible(false);
+
                 break;
-            case 5:
+            case "Detalle de compra":
+                cmbAuxiliar.removeAllItems();
                 lblInicio.setVisible(false);
                 lblFinal.setVisible(false);
                 jdInicio.setVisible(false);
                 jdFinal.setVisible(false);
                 lblCodigo.setText("Selecciona proveedor");
-                cmbAuxiliar.addItem("Proveedor 1");
+                listarProveedor();
                 lblCodigo.setVisible(true);
                 cmbAuxiliar.setVisible(true);
+
                 break;
-            case 6:
+            case "Usabilidad por sede":
                 lblInicio.setVisible(false);
                 lblFinal.setVisible(false);
                 jdInicio.setVisible(false);
                 jdFinal.setVisible(false);
                 lblCodigo.setVisible(false);
                 cmbAuxiliar.setVisible(false);
+
                 break;
-            case 7:
+            case "Libros con mayor reservas":
                 lblInicio.setVisible(false);
                 lblFinal.setVisible(false);
                 jdInicio.setVisible(false);
                 jdFinal.setVisible(false);
                 lblCodigo.setVisible(false);
-                cmbAuxiliar.setVisible(false);
+                cmbAuxiliar.removeAllItems();
+                for (int i = 1; i <= 10; i++) {
+                    cmbAuxiliar.addItem(String.valueOf(i));
+                }
+                cmbAuxiliar.setVisible(true);
+
                 break;
-            case 8:
+            case "Reservas Completadas":
                 lblInicio.setVisible(true);
                 lblFinal.setVisible(true);
                 jdInicio.setVisible(true);
                 jdFinal.setVisible(true);
                 lblCodigo.setVisible(false);
                 cmbAuxiliar.setVisible(false);
+
                 break;
-            case 9:
+            case "Categoría más destacada":
+                lblInicio.setVisible(true);
+                lblFinal.setVisible(true);
+                jdInicio.setVisible(true);
+                jdFinal.setVisible(true);
+                lblCodigo.setVisible(false);
+                cmbAuxiliar.setVisible(false);
+
                 break;
             default:
                 throw new AssertionError();
@@ -232,7 +268,29 @@ public class jdMnuReportes extends javax.swing.JDialog {
             contenedor.removeAll();
 
             Map<String, Object> parametros = new HashMap();
-            parametros.put("ParFechaInicial", format);
+            parametros.put("parRazonSocial", cmbAuxiliar.getSelectedItem().toString());
+
+            JRViewer objRp = objReporte.reporteInterno(rpt, parametros);
+
+            contenedor.add(objRp);
+            objRp.setVisible(true);
+            this.vistaReporte.setVisible(true);
+            contenedor.revalidate();
+            contenedor.repaint();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void visualizarReporte2(String rpt) {
+        try {
+            Container contenedor = this.vistaReporte;
+            contenedor.setLayout(new BorderLayout());
+            contenedor.removeAll();
+
+            Map<String, Object> parametros = new HashMap();
+            parametros.put("parCantidad", Integer.parseInt(cmbAuxiliar.getSelectedItem().toString()));
 
             JRViewer objRp = objReporte.reporteInterno(rpt, parametros);
 
@@ -284,7 +342,7 @@ public class jdMnuReportes extends javax.swing.JDialog {
 
         contenedorInformacion.setBackground(new java.awt.Color(230, 182, 139));
 
-        cmbReporte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Préstamos y devoluciones por cliente", "Libros más solicitados", "Clientes con préstamos vencidos", "Ejemplares dañados", "Sanciones a clientes", "Detalle de compra", "Usabilidad por sede", "Frecuencia de reserva de libros", "Libros no prestados por periodos" }));
+        cmbReporte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Préstamos y devoluciones por cliente", "Libros más solicitados", "Clientes con préstamos vencidos", "Ejemplares dañados", "Sanciones a clientes", "Detalle de compra", "Usabilidad por sede", "Libros con mayor reservas", "Reservas Completadas", "Categoría más destacada" }));
         cmbReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbReporteActionPerformed(evt);
@@ -295,15 +353,15 @@ public class jdMnuReportes extends javax.swing.JDialog {
 
         jdFinal.setDateFormatString("dd-MM-yyyy");
 
-        lblFinal.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblFinal.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         lblFinal.setForeground(new java.awt.Color(113, 49, 18));
         lblFinal.setText("Fecha Final:");
 
-        lblInicio.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblInicio.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         lblInicio.setForeground(new java.awt.Color(113, 49, 18));
         lblInicio.setText("Fecha Inicio:");
 
-        lblCodigo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblCodigo.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         lblCodigo.setForeground(new java.awt.Color(113, 49, 18));
         lblCodigo.setText("Codigo:");
 
@@ -326,16 +384,23 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 .addComponent(cmbReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(btnReporte)
-                .addGap(80, 80, 80)
-                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCodigo)
-                    .addComponent(lblFinal)
-                    .addComponent(lblInicio))
-                .addGap(18, 18, 18)
-                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jdInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                    .addComponent(jdFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbAuxiliar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(contenedorInformacionLayout.createSequentialGroup()
+                        .addComponent(lblCodigo)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbAuxiliar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(contenedorInformacionLayout.createSequentialGroup()
+                        .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(contenedorInformacionLayout.createSequentialGroup()
+                                .addComponent(lblInicio)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, contenedorInformacionLayout.createSequentialGroup()
+                                .addComponent(lblFinal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jdInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                            .addComponent(jdFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(14, 14, 14))
         );
         contenedorInformacionLayout.setVerticalGroup(
@@ -345,20 +410,16 @@ public class jdMnuReportes extends javax.swing.JDialog {
                 .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jdInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblInicio, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(contenedorInformacionLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbAuxiliar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCodigo))))
-                .addGap(5, 5, 5)
+                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCodigo)
+                    .addComponent(cmbAuxiliar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
                 .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jdFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFinal))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout vistaReporteLayout = new javax.swing.GroupLayout(vistaReporte);
@@ -369,7 +430,7 @@ public class jdMnuReportes extends javax.swing.JDialog {
         );
         vistaReporteLayout.setVerticalGroup(
             vistaReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+            .addGap(0, 541, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -395,38 +456,48 @@ public class jdMnuReportes extends javax.swing.JDialog {
     }//GEN-LAST:event_cmbReporteActionPerformed
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
-        int opcion = cmbReporte.getSelectedIndex();
-        setFechas();
+        String opcion = cmbReporte.getSelectedItem().toString();
+
         switch (opcion) {
-            case 0:
+            case "Préstamos y devoluciones por cliente":
+                setFechas();
+                if ((format == null || format.isEmpty()) && (format2 == null || format2.isEmpty())) {
+                    JOptionPane.showMessageDialog(rootPane, "Debe escoger una fecha para este reporte");
+                    return;
+                }
                 visualizarReporteConFechas("rpt1.jasper");
                 break;
-            case 1:
+            case "Libros más solicitados":
+                setFechas();
+                if ((format == null || format.isEmpty()) && (format2 == null || format2.isEmpty())) {
+                    JOptionPane.showMessageDialog(rootPane, "Debe escoger una fecha para este reporte");
+                    return;
+                }
                 visualizarReporteConFechas("rpt2.jasper");
                 break;
-            case 2:
+            case "Clientes con préstamos vencidos":
                 visualizarReporte("rpt3.jasper");
                 break;
-            case 3:
+            case "Ejemplares dañados":
+                visualizarReporte("RptLibrosDañados.jasper");
+                break;
+            case "Sanciones a clientes":
                 visualizarReporte("rpt4.jasper");
                 break;
-            case 4:
-                visualizarReporte("rpt5.jasper");
+            case "Detalle de compra":
+                visualizarReporte1("rpt5_subreport1.jasper");
                 break;
-            case 5:
-                visualizarReporte1("rpt6.jasper");
+            case "Usabilidad por sede":
+                visualizarReporte("RptUsabilidad.jasper");
                 break;
-            case 6:
-                visualizarReporte("rpt7.jasper");
+            case "Libros con mayor reservas":
+                visualizarReporte2("RptTopLxR.jasper");
                 break;
-            case 7:
-                visualizarReporte("rpt8.jasper");
+            case "Reservas Completadas":
+                visualizarReporte("RptReservasCompletadas.jasper");
                 break;
-            case 8:
-                visualizarReporteConFechas("rpt9.jasper");
-                break;
-            case 9:
-                JOptionPane.showMessageDialog(rootPane, "En construcción...");
+            case "Categoría más destacada":
+                visualizarReporte("RptCategorias.jasper");
                 break;
             default:
                 throw new AssertionError();
