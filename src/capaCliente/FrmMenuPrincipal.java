@@ -67,6 +67,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         MnuLibro.setVisible(false);
         MnuCategoria.setVisible(false);
         MnuProveedor.setVisible(false);
+        mnuOrdenCompra.setVisible(false);
         //Btn : No Acceso
         btnLibro.setVisible(false);
         btnEjemplar.setVisible(false);
@@ -168,6 +169,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         mnuOrdenCompra = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -545,6 +547,9 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuBar1.add(mnuReportes);
 
+        jMenu2.setText("Acerca de");
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -788,6 +793,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
