@@ -140,7 +140,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                  <Component id="jLabel12" min="-2" pref="135" max="-2" attributes="0"/>
+                  <Component id="lblImagen" min="-2" pref="135" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel5" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -170,7 +170,7 @@
                           <Component id="btnNuevoCli" min="-2" pref="36" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jPanel5" max="32767" attributes="0"/>
-                      <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lblImagen" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
@@ -417,7 +417,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="jLabel12">
+        <Component class="javax.swing.JLabel" name="lblImagen">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel12"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

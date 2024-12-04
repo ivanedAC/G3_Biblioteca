@@ -78,7 +78,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jLabel6" min="-2" pref="350" max="-2" attributes="0"/>
+                      <Component id="lblImagen" min="-2" pref="350" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -100,7 +100,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                                  <Component id="jLabel6" min="-2" pref="227" max="-2" attributes="0"/>
+                                  <Component id="lblImagen" min="-2" pref="227" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
@@ -746,7 +746,7 @@
             <Property name="orientation" type="int" value="1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="lblImagen">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>

@@ -39,7 +39,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Menú - Transacción Préstamo");
-
+        ValidationManager.setImageInLabel(lblImagen, "cliente_label.png");
     }
 
     private void llenarTablaInicial() {
@@ -214,7 +214,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         btnElegirCli = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -259,16 +259,13 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Código:");
 
         calendarFLim.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Fecha Límite:");
 
-        txtCodPre.setBackground(new java.awt.Color(255, 255, 255));
         txtCodPre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtCodPre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -277,7 +274,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         });
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Hora Límite:");
 
         spnHora.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -406,25 +402,21 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel14.setText("jLabel14");
-        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblImagen.setText("jLabel14");
+        lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jPanel7.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Código:");
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Nro Doc:");
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Tipo Doc:");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre:");
 
         lblCodCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -438,7 +430,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         lblTipoDocCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Tipo Persona:");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -499,7 +490,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -516,7 +507,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnElegirCli, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -526,7 +517,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(243, 226, 210));
 
-        tblDetalles.setBackground(new java.awt.Color(255, 255, 255));
         tblDetalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -543,11 +533,9 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblDetalles);
 
         jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Código:");
 
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Nombre:");
 
         lblNomEjem.setBackground(new java.awt.Color(255, 255, 255));
@@ -570,14 +558,12 @@ public class jdTranPrestamo extends javax.swing.JDialog {
         });
 
         jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("ISBN:");
 
         lblISBNEjem.setBackground(new java.awt.Color(255, 255, 255));
         lblISBNEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Editorial:");
 
         lblEditorialEjem.setBackground(new java.awt.Color(255, 255, 255));
@@ -672,7 +658,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
 
         jPanel4.setBackground(new java.awt.Color(66, 39, 5));
 
-        btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(66, 39, 5));
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/save_transa.png"))); // NOI18N
@@ -683,7 +668,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             }
         });
 
-        btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(66, 39, 5));
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/leave_transa.png"))); // NOI18N
@@ -694,7 +678,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
             }
         });
 
-        btnAnular.setBackground(new java.awt.Color(255, 255, 255));
         btnAnular.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAnular.setForeground(new java.awt.Color(66, 39, 5));
         btnAnular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cancel_transa.png"))); // NOI18N
@@ -994,7 +977,6 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
@@ -1018,6 +1000,7 @@ public class jdTranPrestamo extends javax.swing.JDialog {
     private javax.swing.JLabel lblCodEjem;
     private javax.swing.JLabel lblEditorialEjem;
     private javax.swing.JLabel lblISBNEjem;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNomCli;
     private javax.swing.JLabel lblNomEjem;
     private javax.swing.JLabel lblNroDocCli;

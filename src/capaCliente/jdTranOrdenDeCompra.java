@@ -39,6 +39,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Menú - Transacción Orden de Compra");
+        ValidationManager.setImageInLabel(lblImagen, "cliente_label.png");
 
     }
 
@@ -206,7 +207,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDetalles = new javax.swing.JTable();
@@ -245,11 +246,9 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Número de compra:");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Fecha");
 
         lblNumCompra.setText(".");
@@ -310,11 +309,9 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         jPanel5.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Tipo Doc:");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Código:");
 
         lblNroDocPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -322,13 +319,11 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         lblNomPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Nro Doc:");
 
         lblTipoDocPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre:");
 
         lblTipoPerPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -336,7 +331,6 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         lblCodPro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Tipo Persona:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -413,8 +407,8 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel12.setText("jLabel12");
-        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblImagen.setText("jLabel12");
+        lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -422,7 +416,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -447,13 +441,12 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(btnNuevoCli, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(243, 226, 210));
 
-        tblDetalles.setBackground(new java.awt.Color(255, 255, 255));
         tblDetalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -517,15 +510,12 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
         lblEditorialLib.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("ISBN:");
 
         jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Editorial:");
 
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Nombre:");
 
         lblISBNLib.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -912,7 +902,6 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -939,6 +928,7 @@ public class jdTranOrdenDeCompra extends javax.swing.JDialog {
     private javax.swing.JLabel lblEditorialLib;
     private javax.swing.JLabel lblIGV;
     private javax.swing.JLabel lblISBNLib;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNomLib;
     private javax.swing.JLabel lblNomPro;
     private javax.swing.JLabel lblNroDocPro;

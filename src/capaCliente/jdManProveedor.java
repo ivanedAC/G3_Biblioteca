@@ -433,6 +433,11 @@ public class jdManProveedor extends javax.swing.JDialog {
         lblDoc.setText("DOC. IDENTIDAD");
 
         txtDocIdent.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtDocIdent.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocIdentKeyTyped(evt);
+            }
+        });
 
         lblNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblNombre.setText("NOMBRE");
@@ -462,6 +467,11 @@ public class jdManProveedor extends javax.swing.JDialog {
         lblTelefono.setText("TELEFONO");
 
         txtTelefono.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/buscar_24px.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -735,7 +745,7 @@ public class jdManProveedor extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1379, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1412, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1035,6 +1045,26 @@ public class jdManProveedor extends javax.swing.JDialog {
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtDocIdentKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocIdentKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDocIdentKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+        
+        if (txtTelefono.getText().length() > 8) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 
     /**
      * @param args the command line arguments

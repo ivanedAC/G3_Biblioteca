@@ -4,6 +4,7 @@
  */
 package capaCliente;
 
+import capaLogica.ValidationManager;
 import capaLogica.clsCliente;
 import capaLogica.clsEjemplar;
 import capaLogica.clsPrestamo;
@@ -44,7 +45,7 @@ public class jdTranReserva extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Menú - Transacción Reserva");
-
+        ValidationManager.setImageInLabel(lblImagen, "cliente_label.png");
     }
 
     private void llenarTablaInicial() {
@@ -204,7 +205,7 @@ public class jdTranReserva extends javax.swing.JDialog {
         lblTipoDocCli = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         calendarFLim = new com.toedter.calendar.JDateChooser();
@@ -249,15 +250,12 @@ public class jdTranReserva extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre:");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Código:");
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Nro Doc:");
 
         lblNomCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -289,13 +287,11 @@ public class jdTranReserva extends javax.swing.JDialog {
         lblCodCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Tipo Persona:");
 
         lblTipoPerCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Tipo Doc:");
 
         lblTipoDocCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -323,8 +319,8 @@ public class jdTranReserva extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel14.setText("jLabel14");
-        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblImagen.setText("jLabel14");
+        lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -332,7 +328,7 @@ public class jdTranReserva extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -371,7 +367,7 @@ public class jdTranReserva extends javax.swing.JDialog {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblNroDocCli, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -400,14 +396,11 @@ public class jdTranReserva extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Código:");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Fecha Reserva:");
 
-        txtCodRes.setBackground(new java.awt.Color(255, 255, 255));
         txtCodRes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCodResKeyTyped(evt);
@@ -486,11 +479,9 @@ public class jdTranReserva extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblDetalles);
 
         jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Código:");
 
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Nombre:");
 
         lblNomEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -512,13 +503,11 @@ public class jdTranReserva extends javax.swing.JDialog {
         });
 
         jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("ISBN:");
 
         lblISBNEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Editorial:");
 
         lblEditorialEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -611,7 +600,6 @@ public class jdTranReserva extends javax.swing.JDialog {
         jPanel4.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel17.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Fecha estimada para recoger libro:");
 
         lblFechaEstimada.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -622,7 +610,6 @@ public class jdTranReserva extends javax.swing.JDialog {
 
         jPanel8.setBackground(new java.awt.Color(66, 39, 5));
 
-        btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(113, 49, 18));
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/save_transa.png"))); // NOI18N
@@ -633,7 +620,6 @@ public class jdTranReserva extends javax.swing.JDialog {
             }
         });
 
-        btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(113, 49, 18));
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/leave_transa.png"))); // NOI18N
@@ -904,7 +890,6 @@ public class jdTranReserva extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -930,6 +915,7 @@ public class jdTranReserva extends javax.swing.JDialog {
     private javax.swing.JLabel lblEditorialEjem;
     private javax.swing.JLabel lblFechaEstimada;
     private javax.swing.JLabel lblISBNEjem;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNomCli;
     private javax.swing.JLabel lblNomEjem;
     private javax.swing.JLabel lblNroDocCli;

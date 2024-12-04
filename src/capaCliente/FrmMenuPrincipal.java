@@ -169,7 +169,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         mnuOrdenCompra = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        mnuAcercaDe = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -547,8 +547,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuBar1.add(mnuReportes);
 
-        jMenu2.setText("Acerca de");
-        jMenuBar1.add(jMenu2);
+        mnuAcercaDe.setText("Acerca de");
+        mnuAcercaDe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnuAcercaDeMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(mnuAcercaDe);
 
         setJMenuBar(jMenuBar1);
 
@@ -768,6 +773,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         objJd.setVisible(true);
     }//GEN-LAST:event_mnuReportesActionPerformed
 
+    private void mnuAcercaDeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuAcercaDeMouseClicked
+        // TODO add your handling code here:
+        jdAcercaDe objJd = new jdAcercaDe(this, true);
+        objJd.setLocationRelativeTo(null);
+        objJd.setVisible(true);
+    }//GEN-LAST:event_mnuAcercaDeMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -793,7 +805,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
@@ -801,6 +812,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblCargo;
     private javax.swing.JLabel lblUser;
+    private javax.swing.JMenu mnuAcercaDe;
     private javax.swing.JMenuItem mnuCerrarSesion;
     private javax.swing.JMenuItem mnuDevolucion;
     private javax.swing.JMenu mnuMantenimientos;

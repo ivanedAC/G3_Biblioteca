@@ -4,6 +4,7 @@
  */
 package capaCliente;
 
+import capaLogica.ValidationManager;
 import capaLogica.clsAutor;
 import capaLogica.clsCategoria;
 import capaLogica.clsEditorial;
@@ -231,6 +232,7 @@ public class jdManLibro extends javax.swing.JDialog {
         combearFormato();
         combearIdioma();
         combearTipoLibro();
+        ValidationManager.setImageInLabel(lblImagen, "libro_label.png");
         DefaultListModel modelo = new DefaultListModel();
         listCategorias.setModel(modelo);
         DefaultListModel modelo2 = new DefaultListModel();
@@ -281,7 +283,7 @@ public class jdManLibro extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         cmbFormato = new javax.swing.JComboBox<>();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel6 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
@@ -632,7 +634,7 @@ public class jdManLibro extends javax.swing.JDialog {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -649,7 +651,7 @@ public class jdManLibro extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(13, 13, 13)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1040,7 +1042,6 @@ public class jdManLibro extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1056,6 +1057,7 @@ public class jdManLibro extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel lblImagen;
     public static javax.swing.JList<String> listAutores;
     public static javax.swing.JList<String> listCategorias;
     private javax.swing.JSpinner spnEdicion;

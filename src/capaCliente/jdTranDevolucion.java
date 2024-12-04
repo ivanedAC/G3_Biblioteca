@@ -39,6 +39,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Menú - Transacción Devolución");
+        ValidationManager.setImageInLabel(lblImagen, "cliente_label.png");
     }
 
     private void llenarTablaInicial() {
@@ -231,7 +232,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         lblTipoPerCli = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEjemplaresP = new javax.swing.JTable();
@@ -268,14 +269,11 @@ public class jdTranDevolucion extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Código:");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Fecha de Devolución:");
 
-        txtCodDev.setBackground(new java.awt.Color(255, 255, 255));
         txtCodDev.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCodDevKeyTyped(evt);
@@ -383,15 +381,12 @@ public class jdTranDevolucion extends javax.swing.JDialog {
         lblNroDocCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre:");
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Nro Doc:");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Código:");
 
         lblTipoDocCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -399,13 +394,11 @@ public class jdTranDevolucion extends javax.swing.JDialog {
         lblCodCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Tipo Persona:");
 
         lblTipoPerCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Tipo Doc:");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -459,8 +452,8 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel18.setText("jLabel14");
-        jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblImagen.setText("jLabel14");
+        lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -472,7 +465,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
@@ -490,7 +483,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(btnElegirCli)))))
@@ -499,7 +492,6 @@ public class jdTranDevolucion extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(243, 226, 210));
 
-        tblEjemplaresP.setBackground(new java.awt.Color(255, 255, 255));
         tblEjemplaresP.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -526,7 +518,6 @@ public class jdTranDevolucion extends javax.swing.JDialog {
             }
         });
 
-        tblEjemplaresD.setBackground(new java.awt.Color(255, 255, 255));
         tblEjemplaresD.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -586,32 +577,24 @@ public class jdTranDevolucion extends javax.swing.JDialog {
         jPanel10.setBackground(new java.awt.Color(243, 226, 210));
 
         lblNomEjem.setBackground(new java.awt.Color(255, 255, 255));
-        lblNomEjem.setForeground(new java.awt.Color(0, 0, 0));
         lblNomEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        cboxSanciones.setBackground(new java.awt.Color(255, 255, 255));
         cboxSanciones.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        cboxSanciones.setForeground(new java.awt.Color(0, 0, 0));
         cboxSanciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblISBNEjem.setBackground(new java.awt.Color(255, 255, 255));
-        lblISBNEjem.setForeground(new java.awt.Color(0, 0, 0));
         lblISBNEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblCodEjem.setBackground(new java.awt.Color(255, 255, 255));
-        lblCodEjem.setForeground(new java.awt.Color(0, 0, 0));
         lblCodEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Código:");
 
         jLabel17.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Sanción:");
 
         jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Editorial:");
 
         btnConsultarSanciones.setBackground(new java.awt.Color(113, 49, 18));
@@ -625,15 +608,12 @@ public class jdTranDevolucion extends javax.swing.JDialog {
         });
 
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Nombre:");
 
         lblEditorialEjem.setBackground(new java.awt.Color(255, 255, 255));
-        lblEditorialEjem.setForeground(new java.awt.Color(0, 0, 0));
         lblEditorialEjem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("ISBN:");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -664,8 +644,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(cboxSanciones, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnConsultarSanciones)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnConsultarSanciones)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -719,15 +698,13 @@ public class jdTranDevolucion extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDevolverEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnDevolverEjem, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -738,7 +715,6 @@ public class jdTranDevolucion extends javax.swing.JDialog {
 
         jPanel4.setBackground(new java.awt.Color(66, 39, 5));
 
-        btnFinalizar.setBackground(new java.awt.Color(255, 255, 255));
         btnFinalizar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnFinalizar.setForeground(new java.awt.Color(66, 39, 5));
         btnFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/finish_devolucion.png"))); // NOI18N
@@ -749,7 +725,6 @@ public class jdTranDevolucion extends javax.swing.JDialog {
             }
         });
 
-        btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(66, 39, 5));
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/leave_transa.png"))); // NOI18N
@@ -1055,7 +1030,6 @@ public class jdTranDevolucion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1079,6 +1053,7 @@ public class jdTranDevolucion extends javax.swing.JDialog {
     private javax.swing.JLabel lblCodEjem;
     private javax.swing.JLabel lblEditorialEjem;
     private javax.swing.JLabel lblISBNEjem;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNomCli;
     private javax.swing.JLabel lblNomEjem;
     private javax.swing.JLabel lblNroDocCli;

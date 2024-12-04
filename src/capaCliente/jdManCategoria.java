@@ -70,6 +70,7 @@ public class jdManCategoria extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Menú - Mantenimiento Categoria");
+        ValidationManager.setImageInLabel(lblImagen, "categoria.png");
     }
 
     public void modificarBotones(boolean activar) {
@@ -103,7 +104,7 @@ public class jdManCategoria extends javax.swing.JDialog {
         btnModificar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -120,18 +121,14 @@ public class jdManCategoria extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Nombre:");
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         txtNombre.setBorder(null);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Codigo:");
 
-        txtCodigo.setBackground(new java.awt.Color(255, 255, 255));
         txtCodigo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         txtCodigo.setBorder(null);
 
@@ -253,8 +250,7 @@ public class jdManCategoria extends javax.swing.JDialog {
         jSeparator3.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
 
-        jLabel1.setText("IMAGEN DE LA CATEGORIA");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jPanel5.setBackground(new java.awt.Color(113, 49, 18));
 
@@ -297,7 +293,7 @@ public class jdManCategoria extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 25, Short.MAX_VALUE))))
         );
@@ -316,7 +312,7 @@ public class jdManCategoria extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNombre)))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -330,7 +326,6 @@ public class jdManCategoria extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(243, 226, 210));
 
-        tblAutor.setBackground(new java.awt.Color(255, 255, 255));
         tblAutor.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         tblAutor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -540,7 +535,6 @@ public class jdManCategoria extends javax.swing.JDialog {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -551,6 +545,7 @@ public class jdManCategoria extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JTable tblAutor;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;

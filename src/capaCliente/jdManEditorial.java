@@ -23,6 +23,7 @@ public class jdManEditorial extends javax.swing.JDialog {
         super(parent, modal);
         setTitle("Menú - Mantenimiento de editorial");
         initComponents();
+        ValidationManager.setImageInLabel(lblImagen, "editorial_label.jpg");
     }
 
     public boolean existe() throws Exception {
@@ -104,7 +105,7 @@ public class jdManEditorial extends javax.swing.JDialog {
         btnDarBaja = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -307,8 +308,7 @@ public class jdManEditorial extends javax.swing.JDialog {
         jSeparator2.setForeground(new java.awt.Color(113, 49, 18));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel4.setText("Imagen Editorial");
-        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -324,14 +324,14 @@ public class jdManEditorial extends javax.swing.JDialog {
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDarBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -553,7 +553,6 @@ public class jdManEditorial extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -561,6 +560,7 @@ public class jdManEditorial extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JTable tblEditoriales;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;

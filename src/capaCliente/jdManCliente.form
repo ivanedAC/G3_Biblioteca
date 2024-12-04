@@ -200,6 +200,9 @@
                   <Border info="null"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDocIdentKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblSexo">
               <Properties>
@@ -520,6 +523,9 @@
                   <Border info="null"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTelefonoKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblCorreo1">
               <Properties>

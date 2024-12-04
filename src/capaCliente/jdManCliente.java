@@ -375,7 +375,6 @@ public class jdManCliente extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Mantenimiento de cliente");
         setBackground(new java.awt.Color(255, 215, 171));
-        setMaximumSize(new java.awt.Dimension(32767, 32767));
 
         jPanel1.setBackground(new java.awt.Color(243, 226, 210));
         jPanel1.setPreferredSize(new java.awt.Dimension(1332, 725));
@@ -390,6 +389,11 @@ public class jdManCliente extends javax.swing.JDialog {
 
         txtDocIdent.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         txtDocIdent.setBorder(null);
+        txtDocIdent.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocIdentKeyTyped(evt);
+            }
+        });
 
         lblSexo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblSexo.setText("Sexo:");
@@ -527,6 +531,11 @@ public class jdManCliente extends javax.swing.JDialog {
 
         txtTelefono.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         txtTelefono.setBorder(null);
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
 
         lblCorreo1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblCorreo1.setText("Estado:");
@@ -1176,6 +1185,26 @@ public class jdManCliente extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void txtDocIdentKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocIdentKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDocIdentKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        // TODO add your handling code here:
+        Character objTecla = evt.getKeyChar();
+        if (!Character.isDigit(objTecla)) {
+            evt.consume();
+        }
+        
+        if (txtTelefono.getText().length() > 8) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 
     /**
      * @param args the command line arguments

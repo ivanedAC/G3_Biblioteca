@@ -27,7 +27,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="1" pref="1379" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="1" pref="1412" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -372,6 +372,9 @@
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDocIdentKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblNombre">
               <Properties>
@@ -465,6 +468,9 @@
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTelefonoKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnBuscar">
               <Properties>
