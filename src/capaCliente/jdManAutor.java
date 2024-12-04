@@ -94,6 +94,7 @@ public class jdManAutor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Menú - Mantenimiento Autor");
+        ValidationManager.setImageInLabel(lblImagen, "autor.jpg");
     }
     public void modificarBotones(boolean activar){
         btnBuscar.setEnabled(activar);
@@ -122,7 +123,7 @@ public class jdManAutor extends javax.swing.JDialog {
         txtCodigo = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -146,20 +147,15 @@ public class jdManAutor extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(243, 226, 210));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Pais:");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Nombre:");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Sexo:");
 
-        cmbPais.setBackground(new java.awt.Color(255, 255, 255));
         cmbPais.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        cmbPais.setForeground(new java.awt.Color(0, 0, 0));
         cmbPais.setBorder(null);
         cmbPais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,24 +163,17 @@ public class jdManAutor extends javax.swing.JDialog {
             }
         });
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
         txtNombre.setBorder(null);
 
-        cmbSexo.setBackground(new java.awt.Color(255, 255, 255));
         cmbSexo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        cmbSexo.setForeground(new java.awt.Color(0, 0, 0));
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
         cmbSexo.setBorder(null);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Codigo:");
 
-        txtCodigo.setBackground(new java.awt.Color(255, 255, 255));
         txtCodigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        txtCodigo.setForeground(new java.awt.Color(0, 0, 0));
         txtCodigo.setBorder(null);
         txtCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,9 +201,8 @@ public class jdManAutor extends javax.swing.JDialog {
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("IMAGEN PROVEEDOR");
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblImagen.setText("IMAGEN PROVEEDOR");
+        lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -223,7 +211,7 @@ public class jdManAutor extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -265,7 +253,7 @@ public class jdManAutor extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
 
@@ -369,7 +357,6 @@ public class jdManAutor extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(243, 226, 210));
 
-        tblAutor.setBackground(new java.awt.Color(255, 255, 255));
         tblAutor.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tblAutor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -644,7 +631,6 @@ public class jdManAutor extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cmbSexo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -653,6 +639,7 @@ public class jdManAutor extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JTable tblAutor;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
